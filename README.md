@@ -59,7 +59,7 @@ Windows is not supported natively — the tooling assumes a bash-compatible
 environment. The workaround is
 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install): install a
 Ubuntu distribution, then follow the Ubuntu steps throughout this guide.
-This path is well trodden — the guide itself is maintained from a WSL2
+This path is well-trodden — the guide itself is maintained from a WSL2
 environment.
 
 ### A note for Arch Linux users
@@ -228,8 +228,8 @@ runs on [Podman](https://podman.io/docs/installation), with
 as the provider behind `podman compose`. Docker is not used.
 
 ```bash
-# macOS — Podman runs inside a lightweight VM: create it once with
-# `machine init`, start it after each reboot with `machine start`
+# macOS — Podman runs inside a lightweight VM: the two `podman machine`
+# commands below create it once, then start it after each reboot.
 brew install podman podman-compose
 podman machine init
 podman machine start
