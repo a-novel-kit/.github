@@ -68,6 +68,37 @@ Work through the subsections in order — later steps assume the earlier ones
 subsection ends with a **Verify** block; the comment under each command shows
 the kind of output you should expect.
 
+### zsh
+
+Any bash-compatible shell works, but we recommend
+[zsh](https://www.zsh.org) on every platform — it is what the team uses, and
+the `a-novel` CLI's shell integration (daemon auto-start, tab completion)
+supports zsh, bash and fish. See the
+[per-OS install instructions](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+for other systems.
+
+```bash
+# macOS — zsh is already the default shell; nothing to do
+
+# Ubuntu
+sudo apt install zsh
+chsh -s $(which zsh)
+
+# Arch Linux
+sudo pacman -S zsh
+chsh -s $(which zsh)
+```
+
+`chsh` makes zsh your default shell; log out and back in for it to take
+effect.
+
+Verify:
+
+```bash
+echo $SHELL
+# /usr/bin/zsh
+```
+
 ### Git
 
 Everything is versioned with [Git](https://git-scm.com/downloads), and all
@@ -159,6 +190,19 @@ Verify:
 go version
 # go version go1.26.4 linux/amd64
 ```
+
+One more thing while you are here: `go install` places binaries in
+`$(go env GOPATH)/bin` — `~/go/bin` by default; set `GOBIN`
+(`go env -w GOBIN=<dir>`) if you want them elsewhere. That directory must be
+on your `PATH`, or the `a-novel` CLI you install in step 2 won't be found:
+
+```bash
+echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
+exec $SHELL
+```
+
+(The example targets zsh — if you use another shell, the same line goes to
+its rc file instead, e.g. `~/.bashrc`.)
 
 ### Node.js
 
@@ -273,45 +317,51 @@ sudo pacman -Syu
 ## Step 2 — install the a-novel CLI
 
 The `a-novel` CLI is the single entrypoint for building, testing, running and
-releasing every project. It lives in the
-[**stack** repository](https://github.com/a-novel-kit/stack), which also
-anchors your local checkouts of the org repositories — so cloning it gives
-your whole workspace a home.
-
-### Get the code and build
+releasing every project. It installs like any other Go tool, straight from
+source — no need to clone anything first:
 
 ```bash
-git clone git@github.com:a-novel-kit/stack.git ~/git-projects/a-novel
-cd ~/git-projects/a-novel/cli
-go install ./cmd/a-novel
+go install github.com/a-novel-kit/stack/cli/cmd/a-novel@latest
 ```
 
-`go install` places the binary in `$(go env GOPATH)/bin` (usually
-`~/go/bin`). If your shell cannot find `a-novel` afterwards, add that
-directory to your `PATH`:
-
-```bash
-echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc   # or ~/.bashrc
-exec $SHELL
-```
+The binary lands in the Go install directory you added to your `PATH` in
+step 1 — `$(go env GOPATH)/bin` by default, or `$GOBIN` if you changed it.
 
 ### Bootstrap your environment
 
 ```bash
 a-novel core setup
+```
+
+`core setup` is the one-time interactive bootstrap, and it takes care of
+everything: it re-checks the environment you installed in step 1 (podman,
+git, GitHub SSH), creates the CLI's state directories, clones your workspace
+(see below), installs a small block in your shell rc (zsh, bash and fish are
+supported) that auto-starts the background daemon and enables tab
+completion, and finally starts the daemon. It is also **idempotent** — you
+can re-run it any time as a health check; on an already-configured machine
+it changes nothing and simply reports green checks.
+
+The workspace is a clone of the
+[stack repository](https://github.com/a-novel-kit/stack); it hosts the CLI's
+source and anchors your local checkouts of all org repositories. By default
+it lives at `~/git-projects/a-novel`. To put it somewhere else, set
+`A_NOVEL_STACKS` before running setup (format: `name:path` entries separated
+by commas, first entry is the default workspace) — and keep it set, for
+example in your shell rc:
+
+```bash
+export A_NOVEL_STACKS="default:$HOME/somewhere/else/a-novel"
+```
+
+Finally, pull the org repositories into the workspace:
+
+```bash
 a-novel core sync
 ```
 
-`core setup` is the one-time interactive bootstrap. It re-checks the
-environment you just installed (podman, git, GitHub SSH), creates the CLI's
-state directories, installs a small block in your shell rc (zsh, bash and
-fish are supported) that auto-starts the background daemon and enables tab
-completion, and finally starts the daemon. It is also **idempotent** — you
-can re-run it any time as a health check; on an already-configured machine it
-changes nothing and simply reports green checks.
-
-`core sync` then clones (or fast-forwards) the curated set of org
-repositories into `app/` and `kit/` inside the stack checkout.
+`core sync` clones (or fast-forwards) the curated set of org repositories
+into `app/` and `kit/` inside the workspace.
 
 ### Verify the installation
 
@@ -333,12 +383,12 @@ new shells do this automatically thanks to the rc block installed by setup.
 
 ### Updating the CLI
 
-After pulling a stack update that touches `cli/`, rebuild in place —
-`a-novel install` rebuilds the binary and restarts the daemon without losing
-your running targets:
+After pulling a workspace update that touches `cli/`, rebuild in place —
+`a-novel install` rebuilds the binary from your workspace's `cli/` directory
+and restarts the daemon without losing your running targets:
 
 ```bash
-git -C ~/git-projects/a-novel pull
+git -C ~/git-projects/a-novel pull   # adjust if you moved your workspace
 a-novel install
 ```
 
