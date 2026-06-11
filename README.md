@@ -15,7 +15,7 @@ GitHub Actions and tooling behind it. One setup covers both.
 - [Before you begin](#before-you-begin)
   - [Supported platforms](#supported-platforms)
   - [A note for macOS users](#a-note-for-macos-users)
-  - [A note for Ubuntu and WSL2 users](#a-note-for-ubuntu-and-wsl2-users)
+  - [A note for Windows users](#a-note-for-windows-users)
   - [A note for Arch Linux users](#a-note-for-arch-linux-users)
 - [Step 1 — install the toolchain](#step-1--install-the-toolchain)
 - [Step 2 — install the a-novel CLI](#step-2--install-the-a-novel-cli)
@@ -39,38 +39,28 @@ exists.
 
 ### A note for macOS users
 
-All macOS commands in this guide use [Homebrew](https://brew.sh). Homebrew is
-**preferred, not assumed**: if you don't have it yet, install it first —
+We recommend installing the toolchain through [Homebrew](https://brew.sh),
+and the macOS commands in this guide are written for it. The reason is
+maintenance: everything installed through Homebrew updates with a single
+`brew upgrade`, instead of each tool shipping its own installer and update
+mechanism. Each section still links the official install documentation,
+which may recommend a different method — you are free to follow it instead;
+the rest of the guide works the same either way.
+
+If you don't have Homebrew yet, install it first:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-You are free to use a tool's official installer instead (each section links
-the official docs). Podman is the notable case: its upstream documentation
-actually recommends the `.pkg` installer over Homebrew. We standardize on
-Homebrew anyway, because it keeps the whole toolchain upgradable with a single
-`brew upgrade` instead of a per-tool hunt for installers.
+### A note for Windows users
 
-Also specific to macOS: Podman runs containers inside a lightweight VM. You
-create that VM once (`podman machine init`) and start it after each reboot
-(`podman machine start`) — both commands are included in the Podman section
-below. If `podman info` ever fails on macOS, the VM not running is the first
-thing to check.
-
-### A note for Ubuntu and WSL2 users
-
-Two of Ubuntu's `apt` packages lag too far behind for us: **Go** (install
-through snap instead) and **Node.js** (install through
-[nvm](https://github.com/nvm-sh/nvm) instead). Everything else comes straight
-from `apt`. The sections below already point you at the right source, so you
-don't need to remember this — it is only called out here so the deviation
-doesn't surprise you.
-
-Windows is not supported natively, but
-[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) works well:
-install a Ubuntu distribution and follow the Ubuntu steps throughout. This
-guide is itself maintained from a WSL2 environment.
+Windows is not supported natively — the tooling assumes a bash-compatible
+environment. The workaround is
+[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install): install a
+Ubuntu distribution, then follow the Ubuntu steps throughout this guide.
+This path is well trodden — the guide itself is maintained from a WSL2
+environment.
 
 ### A note for Arch Linux users
 
@@ -238,9 +228,8 @@ runs on [Podman](https://podman.io/docs/installation), with
 as the provider behind `podman compose`. Docker is not used.
 
 ```bash
-# macOS — runs in a VM: init once, start after each reboot.
-# (Upstream recommends its .pkg installer; see the macOS note above for why
-# we use Homebrew anyway.)
+# macOS — Podman runs inside a lightweight VM: create it once with
+# `machine init`, start it after each reboot with `machine start`
 brew install podman podman-compose
 podman machine init
 podman machine start
