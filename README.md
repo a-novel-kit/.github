@@ -191,7 +191,8 @@ brew install node
 # Ubuntu — use nvm; the apt package is far too old. Check the nvm README for
 # the current installer version: https://github.com/nvm-sh/nvm#installing-and-updating
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
-nvm install node    # "node" is nvm's alias for the latest version
+\. "$HOME/.nvm/nvm.sh"   # load nvm into this shell — new shells load it automatically
+nvm install node         # "node" is nvm's alias for the latest version
 
 # Arch Linux
 sudo pacman -S nodejs npm
@@ -342,7 +343,7 @@ a-novel core status
 #   socket : /run/user/1000/a-novel.sock
 #   started: 2026-06-11T21:44:18Z (2s ago)
 #   stacks : 1
-#     * default    /home/kushuh/git-projects/a-novel
+#     * default    /home/<you>/git-projects/a-novel
 ```
 
 If the daemon reports `not running`, start it with `a-novel core start` —
