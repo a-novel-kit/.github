@@ -295,6 +295,45 @@ podman compose version
 The "external compose provider" banner is the success signal: it means
 `podman compose` found `podman-compose`.
 
+### Claude Code (optional — heavily recommended)
+
+[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's
+terminal coding agent, and our workflow leans on it heavily: every repository
+ships curated Claude Code skills and settings (under `.claude/`) that teach
+it the project's conventions, so it arrives pre-configured the moment you
+open a workspace folder. You can develop a-novel without it — but you would
+be passing on a lot of leverage.
+
+Install with the [native installer](https://code.claude.com/docs/en/setup)
+on every platform — macOS, Linux and WSL2 alike:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Unlike the rest of the toolchain, Claude Code keeps itself up to date in the
+background — the same reason we prefer Homebrew elsewhere, satisfied even
+better here. (A `claude-code` Homebrew cask exists if you prefer it, but it
+does not auto-update.)
+
+Claude Code requires a paid Claude account (Pro, Max, Team or Enterprise) or
+a Claude Console account — the free plan does not include it. To
+authenticate, run `claude` once from any project directory and follow the
+browser prompts.
+
+Verify:
+
+```bash
+claude --version
+# 2.1.173 (Claude Code)
+
+claude doctor    # deeper health check: install method, auto-update status
+```
+
+No configuration beyond login is needed for a-novel — the per-repo
+`.claude/` directories do the rest. `claude update` forces an update
+immediately if you don't want to wait for the background one.
+
 ### Keeping the toolchain up to date
 
 Most of the toolchain updates through your package manager; only the pieces
