@@ -12,7 +12,7 @@ Join us on social media!
 [![Discord](https://img.shields.io/discord/1315240114691248138?logo=discord)](https://discord.gg/rp4Qr8cA)
 [![Spotify](https://img.shields.io/badge/Spotify-1ED760?logo=spotify&logoColor=white)](https://open.spotify.com/show/6NiTIuFh4vtNVoJzLozrWb)
 
-# Technical
+## Technical
 
 Developing a-novel? Start with the
-[developer onboarding guide](https://github.com/a-novel-kit/.github/blob/master/README.md).
+[developer onboarding guide](https://github.com/a-novel-kit/.github#readme).
