@@ -16,7 +16,6 @@ GitHub Actions and tooling behind it. One setup covers both.
   - [Supported platforms](#supported-platforms)
   - [A note for macOS users](#a-note-for-macos-users)
   - [A note for Windows users](#a-note-for-windows-users)
-  - [A note for Arch Linux users](#a-note-for-arch-linux-users)
 - [Step 1 — install the toolchain](#step-1--install-the-toolchain)
 - [Step 2 — install the a-novel CLI](#step-2--install-the-a-novel-cli)
 - [Step 3 — daily usage](#step-3--daily-usage)
@@ -56,17 +55,11 @@ If you don't have Homebrew yet, install it first:
 ### A note for Windows users
 
 Windows is not supported natively — the tooling assumes a bash-compatible
-environment. The workaround is
+environment. Other solutions exist, but the one we recommend is
 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install): install a
 Ubuntu distribution, then follow the Ubuntu steps throughout this guide.
 This path is well-trodden — the guide itself is maintained from a WSL2
 environment.
-
-### A note for Arch Linux users
-
-You have the easy mode: every tool in this guide is in the official `pacman`
-repositories, with no special cases. A single `sudo pacman -Syu` updates the
-entire toolchain at once.
 
 ## Step 1 — install the toolchain
 
