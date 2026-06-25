@@ -200,7 +200,6 @@ and
 git config --global gpg.format ssh
 git config --global user.signingkey ~/.ssh/id_ed25519.pub
 git config --global commit.gpgsign true
-git config --global tag.gpgsign true
 ```
 
 Then register that **same** public key with GitHub a second time as a _signing_
@@ -210,8 +209,7 @@ key — GitHub tracks authentication and signing keys separately:
 gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "$(hostname) (signing)"
 ```
 
-New commits now show as **Verified** on GitHub; confirm locally with
-`git log --show-signature -1`.
+New commits now show as **Verified** on GitHub.
 
 ### Go
 
