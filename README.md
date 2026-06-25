@@ -166,6 +166,31 @@ ssh -T git@github.com
 > `ssh -T git@github.com` exits with code 1 even on success — GitHub refuses
 > the shell after greeting you. The greeting line is what matters.
 
+### Signing your commits
+
+Commits to A-Novel repositories must be signed — no new key or GPG needed.
+`gh auth login` above already generated an SSH key (default `~/.ssh/id_ed25519`)
+and registered it with GitHub for authentication; reuse that same key to sign.
+Point Git at it and turn signing on (reference:
+[Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
+and
+[Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)):
+
+```bash
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519.pub
+git config --global commit.gpgsign true
+```
+
+GitHub tracks authentication and signing keys separately, so register that
+**same** public key a second time — now as a _signing_ key:
+
+```bash
+gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "$(hostname) (signing)"
+```
+
+New commits now show as **Verified** on GitHub.
+
 ### Go
 
 The services, the shared libraries and the `a-novel` CLI itself are written in
