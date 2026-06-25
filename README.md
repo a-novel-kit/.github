@@ -166,35 +166,15 @@ ssh -T git@github.com
 > `ssh -T git@github.com` exits with code 1 even on success — GitHub refuses
 > the shell after greeting you. The greeting line is what matters.
 
-### Git over SSH
-
-All repositories are cloned over SSH, so your machine needs an SSH key
-registered with GitHub. `gh auth login` above sets one up for you; to do it by
-hand — or to see what it did — generate a key, load it into the agent, and
-register the public half. Full reference:
-[Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
-
-```bash
-ssh-keygen -t ed25519 -C "you@example.com"   # accept the default path; set a passphrase
-eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519
-gh ssh-key add ~/.ssh/id_ed25519.pub --title "$(hostname)"   # or paste it under GitHub → Settings → SSH and GPG keys
-ssh -T git@github.com                         # the greeting is success (exit 1 is normal — see the note above)
-```
-
-Clone over SSH, not HTTPS, so pushes authenticate with the key:
-
-```bash
-git clone git@github.com:a-novel-kit/<repo>.git
-```
-
 ### Signing your commits
 
-Commits to A-Novel repositories must be signed. The simplest setup reuses the
-SSH key from above — no GPG needed: point Git at it and turn signing on. Full
-reference:
+Commits to A-Novel repositories must be signed — no new key or GPG needed.
+`gh auth login` above already generated an SSH key (default `~/.ssh/id_ed25519`)
+and registered it with GitHub for authentication; reuse that same key to sign.
+Point Git at it and turn signing on (reference:
 [Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
 and
-[Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key).
+[Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)):
 
 ```bash
 git config --global gpg.format ssh
@@ -202,8 +182,8 @@ git config --global user.signingkey ~/.ssh/id_ed25519.pub
 git config --global commit.gpgsign true
 ```
 
-Then register that **same** public key with GitHub a second time as a _signing_
-key — GitHub tracks authentication and signing keys separately:
+GitHub tracks authentication and signing keys separately, so register that
+**same** public key a second time — now as a _signing_ key:
 
 ```bash
 gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "$(hostname) (signing)"
