@@ -447,16 +447,16 @@ child process only — never printed, logged, or committed. Set this up once, an
 only if you work on a service that needs it:
 
 ```bash
-a-novel secrets init             # generate the local key (one time)
+a-novel secrets init             # generate the local key (run once)
 a-novel secrets set openai-key   # paste the value — no echo, never an argument
 ```
 
 The service declares the secrets it needs in a committed, value-free
 `.a-novel/secrets.yaml` — each entry pairs a target env var with a secret `id`
-and an optional description — so `test` / `run` / `ui` load and inject them
-automatically; a secret you haven't set yet is skipped with a descriptive
-warning. For one-off use, `a-novel secrets exec --env NAME=<id> -- <cmd>`. Full
-format in the
+and an optional description — so the `test`, `run`, and `ui` commands load and
+inject them automatically; a secret you haven't set yet is skipped with a
+descriptive warning. For a one-off run, use
+`a-novel secrets exec --env NAME=<id> -- <cmd>`. Full format in the
 [CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md).
 
 ## Step 3 — daily usage
