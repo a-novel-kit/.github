@@ -438,6 +438,30 @@ under `.secrets/`. This is not required for regular development; when you
 need it, follow the
 [GitHub access section of the stack README](https://github.com/a-novel-kit/stack#github-access).
 
+### Optional — service secrets
+
+Some services need secret values to run. The CLI ships a small local secret
+manager so these are never handled in the open: a tool — or an AI agent — can
+run the toolchain against real secrets **without ever seeing them**. Values are
+stored AES-256-GCM-encrypted under a local key and injected only into the child
+process of `test` / `run` / `ui` — never printed, logged, committed, or passed
+as an argument.
+
+Set the store up once:
+
+```bash
+a-novel secrets init   # generate the local key + store (run once)
+```
+
+After that you only provision the secrets for the services you actually work on.
+A service declares what it needs in a committed, value-free `.a-novel/secrets.yaml`,
+and the CLI injects them automatically; a secret you haven't set yet is skipped
+with a descriptive warning naming exactly what to run. **Each service states the
+secrets it requires — and where to obtain them — in its own `CONTRIBUTING.md`;
+look there for the precise commands.** The
+[CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md)
+documents the full secrets model.
+
 ## Step 3 — daily usage
 
 A taste of the everyday commands, all run from anywhere inside the stack:
