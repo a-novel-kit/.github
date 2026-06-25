@@ -438,6 +438,25 @@ under `.secrets/`. This is not required for regular development; when you
 need it, follow the
 [GitHub access section of the stack README](https://github.com/a-novel-kit/stack#github-access).
 
+### Optional — provider secrets
+
+Some services call an external AI provider (the narrative engine, for one) and
+read its API key from an env var. The CLI keeps such keys in a local,
+AES-256-GCM-encrypted store and injects them into the `test` / `run` / `ui`
+child process only — never printed, logged, or committed. Set this up once, and
+only if you work on a service that needs it:
+
+```bash
+a-novel secrets init             # generate the local key (one time)
+a-novel secrets set openai-key   # paste the value — no echo, never an argument
+```
+
+The service declares which env var maps to which secret in a committed,
+value-free `.a-novel/secrets.yaml` (e.g. `env: { OPENAI_API_KEY: openai-key }`),
+so `test` / `run` / `ui` inject it automatically; for one-off use,
+`a-novel secrets exec --env NAME=<id> -- <cmd>`. Full reference in the
+[CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md).
+
 ## Step 3 — daily usage
 
 A taste of the everyday commands, all run from anywhere inside the stack:
