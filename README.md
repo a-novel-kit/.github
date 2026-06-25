@@ -15,6 +15,7 @@ GitHub Actions and tooling behind it. One setup covers both.
 - [Before you begin](#before-you-begin)
   - [Supported platforms](#supported-platforms)
   - [A note for macOS users](#a-note-for-macos-users)
+  - [A note for Arch Linux users](#a-note-for-arch-linux-users)
   - [A note for Windows users](#a-note-for-windows-users)
 - [Step 1 — install the toolchain](#step-1--install-the-toolchain)
 - [Step 2 — install the a-novel CLI](#step-2--install-the-a-novel-cli)
@@ -52,6 +53,22 @@ If you don't have Homebrew yet, install it first:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+### A note for Arch Linux users
+
+A base Arch install leaves out a couple of small utilities that the rest of
+this guide — and many tool installers — assume are already there. Install them
+up front so a later step doesn't fail on a missing command:
+
+```bash
+sudo pacman -S which inetutils
+```
+
+`which` resolves a command name to its path (tooling and scripts lean on it);
+`inetutils` provides `hostname`, which the SSH-key titles further down use to
+label each machine. A few other tools need their own Arch package too — those
+are called out where you reach them (`openssh` for your SSH key, `crun` for
+Podman).
+
 ### A note for Windows users
 
 Windows is not supported natively — the tooling assumes a bash-compatible
@@ -64,7 +81,7 @@ environment.
 ## Step 1 — install the toolchain
 
 Work through the subsections in order — later steps assume the earlier ones
-(for example, `gh` is the easiest way to set up your GitHub SSH key). Each
+(for example, the SSH-key step uses the `gh` you install just before it). Each
 subsection ends with a **Verify** block; the comment under each command shows
 the kind of output you should expect.
 
@@ -84,9 +101,12 @@ for other systems.
 sudo apt install zsh
 chsh -s $(which zsh)
 
-# Arch Linux
-sudo pacman -S zsh
-chsh -s $(which zsh)
+# Arch Linux — zsh-completions ships the extra completion definitions the zsh
+# package recommends installing alongside it
+sudo pacman -S zsh zsh-completions
+# `which zsh` resolves to the /usr/sbin path on Arch, which chsh rejects
+# (only the /usr/bin path is registered in /etc/shells) — point it there.
+chsh -s /usr/bin/zsh
 ```
 
 `chsh` makes zsh your default shell; log out and back in for it to take
@@ -122,6 +142,36 @@ git --version
 # git version 2.54.0
 ```
 
+Set your commit identity — Git stamps it on every commit as the author, and
+GitHub matches the email to your account:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@users.noreply.github.com"
+```
+
+Use an email tied to your GitHub account so your commits link back to your
+profile. GitHub's `…@users.noreply.github.com` address — found under your
+account's email settings — works if you would rather not publish a real one.
+
+### Oh My Zsh (recommended)
+
+[Oh My Zsh](https://ohmyz.sh) is a configuration framework for zsh: sane
+defaults, themes, plugins, and far better completion out of the box. It is
+optional, but it makes day-to-day shell work markedly nicer, and it is what
+the team runs. The installer clones itself with Git, so it has to come after
+the step above.
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+The installer replaces your `~/.zshrc` with its own template (your previous
+file is backed up to `~/.zshrc.pre-oh-my-zsh`). Run it **now**, before later
+steps append `PATH` lines to `~/.zshrc` — installing it afterwards would shed
+those edits. It may also offer to set zsh as your login shell; you already did
+that in the zsh step, so accepting is harmless and declining is fine.
+
 ### GitHub CLI
 
 The [GitHub CLI](https://github.com/cli/cli#installation) (`gh`) drives pull
@@ -141,15 +191,15 @@ sudo apt install gh
 sudo pacman -S github-cli
 ```
 
-Then authenticate. Pick **GitHub.com**, then **SSH** as the protocol — `gh`
-offers to generate an SSH key and upload it to your account for you, which
-covers the SSH requirement in one go:
+Then authenticate. Pick **GitHub.com**, then **SSH** as the protocol. When
+`gh` offers to generate or upload an SSH key, choose **Skip** — the next
+section creates one explicitly and reuses it for commit signing:
 
 ```bash
 gh auth login
 ```
 
-Verify both the CLI and your SSH access:
+Verify:
 
 ```bash
 gh --version
@@ -157,7 +207,51 @@ gh --version
 
 gh auth status
 # github.com: ✓ Logged in to github.com account <you> (keyring)
+```
 
+### SSH key
+
+Every repository is cloned over SSH, so GitHub needs one of your public keys.
+You create a single key here and use it for two things: authenticating Git
+operations, and signing your commits (next section).
+
+On Arch, install OpenSSH first — it ships `ssh` and `ssh-keygen`, which a base
+install omits; macOS and Ubuntu already have them:
+
+```bash
+# Arch Linux only
+sudo pacman -S openssh
+```
+
+Generate an Ed25519 key, accepting the defaults at every prompt (press Enter
+through each question — an empty passphrase is fine on a personal dev machine).
+This writes the private key to `~/.ssh/id_ed25519` and the public key to
+`~/.ssh/id_ed25519.pub` (reference:
+[Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)):
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Register the public key with GitHub as an **authentication** key — the next
+section adds the same key again as a _signing_ key, since GitHub tracks the two
+separately:
+
+```bash
+gh ssh-key add ~/.ssh/id_ed25519.pub --type authentication --title "$(hostname)"
+```
+
+Prefer the web UI? Print the public key and paste it at
+[github.com/settings/ssh/new](https://github.com/settings/ssh/new) (reference:
+[Adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)):
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Verify your SSH access:
+
+```bash
 ssh -T git@github.com
 # Hi <you>! You've successfully authenticated, but GitHub does not provide shell access.
 ```
@@ -168,10 +262,9 @@ ssh -T git@github.com
 
 ### Signing your commits
 
-Commits to A-Novel repositories must be signed — no new key or GPG needed.
-`gh auth login` above already generated an SSH key (default `~/.ssh/id_ed25519`)
-and registered it with GitHub for authentication; reuse that same key to sign.
-Point Git at it and turn signing on (reference:
+Commits to A-Novel repositories must be signed — no GPG needed. Reuse the SSH
+key you created in the previous section: point Git at it and turn signing on
+(reference:
 [Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
 and
 [Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)):
@@ -182,8 +275,10 @@ git config --global user.signingkey ~/.ssh/id_ed25519.pub
 git config --global commit.gpgsign true
 ```
 
-GitHub tracks authentication and signing keys separately, so register that
-**same** public key a second time — now as a _signing_ key:
+> If you created your key under a different name or path, substitute it for
+> `~/.ssh/id_ed25519.pub` in the commands here.
+
+Then register that **same** public key a second time — now as a _signing_ key:
 
 ```bash
 gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "$(hostname) (signing)"
@@ -299,7 +394,7 @@ podman machine start
 # Ubuntu
 sudo apt install podman podman-compose
 
-# Arch Linux
+# Arch Linux — pacman prompts for an OCI runtime provider; choose `crun`
 sudo pacman -S podman podman-compose
 ```
 
@@ -336,6 +431,17 @@ on every platform — macOS, Linux and WSL2 alike:
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
+The binary lands in `~/.local/bin`, and the installer adds that directory to
+your `PATH`. If a new shell still can't find `claude`, add it yourself:
+
+```bash
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
+exec $SHELL
+```
+
+(As with Go in step 1, another shell's rc file takes the same line instead,
+e.g. `~/.bashrc`.)
+
 Unlike the rest of the toolchain, Claude Code keeps itself up to date in the
 background — the same reason we prefer Homebrew elsewhere, satisfied even
 better here. (A `claude-code` Homebrew cask exists if you prefer it, but it
@@ -355,9 +461,26 @@ claude --version
 claude doctor    # deeper health check: install method, auto-update status
 ```
 
-No configuration beyond login is needed for a-novel — the per-repo
-`.claude/` directories do the rest. `claude update` forces an update
-immediately if you don't want to wait for the background one.
+The per-repo `.claude/` directories handle every _project_ convention, so
+there is nothing to configure for a-novel itself. A few _personal_ settings,
+though, noticeably improve the experience — all are global (saved to
+`~/.claude/settings.json`), so you set them once and forget them:
+
+- **Model** — run `/model` and pick the latest Opus (the `opus` alias always
+  tracks it); press Enter to save it as your default. Newer models are the most
+  capable, and they unlock the `xhigh` effort level below.
+- **Output style** — `/config` → **Output style** → **Explanatory**. Claude
+  then narrates the reasoning behind each change, which is far easier to learn
+  from and to review than terse, answer-only output.
+- **Reasoning effort** — `/effort xhigh` makes deep reasoning your everyday
+  default (it persists across sessions). Step up to `/effort max` for the
+  genuinely hard tasks — architecture, gnarly debugging — where you want it to
+  think without a token limit (`max` applies to the current session only).
+  `xhigh` needs a recent model (Opus 4.7+ or Fable 5), one more reason to pick
+  the latest above.
+
+`claude update` forces an update immediately if you don't want to wait for the
+background one.
 
 ### Keeping the toolchain up to date
 
