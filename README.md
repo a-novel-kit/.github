@@ -440,13 +440,12 @@ need it, follow the
 
 ### Optional — service secrets
 
-Some services need secret values to run — today an external AI provider's API
-key, more kinds over time. The CLI ships a small local secret manager so these
-are never handled in the open: a tool, or an AI agent, can run the toolchain
-against real secrets **without ever seeing them**. Values are stored
-AES-256-GCM-encrypted under a local key and injected only into the child process
-of `test` / `run` / `ui` — never printed, logged, committed, or passed as an
-argument.
+Some services need secret values to run. The CLI ships a small local secret
+manager so these are never handled in the open: a tool — or an AI agent — can
+run the toolchain against real secrets **without ever seeing them**. Values are
+stored AES-256-GCM-encrypted under a local key and injected only into the child
+process of `test` / `run` / `ui` — never printed, logged, committed, or passed
+as an argument.
 
 Set the store up once:
 
@@ -454,12 +453,12 @@ Set the store up once:
 a-novel secrets init   # generate the local key + store (run once)
 ```
 
-Then provision only the secrets for the services you actually work on. Each
-service declares what it needs in a committed, value-free `.a-novel/secrets.yaml`
+After that you only provision the secrets for the services you actually work on.
+A service declares what it needs in a committed, value-free `.a-novel/secrets.yaml`,
 and the CLI injects them automatically; a secret you haven't set yet is skipped
-with a descriptive warning naming exactly what to run. **The precise
-`a-novel secrets set <id>` commands — and the links for creating each secret —
-live in that service's own `CONTRIBUTING.md`.** The
+with a descriptive warning naming exactly what to run. **Each service states the
+secrets it requires — and where to obtain them — in its own `CONTRIBUTING.md`;
+look there for the precise commands.** The
 [CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md)
 documents the full secrets model.
 
