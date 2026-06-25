@@ -438,26 +438,30 @@ under `.secrets/`. This is not required for regular development; when you
 need it, follow the
 [GitHub access section of the stack README](https://github.com/a-novel-kit/stack#github-access).
 
-### Optional — provider secrets
+### Optional — service secrets
 
-Some services call an external AI provider (the narrative engine, for one) and
-read its API key from an env var. The CLI keeps such keys in a local,
-AES-256-GCM-encrypted store and injects them into the `test` / `run` / `ui`
-child process only — never printed, logged, or committed. Set this up once, and
-only if you work on a service that needs it:
+Some services need secret values to run — today an external AI provider's API
+key, more kinds over time. The CLI ships a small local secret manager so these
+are never handled in the open: a tool, or an AI agent, can run the toolchain
+against real secrets **without ever seeing them**. Values are stored
+AES-256-GCM-encrypted under a local key and injected only into the child process
+of `test` / `run` / `ui` — never printed, logged, committed, or passed as an
+argument.
+
+Set the store up once:
 
 ```bash
-a-novel secrets init             # generate the local key (run once)
-a-novel secrets set openai-key   # paste the value — no echo, never an argument
+a-novel secrets init   # generate the local key + store (run once)
 ```
 
-The service declares the secrets it needs in a committed, value-free
-`.a-novel/secrets.yaml` — each entry pairs a target env var with a secret `id`
-and an optional description — so the `test`, `run`, and `ui` commands load and
-inject them automatically; a secret you haven't set yet is skipped with a
-descriptive warning. For a one-off run, use
-`a-novel secrets exec --env NAME=<id> -- <cmd>`. Full format in the
-[CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md).
+Then provision only the secrets for the services you actually work on. Each
+service declares what it needs in a committed, value-free `.a-novel/secrets.yaml`
+and the CLI injects them automatically; a secret you haven't set yet is skipped
+with a descriptive warning naming exactly what to run. **The precise
+`a-novel secrets set <id>` commands — and the links for creating each secret —
+live in that service's own `CONTRIBUTING.md`.** The
+[CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md)
+documents the full secrets model.
 
 ## Step 3 — daily usage
 
