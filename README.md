@@ -451,10 +451,12 @@ a-novel secrets init             # generate the local key (one time)
 a-novel secrets set openai-key   # paste the value — no echo, never an argument
 ```
 
-The service declares which env var maps to which secret in a committed,
-value-free `.a-novel/secrets.yaml` (e.g. `env: { OPENAI_API_KEY: openai-key }`),
-so `test` / `run` / `ui` inject it automatically; for one-off use,
-`a-novel secrets exec --env NAME=<id> -- <cmd>`. Full reference in the
+The service declares the secrets it needs in a committed, value-free
+`.a-novel/secrets.yaml` — each entry pairs a target env var with a secret `id`
+and an optional description — so `test` / `run` / `ui` load and inject them
+automatically; a secret you haven't set yet is skipped with a descriptive
+warning. For one-off use, `a-novel secrets exec --env NAME=<id> -- <cmd>`. Full
+format in the
 [CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md).
 
 ## Step 3 — daily usage
