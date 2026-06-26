@@ -1,8 +1,8 @@
 name: Feature request
 description: Suggest an idea, enhancement, or new capability for an a-novel-kit project.
 title: "feat: <short description>"
+type: Feature
 labels:
-  - enhancement
   - triage
 body:
   - type: markdown
@@ -12,7 +12,7 @@ body:
 
         **Before you continue:**
         - Please search [existing issues](https://github.com/a-novel-kit) and the
-          [roadmap](https://github.com/orgs/a-novel/projects/7) first to avoid duplicates.
+          [roadmap](https://github.com/orgs/a-novel-kit/projects/1) first to avoid duplicates.
         - For open-ended discussion or ideas you are not yet sure about, please use
           [Discord](https://discord.gg/rp4Qr8cA) — once an idea has crystallised into a concrete
           ask, file it here.
