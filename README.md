@@ -220,10 +220,15 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 Register the public key with GitHub as an **authentication** key — the next
 section adds the same key again as a _signing_ key, since GitHub tracks the two
-separately:
+separately. `gh auth login` doesn't grant the scope needed to manage keys, so
+grant it just for this command and drop it again right after, to avoid leaving a
+key-management token lying around (each `gh auth refresh` re-authorizes in your
+browser):
 
 ```bash
+gh auth refresh -h github.com -s admin:public_key
 gh ssh-key add ~/.ssh/id_ed25519.pub --type authentication --title "$(hostname)"
+gh auth refresh -h github.com --remove-scopes admin:public_key
 ```
 
 Prefer the web UI? Print the public key and paste it at
@@ -263,10 +268,14 @@ git config --global commit.gpgsign true
 > If you created your key under a different name or path, substitute it for
 > `~/.ssh/id_ed25519.pub` in the commands here.
 
-Then register that **same** public key a second time — now as a _signing_ key:
+Then register that **same** public key a second time — now as a _signing_ key.
+As before, grant the key-management scope just for this command and remove it
+again afterward:
 
 ```bash
+gh auth refresh -h github.com -s admin:ssh_signing_key
 gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "$(hostname) (signing)"
+gh auth refresh -h github.com --remove-scopes admin:ssh_signing_key
 ```
 
 New commits now show as **Verified** on GitHub.
