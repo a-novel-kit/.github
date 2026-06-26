@@ -55,19 +55,13 @@ If you don't have Homebrew yet, install it first:
 
 ### A note for Arch Linux users
 
-A base Arch install leaves out a couple of small utilities that the rest of
-this guide — and many tool installers — assume are already there. Install them
-up front so a later step doesn't fail on a missing command:
+A base Arch install leaves out a few packages that the rest of this guide — and
+many tool installers — assume are already there. Install them up front so a
+later step doesn't fail on a missing command:
 
 ```bash
-sudo pacman -S which inetutils
+sudo pacman -S which inetutils openssh
 ```
-
-`which` resolves a command name to its path (tooling and scripts lean on it);
-`inetutils` provides `hostname`, which the SSH-key titles further down use to
-label each machine. A few other tools need their own Arch package too — those
-are called out where you reach them (`openssh` for your SSH key, `crun` for
-Podman).
 
 ### A note for Windows users
 
@@ -101,11 +95,8 @@ for other systems.
 sudo apt install zsh
 chsh -s $(which zsh)
 
-# Arch Linux — zsh-completions ships the extra completion definitions the zsh
-# package recommends installing alongside it
+# Arch Linux
 sudo pacman -S zsh zsh-completions
-# `which zsh` resolves to the /usr/sbin path on Arch, which chsh rejects
-# (only the /usr/bin path is registered in /etc/shells) — point it there.
 chsh -s /usr/bin/zsh
 ```
 
@@ -159,8 +150,7 @@ account's email settings — works if you would rather not publish a real one.
 [Oh My Zsh](https://ohmyz.sh) is a configuration framework for zsh: sane
 defaults, themes, plugins, and far better completion out of the box. It is
 optional, but it makes day-to-day shell work markedly nicer, and it is what
-the team runs. The installer clones itself with Git, so it has to come after
-the step above.
+the team runs.
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -214,14 +204,6 @@ gh auth status
 Every repository is cloned over SSH, so GitHub needs one of your public keys.
 You create a single key here and use it for two things: authenticating Git
 operations, and signing your commits (next section).
-
-On Arch, install OpenSSH first — it ships `ssh` and `ssh-keygen`, which a base
-install omits; macOS and Ubuntu already have them:
-
-```bash
-# Arch Linux only
-sudo pacman -S openssh
-```
 
 Generate an Ed25519 key, accepting the default location at each prompt. A
 passphrase protects the key if the machine is lost or the private key is
@@ -493,9 +475,9 @@ there is nothing to configure for a-novel itself. A few _personal_ settings,
 though, noticeably improve the experience — all are global (saved to
 `~/.claude/settings.json`), so you set them once and forget them:
 
-- **Model** — run `/model` and pick the latest Opus (the `opus` alias always
-  tracks it); press Enter to save it as your default. Newer models are the most
-  capable, and they unlock the `xhigh` effort level below.
+- **Model** — run `/model` and pick the latest, most capable model; press Enter
+  to save it as your default. The newest models unlock the `xhigh` effort level
+  below.
 - **Output style** — `/config` → **Output style** → **Explanatory**. Claude
   then narrates the reasoning behind each change, which is far easier to learn
   from and to review than terse, answer-only output.
