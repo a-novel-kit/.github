@@ -223,8 +223,11 @@ install omits; macOS and Ubuntu already have them:
 sudo pacman -S openssh
 ```
 
-Generate an Ed25519 key, accepting the defaults at every prompt (press Enter
-through each question — an empty passphrase is fine on a personal dev machine).
+Generate an Ed25519 key, accepting the default location at each prompt. A
+passphrase protects the key if the machine is lost or the private key is
+exfiltrated; leaving it empty (press Enter) is reasonable on an encrypted
+personal machine and saves a prompt on every signed commit — choose by your
+threat model.
 This writes the private key to `~/.ssh/id_ed25519` and the public key to
 `~/.ssh/id_ed25519.pub` (reference:
 [Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)):
@@ -318,7 +321,7 @@ on your `PATH`, or the `a-novel` CLI you install in step 2 won't be found:
 
 ```bash
 echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
-exec $SHELL
+exec "$SHELL"
 ```
 
 (The example targets zsh — if you use another shell, the same line goes to
@@ -460,7 +463,7 @@ your `PATH`. If a new shell still can't find `claude`, add it yourself:
 
 ```bash
 echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
-exec $SHELL
+exec "$SHELL"
 ```
 
 (As with Go in step 1, another shell's rc file takes the same line instead,
@@ -500,8 +503,9 @@ though, noticeably improve the experience — all are global (saved to
   default (it persists across sessions). Step up to `/effort max` for the
   genuinely hard tasks — architecture, gnarly debugging — where you want it to
   think without a token limit (`max` applies to the current session only).
-  `xhigh` needs a recent model (Opus 4.7+ or Fable 5), one more reason to pick
-  the latest above.
+  `xhigh` is only offered on recent models; if your selected model doesn't list
+  it, the `/effort` picker shows which levels it does — pick a newer one
+  (another reason to choose the latest above) or fall back to `high`.
 
 `claude update` forces an update immediately if you don't want to wait for the
 background one.
