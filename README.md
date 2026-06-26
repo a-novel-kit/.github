@@ -377,6 +377,30 @@ pnpm --version
 # 11.5.2
 ```
 
+### GitHub Packages access
+
+The `@a-novel` and `@a-novel-kit` npm scopes are published to
+[GitHub Packages](https://docs.github.com/en/packages), not the public npm
+registry — every JS workspace's `.npmrc` points those scopes at
+`npm.pkg.github.com`. Installing them (anything that runs `pnpm install`) needs
+a GitHub **personal access token** with the `read:packages` scope.
+
+Create a classic token with `read:packages` at
+[github.com/settings/tokens](https://github.com/settings/tokens) (reference:
+[Authenticating to GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)),
+then add it to the `.npmrc` in your **home** directory — never a repo's:
+
+```bash
+# ~/.npmrc — outside every repo, so the token can't be committed by accident
+//npm.pkg.github.com/:_authToken=ghp_your_token_here
+```
+
+> Keep the credential in `~/.npmrc`, not a project `.npmrc`. The per-repo
+> `.npmrc` files are committed and only map the scopes to the registry; a token
+> placed there is one `git add` away from being pushed. npm and pnpm merge your
+> home `~/.npmrc` with the project one, so the registry mapping and your token
+> combine automatically.
+
 ### Podman and podman-compose
 
 Local infrastructure — databases, test environments, service containers —
