@@ -8,7 +8,7 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
-      - uses: a-novel-kit/workflows/generic-actions/renovate@v1.9.0
+      - uses: a-novel-kit/workflows/generic-actions/renovate@v1.10.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           app_private_key: ${{ secrets.DEPENDENCY_BOT_PRIVATE_KEY }}
