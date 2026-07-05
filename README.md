@@ -398,9 +398,11 @@ then add it to the `.npmrc` in your **home** directory — never a repo's:
 ### Podman and podman-compose
 
 Local infrastructure — databases, test environments, service containers —
-runs on [Podman](https://podman.io/docs/installation), with
+runs on [Podman](https://podman.io/docs/installation) (rootless by default on
+Linux — no daemon, no root), with
 [podman-compose](https://github.com/containers/podman-compose#installation)
-as the provider behind `podman compose`. Docker is not used.
+(1.6.0 or newer) as the provider behind `podman compose`. Docker is not used,
+and does not need to be installed.
 
 ```bash
 # macOS — Podman runs inside a lightweight VM: the two `podman machine`
@@ -432,6 +434,12 @@ podman compose version
 
 The "external compose provider" banner is the success signal: it means
 `podman compose` found `podman-compose`.
+
+podman-compose must be 1.6.0 or newer — older versions mishandle
+`depends_on: service_healthy` and can hang at start-up. If docker-compose is
+also installed, `podman compose` prefers it (which would then need Podman's
+Docker-compatible socket); you don't need docker-compose, and the `a-novel` CLI
+pins the provider to podman-compose for its own commands regardless.
 
 ### Claude Code (optional — heavily recommended)
 
