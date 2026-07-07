@@ -5,36 +5,36 @@ shipped release.
 
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
 The board takes on the bookkeeping, so your attention can stay on the two things that really matter: the
-intention and the shipment. Everything between them, it tracks for you.
+intention and the shipment. It tracks everything in between for you.
 
 It starts with **the intention**. A feature begins as an idea, and before any code you open a draft issue
 to hold it: you refine the scope, look up the resources you need, and track your progress there. That
-description is the first place the work waits for a human. It is where you settle what to build, and it
-earns your care, because everything after it rests on it. Once it holds, the idea becomes a real Task,
+description is the first place the work waits for a human. It is where you settle what to build, and
+everything after it rests on it, so do it with care. Once it holds, the idea becomes a real Task,
 Epic, Initiative, or Milestone, sized to the work. They are one idea at different scales, so let's follow
 the smallest, the one that turns straight into code: the Task.
 
 Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
-copy of the code. As you pick it up and work, the board follows on its own, moving the Task from Ready to
-In progress. You never set its status; you just write code. When it is ready, you ask for review, and the
+copy of the code. As you pick it up and work, the board follows on its own and moves the Task from Ready
+to In progress. You never set its status; you just write code. When it is ready, you ask for review, and the
 work waits for a human a second time: In Review.
 
 Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
-the last stop of the development cycle. Approved, on its own or as a whole Epic, the Task is Done and
-merges to master.
+the last stop of the development cycle. Once they approve it, on its own or as a whole Epic, the Task is
+Done and merges to master.
 
 Master is staging, not production. Every merged Task gathers there and settles in with everything else
 that has landed. Nothing half-built reaches it: an Epic's Tasks merge together or not at all, so master
 only ever holds whole features.
 
 The last stop is **the shipment**. A merged Task waits in Awaiting Release until someone decides it is
-time. That call is deliberate, and it is a maintainer's to make. A release takes what is on master and
+time. That call is deliberate, and a maintainer makes it. A release takes what is on master and
 publishes it to production as a versioned build, cut the moment it is right: as soon as a feature lands,
 or once a few have gathered. One repository ships with one release; a whole Epic ships with one release
 train across every repository it touched. Big changes go out
 [in steps](taxonomy.md#versioning-and-releases), the dependency before the code that leans on it, so what
-reaches production always fits together. And with that the Task is finished: it leaves the board, its
-issue closed.
+reaches production always fits together. And the Task is finished: it leaves the board, and its issue
+closes.
 
 On the board, that same path is a row of states:
 
@@ -49,8 +49,8 @@ On the board, that same path is a row of states:
 Look at where the path waits for a person. Three points, and only three: the spec, the review, the
 release. The board fills every gap between them, but it cannot do these. A vague spec ships the wrong
 thing, however clean the code. A rushed review lets it through. A careless release times it badly. The
-spec is yours; the review and the release are a maintainer's. Wherever you stand, that is where judgment
-is the whole job, so spend it there and let the board carry the rest.
+spec is yours; the review and the release are a maintainer's. At each one, judgment is the whole job.
+Spend it there, and let the board carry the rest.
 
 One rule sits above all of it: an Epic lands whole. Plan its pieces so they can land together, and keep
 its siblings moving in step. A Task left behind holds back everything it is bound to.
