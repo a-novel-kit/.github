@@ -47,11 +47,12 @@ On the board, that same path is a row of states:
 
 ### What deserves your attention
 
-Look at where the path waits for a person. Three points, and only three: the spec, the review, the
-release. The board fills every gap between them, but it cannot do these. A vague spec ships the wrong
-thing, however clean the code. A rushed review lets it through. A careless release times it badly. The
-spec is yours; the review and the release are a maintainer's. At each one, judgment is the whole job.
-Spend it there, and let the board carry the rest.
+The board automates almost the whole path. The one thing it cannot do is judge, and three stages are
+pure judgment: the spec, the review, the release. A vague spec ships the wrong thing, however clean the
+code. A rushed review lets a bug through. A careless release goes out at the wrong time. The board
+catches none of this; only a person can. Your part is the spec; a maintainer holds the review and the
+release. At whichever stage is yours, judgment is the whole job, so give it there and trust the board
+with the rest.
 
 One rule sits above all of it: an Epic lands whole. Plan its pieces so they can land together, and keep
 its siblings moving in step. A Task left behind holds back everything it is bound to.
@@ -64,7 +65,7 @@ worth knowing on sight.
 
 **A Pull Request will not merge, and its gate is red.** It is an Epic member, waiting for its siblings. An
 Epic lands whole, so a member waits until every other Task in the Epic is ready too. Get the rest
-approved, and they merge together. There is nothing to fix on the PR itself.
+approved, and they merge together. There is nothing to fix on the Pull Request itself.
 
 **A Pull Request is frozen.** Part of an Epic reached master and part did not, so the board froze the rest
 to keep master whole. If the missing piece can still merge, approve it and let it in. If the landed pieces
@@ -83,8 +84,9 @@ hand from the Actions tab.
 While it is on, no Pull Request can merge, and the emergency hotfix path stays open on purpose. Turn it
 off and the next sweep repairs whatever piled up.
 
-**A version in production has a bug.** Patch it with a hotfix: you start the repository's hotfix with the
-release line and the fix, and it cuts a new patch straight off the shipped version, then opens a Pull
+**A version in production has a bug.** Patch it with a hotfix: you run the repository's hotfix workflow
+with the release line and the fix, and it cuts a new patch straight off the shipped version, then opens a
+Pull
 Request to carry the fix back to master. Merge that one. Until it lands, the next release off that line
 could bring the bug back.
 
@@ -94,7 +96,7 @@ You will rarely need this. But when the board does something you did not expect,
 works underneath.
 
 Every status is written by one actor, the board's bot, always from what happened to a Pull Request: a
-draft is in progress, an open one is in review, a merged one is awaiting release. Because it is read from
+draft is in progress, an open one is in review, a merged one is done and awaiting release. Because it is read from
 what happened and never typed in, the status cannot drift, and a manual edit will not stick. The same
 check runs the moment something happens and again on the fifteen-minute sweep, so a missed event never
 leaves the board wrong.
