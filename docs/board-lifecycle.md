@@ -101,15 +101,3 @@ net for a landing that goes half-way.
 
 Everything writes through that one bot, and everything checks the kill switch first. An unset switch means
 running. Any value at all engages it, so a mistyped value fails safe rather than open.
-
-## The design record
-
-The full design, stage by stage, lives in the Initiative and its Epics, kept linked so the reasoning
-stays findable after they archive:
-
-- [#46](https://github.com/a-novel-kit/.github/issues/46) — the Initiative.
-- Stages: [#49](https://github.com/a-novel-kit/.github/issues/49) ·
-  [#50](https://github.com/a-novel-kit/.github/issues/50) ·
-  [#51](https://github.com/a-novel-kit/.github/issues/51) ·
-  [#52](https://github.com/a-novel-kit/.github/issues/52) ·
-  [#53](https://github.com/a-novel-kit/.github/issues/53).
