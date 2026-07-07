@@ -1,14 +1,16 @@
 # The board lifecycle
 
-We plan before we build. A feature is an idea about what the product should do, in the product's own
-terms, and an idea cannot be coded directly. It has to be broken down first, into concrete pieces of
-work small enough to build and review. Turning a feature into buildable work is where everything here
-begins.
+This document is about how a feature is planned, built, and shipped, and how the board tracks it along
+the way.
 
+A feature is an idea about what the product should do, in the product's own terms. It cannot be coded
+directly. It has to be broken down first, into concrete pieces of work small enough to build and review.
 Those pieces are issues, and an issue is the bridge between a business idea and the code that delivers
-it. Each one is a slice of a feature, made concrete. Issues live on a shared board that shows what is
-planned, what is being built, and what is waiting to ship. You read the board to see where things stand.
-It keeps itself in step with the work, so you rarely write to it.
+it.
+
+Issues live on a shared board that shows what is planned, what is being built, and what is waiting to
+ship. You read the board to see where things stand. It keeps itself in step with the work, so you rarely
+write to it.
 
 A feature usually needs several issues, often across several repositories: a service, the library
 beneath it, the client in front of it. Each is a **Task**. An **Epic** groups the Tasks of one feature.
