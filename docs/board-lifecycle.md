@@ -1,222 +1,115 @@
 # The board lifecycle
 
-Every piece of work in `a-novel` and `a-novel-kit` is a GitHub issue on one shared **board**, and it
-moves through the same lifecycle from idea to shipped. Most of that movement is automated: you decide
-_what_ to build and _when_ to ship it, and the board keeps itself honest about _where each thing is_.
+Every piece of work in a-novel and a-novel-kit is a GitHub issue, and every issue lives on one shared
+board. The board shows what is planned, what is being built, and what is waiting to ship. You read it to
+see where things stand. You almost never write to it, because it keeps itself in step with the work.
 
-This is the map — the shape of the process first, then what you do, then how to react when something
-looks wrong. Both organizations run the identical process on their own board; this doc is shared and
-[`a-novel`](https://github.com/a-novel/.github/blob/master/CONTRIBUTING.md) links here.
+A feature starts as an idea, thought through in product terms before any code. Then someone plans it
+into the pieces that will build it. A large feature touches several repositories: a service, the library
+beneath it, the client in front of it. Each piece becomes a Task on the board. An **Epic** groups the
+Tasks of one feature. An **Initiative** groups Epics under a broader direction that plays out over time.
 
-## The big picture
+The Tasks of an Epic belong together. A service that needs a new library function cannot ship until both
+are in. So they land together, or not at all. Each is built on its own branch, the branches are linked,
+and they merge as one. The main branch never holds half a feature.
 
-Every change to the product starts as a **feature** — an idea, thought through in product terms before
-any code. A feature rarely lives in one place: it might touch a service, the library it depends on, and
-the client that calls it. So before it lands we **plan** it — break it into the pieces that will build
-it, and put those on the **board**, where the team sees the shape of the work and how far along it is.
+The main branch is staging. Everything in flight integrates there and proves it fits. It is not
+production. It moves fast and sometimes breaks, and that is what staging is for.
 
-The pieces form a hierarchy, broadest intent to smallest unit:
+Shipping comes later, on purpose. A release bundles the main branch into a published version. You cut it
+when the moment is right, which may be as soon as a feature lands or once several have gathered. Large
+work ships in steps: the dependency first, then the code that leans on it. The board is always in a
+state you can release.
 
-- An **Initiative** is a broad product goal — a direction, spanning many changes over time.
-- An **Epic** is one coherent change that lands as a whole, usually across several repositories.
-- A **Feature** or **Task** is a single piece of an Epic — usually one repository's share of it.
+That is the whole shape of it. What follows is your part in it, and what to do when something looks
+wrong. A last section explains how the board stays in step, for when you need to reason about it. The
+process is identical in both organizations, so this page lives here and a-novel links to it.
 
-The **Epic** is the unit that matters most, because of one principle: **its pieces land together or not
-at all.** A service that needs a new library function isn't shippable until both are in; a client built
-against a new API is broken until that API lands. So an Epic's pieces are built on separate **branches**,
-kept **linked**, and **merged as one** — the _atomicity principle_. It is what makes a cross-repo change
-safe: the main branch never sees half of one.
+## Your part
 
-Here is the whole flow, from idea to shipped:
+Work reaches the board before any code. Someone plans the feature into an Epic and its Tasks, one per
+repository, each with a size and a priority. Planning is its own craft; here it is enough that the work
+exists first, so the board always leads the code.
 
-```
-  thought       planned          built             landed            shipped
- a feature ──▶ Epic + Tasks ──▶ a branch per  ──▶ merged together ──▶ bundled into
-               on the board      repository        to master          a release
-```
-
-Two things about the ends of that flow are worth holding onto:
-
-- **The main branch is unstable staging, not production.** Merging an Epic integrates it with everything
-  else in flight — it is where changes prove they work _together_, not where they reach users. It moves
-  fast and may briefly break; that is what staging is for.
-- **Shipping is a separate, deliberate act.** A **release** bundles the main branch into a published,
-  versioned cut — cut when the time is right, which may be right after an Epic lands or once several have
-  piled up. Large work ships in **stages** (a dependency first, its consumers next) so the graph is
-  always releasable, never half-migrated.
-
-The **board mirrors this flow**: each piece carries a **Status** saying where it is, and a parent's
-Status is a live summary of its children's. You read the board to see what's coming, what's in flight,
-and what's waiting to ship — and you never update it by hand; it is kept in step with the work
-automatically.
-
-That is the model. Everything below is detail — what you do at each step, what to do when something
-looks off, and how the automation keeps the board honest — but the picture above is the whole of it.
-
-## Vocabulary
-
-| Term | Meaning |
-| --- | --- |
-| **Initiative / Epic / Feature / Task** | The work hierarchy, largest to smallest. Each is a GitHub issue. |
-| **Bug** | An unplanned fix; lives on the board like a Task. |
-| **`epic:<N>` label** | Marks a PR as a member of Epic _N_ — the binding that makes its landing atomic. |
-| **Status** | The board field tracking where an item is. The single-writer value, derived from reality. |
-| **merge-gate** | The required check that holds an Epic's PRs until the whole set is ready, then lets them land together. |
-| **the saga** | The set of automations that land a multi-repo Epic atomically and release it. |
-| **reconcile sweep** | A safety net that re-derives the whole board every ~15 minutes, catching anything a live event missed. |
-| **release train** | One dispatch that releases every repo an Epic touched. |
-| **kill-switch** | The org-wide brake that halts all board automation during an incident. |
-
-The Statuses, in order: `Backlog` (planned, not ready) · `Triage` (incoming, un-assessed) · `Tracking`
-(a parent watching its children) · `Ready` (pick-up-able) · `In progress` (a draft PR is open) ·
-`In review` (a PR is up for review) · `Done` (approved, about to merge) · `Awaiting release` (merged,
-not yet shipped) · `Applied` (a no-PR task that's simply done). Shipped items are **archived** (removed
-from the board) and their issues closed.
-
-## What you do — the human gates
-
-The process has a handful of points where a human decides. Everything else follows from them, so these
-are the parts to know well.
-
-### 1. Plan
-
-Work starts as an issue. A cross-repo change is an **Epic** with a **Task** per repo; a self-contained
-change is a single **Feature** or **Task**. Planning sets the item's Type, Priority, Size, and Status,
-and places it under its parent. (Planning itself is a separate practice; here it's enough to know that
-work exists on the board _before_ a PR does.)
-
-### 2. Link your PR to its issue — the one contract
-
-**A PR that implements a planning issue must close it, using the full cross-repo reference:**
+You pick up a Task and open a pull request. There is one thing you must do by hand: close the Task from
+the PR. The Task lives in the organization's `.github` repository, and your PR lives in a code
+repository. A plain `Closes #123` points at your own repository and links nothing. Write the full
+reference instead:
 
 ```
-Closes a-novel-kit/.github#123      (or a-novel/.github#123)
+Closes a-novel-kit/.github#123
 ```
 
-Planning issues live in the org `.github` repo, but your PR lives in a code repo — so a bare
-`Closes #123` points at _your_ repo and links **nothing**. The full reference is the entire contract:
-the automation moves the issue's Status by following that link. **No link, no movement** — the issue
-sits frozen while your PR sails past it. A Task filed in the _same_ repo as the PR keeps the bare form.
+That link is the whole connection between your work and the board. With it, opening the PR moves the
+Task to review, and merging moves it to awaiting release, on their own. Without it, the Task sits still
+while your PR sails past.
 
-Once linked, opening the PR moves the issue to `In review`; merging moves it to `Awaiting release`. You
-do nothing else.
+You review by approving. A standalone PR merges once approved. An Epic's members wait for each other. A
+member holds until every sibling across every repository is ready too, and then the whole set merges
+together. A held PR is not stuck. It is waiting for the rest of its feature.
 
-### 3. Review
+Releasing is deliberate, and only an admin does it. For one repository, you run its release and choose
+the size of the bump. For a whole Epic, you run the release train once. It ships every repository the
+Epic touched, records what it shipped, and is safe to re-run to finish any that did not go. Releasing is
+what clears the work: the shipped Tasks leave the board and their issues close.
 
-Approving a PR is a human gate. For a standalone PR, approval is the last step before it merges. For an
-Epic member (an `epic:<N>` PR), approval is necessary but not sufficient: **merge-gate holds it until
-every sibling across every repo is also ready**, then lets the whole set into the merge queue so they
-land together. A held member is normal — it's waiting for its Epic, not blocked by a fault.
+## When something looks wrong
 
-### 4. Release
+The board heals itself, so most surprises pass within a few minutes. A handful are worth recognizing.
 
-Releasing is a deliberate, admin-only dispatch. For a single repo, run its release workflow and pick
-the bump. For a whole Epic, run the **release train** once: it releases every repo the Epic touched, in
-any order (they're already mutually consistent), and records each release on the Epic. It's idempotent
-— re-running it only ships the repos that haven't shipped yet.
+**A PR shows a red gate.** It is an Epic member waiting for its siblings. Get the rest of the Epic
+approved, and the gate clears for the whole set at once. There is nothing to fix on the PR itself.
 
-Releasing is what archives the work: the shipped items leave the board and their issues close.
+**A PR is frozen.** Part of an Epic landed and part did not, so the automation froze what remains to keep
+the main branch whole. If the missing piece can still merge, approve it and let it in; that completes the
+feature. If the landed pieces must come out, an admin runs a rollback, which reverts them in order
+through the same gate. Reverting merged code is heavy, so it asks for a typed confirmation.
 
-### The exception levers
+**A ticket appears, labelled `escalation`.** The automation opened it because something needs a person: a
+hotfix that stalled, a check that never finished, an emergency path that failed. Fix the underlying
+thing, and the ticket closes itself once the condition clears. It is not planning work, so do not size or
+groom it.
 
-Three deliberate, human-triggered escape hatches, each covered below under **When something looks off**:
+**The board looks stale.** A sweep re-checks it every fifteen minutes and corrects any drift, so it
+usually rights itself. If you need it sooner, run the sweep by hand from the Actions tab.
 
-- **Hotfix** — patch an already-released line without waiting for the default branch.
-- **Rollback** — undo an Epic that landed badly.
-- **Kill-switch** — halt all board automation during an incident.
+**Everything has stopped.** The kill switch is on. It halts every board automation at once, for an
+incident. While it is on, the gate fails every PR so nothing slips through, and the emergency hotfix path
+stays open on purpose. Turn it off to resume, and the next sweep repairs whatever built up.
 
-## When something looks off — edge cases
+**A shipped version has a bug.** Patch it with a hotfix. You dispatch the repository's hotfix with the
+line to patch and the fix to apply, and it cuts a new patch straight off the released tag. It then opens
+a PR to carry the fix forward to the main branch. Merge that PR. Until it lands, the next release off
+that line could bring the bug back.
 
-The board is designed to self-heal, so most surprises resolve on the next sweep. These are the ones
-worth recognizing, and what to do.
+## Underneath
 
-### A PR is "held" (merge-gate is red)
+You rarely need this. When the board does something you did not expect, it is enough to reason about it.
 
-It's an Epic member waiting for its siblings — expected, not a fault. Get the rest of the Epic's PRs
-approved and ready; the gate greens for the whole set at once and they land together. Nothing to fix on
-the held PR itself.
+The board's Status has a single author. One bot writes it, always from what happened to a PR: a draft is
+in progress, an open PR is in review, a merged one is awaiting release. Because the Status is derived and
+never entered, it cannot drift, and a hand edit does not stick. The same logic runs live on each PR event
+and again on the fifteen-minute sweep, so a dropped event never leaves the board wrong.
 
-### A PR is "frozen" (epic-freeze fired)
+A parent follows its children. An Epic sits at the least-advanced status among its Tasks. It reaches
+review once they all have, awaiting release once they all merge, and it archives once they all close.
+Initiatives follow their Epics the same way, so a parent is always a true summary of what is under it.
 
-The automation detected a **partial landing** — some of an Epic's members merged, but others didn't —
-and froze the survivors so nothing else lands half-done. Two ways out:
+The gate that holds Epic members is a required check. It guards the one rule the whole system exists to
+protect: an Epic's members land together, or none of them do. The freeze and the rollback are its safety
+net for a landing that goes half-way.
 
-- **Roll forward** (preferred): the stray member can still merge — approve and re-enqueue it, completing
-  the Epic. There's a grace window before the freeze bites, so a normal queue hiccup fixes itself.
-- **Roll back**: the landed members must be undone. Trigger the admin **epic-rollback** — it reverts the
-  merged members newest-first, groups the reverts under a fresh rollback-Epic, and lands them through
-  the same gate. Reverting merged code is destructive, so it's admin-only and asks for a typed
-  confirmation.
-
-### An escalation ticket appears on the board
-
-The automation opens a ticket (labelled `escalation`) when it needs a human — a stuck hotfix, a stale
-required check, a failed emergency path. **Act on the underlying condition, don't size it as planning
-work.** When the condition clears, the ticket resolves itself; close it once handled. A pile of open
-escalation tickets is an ops signal, not a backlog.
-
-### A hotfix or lock looks stuck
-
-A watchdog watches the emergency paths. If a hotfix run hangs on its lock, or a required check never
-reaches a verdict, it escalates (see above) rather than letting the work rot silently. You'll hear
-about it through a ticket.
-
-### The board looks stale
-
-The **reconcile sweep** re-derives the whole board every ~15 minutes, so drift usually corrects itself
-within a cycle. If you need it now, the sweep is a workflow you can run on demand (Actions →
-`reconcile-board` → Run workflow). It's a safety net, never the primary path — the live events do the
-real work.
-
-### Everything is halted
-
-The **kill-switch** is on — an org variable that halts every board automation at once (the incident
-brake). While it's engaged, merge-gate posts a `failure` on every gated PR (so nothing sneaks through),
-rollups and archives pause, and the emergency hotfix path stays open (it's deliberately exempt). Clear
-the switch to resume; the next sweep repairs anything that accumulated.
-
-### A hotfix (patching a released line)
-
-A bug in a shipped version, fixable without dragging in whatever landed since, is a **hotfix**: dispatch
-the repo's hotfix workflow with the line and the fix, and it cuts a new patch off the released tag,
-then opens a PR to forward-port the fix to the default branch. It's a deliberate, admin-gated dispatch,
-and the one thing you must do is **merge that forward-port PR** — until it lands, a later release cut
-from that line could silently reintroduce the bug.
-
-## How the automation works — reference
-
-You rarely need this, but when the board does something unexpected, this is enough to reason about it.
-
-- **Single-writer status.** One actor (the [Agent] bot) writes every Status, derived purely from a PR's
-  state. Because it's a pure function of reality, the sweep can re-run it any time and get the same
-  answer — which is why the board is consistent and hand-edits are overwritten.
-- **derive-status** turns a PR event into its issue's Status: draft → `In progress`, open → `In review`,
-  approved → `Done`, merged → `Awaiting release`. It finds the issue through the PR's `Closes` link.
-- **rollup** computes each Epic's and Initiative's Status as the floor of its children, and archives a
-  parent once all its children are closed.
-- **merge-gate** is the required check that enforces the **Epic Atomicity Rule** — all of an Epic's
-  members land together or none do — by holding members until the set is ready, then greening them over
-  the merge queue so they commit together.
-- **epic-freeze / partial-landing detection** watches for an Epic that landed half-way and freezes the
-  survivors; **epic-rollback** is its compensating undo.
-- **the reconcile sweep** runs all of the above on a ~15-minute schedule as a level-triggered floor: it
-  re-derives statuses, re-rolls-up parents, re-posts the gate, archives shipped/closed work, and pages
-  a human for anything wedged. It exists so a single dropped webhook can never leave the board wrong.
-- **archive** removes shipped (`Awaiting release` on publish) and done (`Applied`, or any closed issue)
-  items from the board and closes their trackers — the board only ever shows live work.
-- **the release train** dispatches each touched repo's own release, recording a receipt per repo on the
-  Epic so a re-run resumes rather than double-ships.
-- **the kill-switch** is the fail-safe halt every writer checks first; unset means running, and any
-  non-empty value engages it, so a fat-fingered value fails _safe_.
+Everything writes through that one bot, and everything checks the kill switch first. An unset switch means
+running. Any value at all engages it, so a mistyped value fails safe rather than open.
 
 ## The design record
 
-The full design and rationale, stage by stage, lives in the Initiative and its Epics — kept linked so
-the "why" stays retrievable after they archive:
+The full design, stage by stage, lives in the Initiative and its Epics, kept linked so the reasoning
+stays findable after they archive:
 
-- Initiative [#46](https://github.com/a-novel-kit/.github/issues/46) — board & issue lifecycle automation.
-- Stage Epics: [#49](https://github.com/a-novel-kit/.github/issues/49) statuses/fields/labels ·
-  [#50](https://github.com/a-novel-kit/.github/issues/50) rulesets + [Agent] permissions ·
-  [#51](https://github.com/a-novel-kit/.github/issues/51) rollup + single-writer status + merge-gate ·
-  [#52](https://github.com/a-novel-kit/.github/issues/52) coordinator + saga + release ·
-  [#53](https://github.com/a-novel-kit/.github/issues/53) hotfix + exception handlers.
+- [#46](https://github.com/a-novel-kit/.github/issues/46) — the Initiative.
+- Stages: [#49](https://github.com/a-novel-kit/.github/issues/49) ·
+  [#50](https://github.com/a-novel-kit/.github/issues/50) ·
+  [#51](https://github.com/a-novel-kit/.github/issues/51) ·
+  [#52](https://github.com/a-novel-kit/.github/issues/52) ·
+  [#53](https://github.com/a-novel-kit/.github/issues/53).
