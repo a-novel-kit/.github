@@ -1,13 +1,18 @@
 # The board lifecycle
 
-Every piece of work in a-novel and a-novel-kit is a GitHub issue, and every issue lives on one shared
-board. The board shows what is planned, what is being built, and what is waiting to ship. You read it to
-see where things stand. You almost never write to it, because it keeps itself in step with the work.
+We plan before we build. A feature is an idea about what the product should do, in the product's own
+terms, and an idea cannot be coded directly. It has to be broken down first, into concrete pieces of
+work small enough to build and review. Turning a feature into buildable work is where everything here
+begins.
 
-A feature starts as an idea, thought through in product terms before any code. Then someone plans it
-into the pieces that will build it. A large feature touches several repositories: a service, the library
-beneath it, the client in front of it. Each piece becomes a Task on the board. An **Epic** groups the
-Tasks of one feature. An **Initiative** groups Epics under a broader direction that plays out over time.
+Those pieces are issues, and an issue is the bridge between a business idea and the code that delivers
+it. Each one is a slice of a feature, made concrete. Issues live on a shared board that shows what is
+planned, what is being built, and what is waiting to ship. You read the board to see where things stand.
+It keeps itself in step with the work, so you rarely write to it.
+
+A feature usually needs several issues, often across several repositories: a service, the library
+beneath it, the client in front of it. Each is a **Task**. An **Epic** groups the Tasks of one feature.
+An **Initiative** groups Epics under a broader direction that plays out over time.
 
 The Tasks of an Epic belong together. A service that needs a new library function cannot ship until both
 are in. So they land together, or not at all. Each is built on its own branch, the branches are linked,
