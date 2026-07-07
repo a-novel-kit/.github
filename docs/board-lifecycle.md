@@ -7,19 +7,19 @@ As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features an
 The board takes on the bookkeeping, so you can focus on the two things that really matter: the
 intention and the shipment. It tracks everything in between for you.
 
-It starts with **the intention**: the specification behind your idea, and before any code you open a draft issue
-to hold it. You refine the scope, look up the resources you need, and track your progress there. That
-specification is the first place the work waits for a human. It is where you settle what to build, and
-everything after it rests on it, so do it with care. Once it holds, the idea becomes a real Task,
-Epic, Initiative, or Milestone, sized to the work. They are one idea at different scales, so let's follow
-the smallest, the one that turns straight into code: the Task.
+It starts with **the intention**: the specification behind your idea. Before coding anything, the first step is
+to translate this specification into an issue (the GitHub layer that will later interface with concrete code). 
+You refine the scope, look up the resources you need, and track your progress there. That
+specification is human-gated: it's the initial input the whole process will be based on. Taking time validating and
+refining it is what makes the whole process smooth and well-scoped. Once it holds, the GitHub issue becomes a Task,
+Epic, Initiative, or Milestone depending on its size, Task being the smallest unit.
 
 Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
 copy of the code. As you pick it up and work, the Task moves from Ready to In progress. You usually
 don't touch the board yourself: an agent runs the Pull Request, and the status follows it on its own. The
 agent only stands in for a person, though, so you can take the work by hand, drive the Pull Request
-yourself, and the board tracks it the same way. When it is ready, you ask for review, and the work waits
-for a human a second time: In Review.
+yourself, and the board tracks it the same way. When it is ready, your task moves to the second human-gated stage:
+the review process.
 
 Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
 the last stop of the development cycle. Once your code is approved, on its own or as a whole Epic, the Task moves as
@@ -31,12 +31,11 @@ only ever holds whole features.
 
 The last stop is **the shipment**. A merged Task waits in Awaiting Release until someone decides it is
 time. That call is deliberate, and a maintainer makes it. A release takes what is on master and
-publishes it to production as a versioned build, cut the moment it is right: as soon as a feature lands,
-or once a few have gathered. One repository ships with one release; a whole Epic ships with one release
-train across every repository it touched. Big changes go out
-[in steps](taxonomy.md#versioning-and-releases), the dependency before the code that leans on it, so what
-reaches production always fits together. And the Task is finished: it leaves the board, and its issue
-closes.
+publishes it to production as a versioned build, cut the moment it is right. The release process is separate,
+managed by admins using automated publish workflows (a single release for a repo, or a release train for cross-repo
+deployments). Big changes go out [in steps](taxonomy.md#versioning-and-releases), the dependency before the code that 
+leans on it, so what reaches production always fits together. And the Task is finished: it leaves the board, and its 
+issue closes.
 
 On the board, that same path is a row of states:
 
