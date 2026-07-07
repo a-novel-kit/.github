@@ -47,12 +47,23 @@ On the board, that same path is a row of states:
 
 ### What deserves your attention
 
-The board automates almost the whole path. The one thing it cannot do is judge, and three stages are
-pure judgment: the spec, the review, the release. A vague spec ships the wrong thing, however clean the
-code. A rushed review lets a bug through. A careless release goes out at the wrong time. The board
-catches none of this; only a person can. Your part is the spec; a maintainer holds the review and the
-release. At whichever stage is yours, judgment is the whole job, so give it there and trust the board
-with the rest.
+Execution is the part you can delegate. The board handles it, and an agent can even write the code.
+Comprehension and judgment are the part you cannot, and three stages are made of nothing else: the spec,
+the review, the release.
+
+The **spec** sets the target. Build from a vague one and you build the wrong thing, however clean the
+code, so a sharp spec is the whole foundation.
+
+The **review** is where you understand what was built. It is not a rubber stamp. You read the code to
+grasp it, because a rushed review lets bugs through and lets weak structure settle in, and every later
+change builds on what you let stand.
+
+The **release** picks the moment. Ship at the wrong time and even good work lands badly.
+
+The board catches none of this, and neither does an agent; only a person who understands the work can.
+You can hand off the typing, never the understanding. Your part is the spec; a maintainer holds the
+review and the release. At whichever stage is yours, comprehension and judgment are the whole job, so
+spend them there and trust the board with the rest.
 
 One rule sits above all of it: an Epic lands whole. Plan its pieces so they can land together, and keep
 its siblings moving in step. A Task left behind holds back everything it is bound to.
