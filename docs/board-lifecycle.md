@@ -10,31 +10,48 @@ looks wrong. Both organizations run the identical process on their own board; th
 
 ## The big picture
 
-Work is a **hierarchy**. An **Initiative** is a large goal, split into **Epics**; an **Epic** is a
-cross-repo change, split into **Features** and **Tasks**; a **Bug** is an unplanned fix. Each is a
-GitHub issue, and each carries a **Status** on the board.
+Every change to the product starts as a **feature** — an idea, thought through in product terms before
+any code. A feature rarely lives in one place: it might touch a service, the library it depends on, and
+the client that calls it. So before it lands we **plan** it — break it into the pieces that will build
+it, and put those on the **board**, where the team sees the shape of the work and how far along it is.
 
-The Status moves left to right, and shipped work leaves the board:
+The pieces form a hierarchy, broadest intent to smallest unit:
+
+- An **Initiative** is a broad product goal — a direction, spanning many changes over time.
+- An **Epic** is one coherent change that lands as a whole, usually across several repositories.
+- A **Feature** or **Task** is a single piece of an Epic — usually one repository's share of it.
+
+The **Epic** is the unit that matters most, because of one principle: **its pieces land together or not
+at all.** A service that needs a new library function isn't shippable until both are in; a client built
+against a new API is broken until that API lands. So an Epic's pieces are built on separate **branches**,
+kept **linked**, and **merged as one** — the _atomicity principle_. It is what makes a cross-repo change
+safe: the main branch never sees half of one.
+
+Here is the whole flow, from idea to shipped:
 
 ```
-Backlog ──▶ Ready ──▶ In progress ──▶ In review ──▶ Awaiting release ──▶ archived
-  plan      pick up     open a PR      request review    merge              release
+  thought       planned          built             landed            shipped
+ a feature ──▶ Epic + Tasks ──▶ a branch per  ──▶ merged together ──▶ bundled into
+               on the board      repository        to master          a release
 ```
 
-The single idea that makes the board trustworthy: **its Status has one writer — the automation — and
-it is _derived_ from what actually happened** (a PR opened, merged, released). You never set a Status
-by hand; it can't drift, and hand-edits don't stick. So:
+Two things about the ends of that flow are worth holding onto:
 
-- **You** drive the two ends — you _plan_ an item to `Ready`, and you _decide to release_.
-- **The automation** drives the middle and the exit — your PR opening, being approved, merging, and
-  shipping each move the Status on their own, and shipped work is archived off the board.
+- **The main branch is unstable staging, not production.** Merging an Epic integrates it with everything
+  else in flight — it is where changes prove they work _together_, not where they reach users. It moves
+  fast and may briefly break; that is what staging is for.
+- **Shipping is a separate, deliberate act.** A **release** bundles the main branch into a published,
+  versioned cut — cut when the time is right, which may be right after an Epic lands or once several have
+  piled up. Large work ships in **stages** (a dependency first, its consumers next) so the graph is
+  always releasable, never half-migrated.
 
-An Epic's Status is the **floor of its children**: it reaches `In review` when _all_ its Tasks are in
-review or beyond, `Awaiting release` when they've all merged, and archives when they've all shipped.
-The same rolls up from Epics to Initiatives. So a parent is a live summary of its children, for free.
+The **board mirrors this flow**: each piece carries a **Status** saying where it is, and a parent's
+Status is a live summary of its children's. You read the board to see what's coming, what's in flight,
+and what's waiting to ship — and you never update it by hand; it is kept in step with the work
+automatically.
 
-That is the whole process. The rest of this document is detail you only need when you're doing a
-specific step, or when something surprises you.
+That is the model. Everything below is detail — what you do at each step, what to do when something
+looks off, and how the automation keeps the board honest — but the picture above is the whole of it.
 
 ## Vocabulary
 
