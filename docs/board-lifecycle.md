@@ -224,10 +224,10 @@ reaching review once they all have and awaiting release once they all merge, and
 close. Initiatives follow their Epics the same way, so a parent is always an honest summary of what is
 under it.
 
-One rule stands above the rest, and two required checks guard it: an Epic lands whole, or not at all. The
-merge-gate holds a member until its whole set is ready; a second check freezes the survivors if a landing
-goes half-way. Neither ever reverts a merge — the board's answer to trouble is to stop, hold, and hand it
-to a person, never to rewrite history on its own.
+One rule stands above the rest, and a required check guards it: an Epic lands whole, or not at all. The
+merge-gate holds a member until its whole set is ready, and a freeze stops the survivors if a landing goes
+half-way. Neither ever reverts a merge — the board's answer to trouble is to stop, hold, and hand it to a
+person, never to rewrite history on its own.
 
 When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, an Epic that
 cannot complete: each raises an escalation ticket on the board and, for the worst of them, a direct page. A
