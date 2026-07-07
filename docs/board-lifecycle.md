@@ -15,9 +15,11 @@ Epic, Initiative, or Milestone, sized to the work. They are one idea at differen
 the smallest, the one that turns straight into code: the Task.
 
 Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
-copy of the code. As you pick it up and work, the board follows on its own and moves the Task from Ready
-to In progress. You never set its status; you write code. When it is ready, you ask for review, and the
-work waits for a human a second time: In Review.
+copy of the code. As you pick it up and work, the Task moves from Ready to In progress. You usually
+don't touch the board yourself: an agent runs the Pull Request, and the status follows it on its own. The
+agent only stands in for a person, though, so you can take the work by hand, drive the Pull Request
+yourself, and the board tracks it the same way. When it is ready, you ask for review, and the work waits
+for a human a second time: In Review.
 
 Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
 the last stop of the development cycle. Once your code is approved, on its own or as a whole Epic, the Task moves as
