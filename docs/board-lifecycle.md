@@ -1,110 +1,91 @@
-# The board lifecycle
+## Board lifecycle and feature planning
 
-This document is about how a feature is planned, built, and shipped, and how the board tracks it along
-the way.
+This documentation will take you through our entire planning process, from a business feature to the
+concrete implementation, all the way to shipping to production.
 
-A feature is an idea about what the product should do, in the product's own terms. It cannot be coded
-directly. It has to be broken down first, into concrete pieces of work small enough to build and review.
-Those pieces are issues, and an issue is the bridge between a business idea and the code that delivers
-it.
+As a contributor to `a-novel` and `a-novel-kit`, your goal is to build on our foundations and expand the
+application: greater features, better processes, and so on. The board is there to give you automation, so
+you can focus on what really matters: the intention, and the shipment (more on that later).
 
-Issues live on a shared board that shows what is planned, what is being built, and what is waiting to
-ship. You read the board to see where things stand. It keeps itself in step with the work, so you rarely
-write to it.
+**The intention** usually begins as a draft issue (the first layer), where you refine the scope of your
+work, look up external resources, and track your progress. That description is the first human gate of
+the process: it is where you cement your specifications. This crucial step leads to a real Task, Epic,
+Initiative, or even Milestone, depending on its size. They all scale the same concept, so let's focus on
+the smallest, most down-to-earth one, the one that translates directly into an implementation: the Task.
 
-A feature usually needs several issues, often across several repositories: a service, the library
-beneath it, the client in front of it. Each is a **Task**. An **Epic** groups the Tasks of one feature.
-An **Initiative** groups Epics under a broader direction that plays out over time.
+**The code** is where a Task turns your business idea into a concrete implementation. A Task is (almost)
+always linked to a Pull Request, where your raw code actually lives. A Pull Request is a branch, a local
+copy of the code you can iterate on. Once you open a Pull Request on a Task, it reaches the second human
+gate: In Review.
 
-The Tasks of an Epic belong together. A service that needs a new library function cannot ship until both
-are in. So they land together, or not at all. Each is built on its own branch, the branches are linked,
-and they merge as one. The main branch never holds half a feature.
+In review, it falls to a maintainer (a technical role) to read the code and call out what needs fixing
+or improving. This is the last gate of the development cycle. Once a Task is approved, or a whole set of
+Tasks under an Epic is, it becomes mergeable and lands on master, where the release process takes over.
+That process is separate from the strict development cycle.
 
-The main branch is staging. Everything in flight integrates there and proves it fits. It is not
-production. It moves fast and sometimes breaks, and that is what staging is for.
+Master is where all the accepted work gathers, and it is a staging ground, not production. Every merged
+Task lands there and integrates with everything else in flight. This is why an Epic's Tasks merge as one:
+master should only ever hold whole features, never half of one.
 
-Shipping comes later, on purpose. A release bundles the main branch into a published version. You cut it
-when the moment is right, which may be as soon as a feature lands or once several have gathered. Large
-work ships in steps: the dependency first, then the code that leans on it. The board is always in a
-state you can release.
+**The shipment** is the other end that is yours. Shipping is deliberate, and it is a maintainer's call. A
+release takes the current state of master and publishes it, as a versioned build that reaches
+production. You cut one when the moment is right, sometimes as soon as a feature lands, sometimes once a
+few have gathered. One repository ships with a single release; a cross-repo Epic ships with a single
+release train that covers every repository it touched. Large changes go out in steps, the dependency
+first and the code that uses it next, so production always holds a set that fits together. Once a Task
+ships, it is done: it leaves the board, and its issue closes.
 
-That is the whole shape of it. What follows is your part in it, and what to do when something looks
-wrong. A last section explains how the board stays in step, for when you need to reason about it. The
-process is identical in both organizations, so this page lives here and a-novel links to it.
+That is the whole path, from an idea to production. The two ends are yours, the intention you cement at
+the start and the shipment you decide at the end, and the board keeps everything in between in step for
+you.
 
-## Your part
+### When the board needs you
 
-Work reaches the board before any code. Someone plans the feature into an Epic and its Tasks, one per
-repository, each with a size and a priority. Planning is its own craft; here it is enough that the work
-exists first, so the board always leads the code.
+Most days you never think about the board; it moves your work along as you go. Now and then, though, it
+needs a person. These are the cases worth knowing.
 
-You pick up a Task and open a pull request. There is one thing you must do by hand: close the Task from
-the PR. The Task lives in the organization's `.github` repository, and your PR lives in a code
-repository. A plain `Closes #123` points at your own repository and links nothing. Write the full
-reference instead:
+**A Pull Request will not merge, and its gate is red.** It is an Epic member, waiting for its siblings.
+An Epic lands whole, so a member holds until every other Task in the Epic is ready too. Get the rest of
+the Epic approved, and they merge together. There is nothing to fix on the PR itself.
 
-```
-Closes a-novel-kit/.github#123
-```
+**A Pull Request is frozen.** Part of an Epic reached master and part did not, so the board froze what
+remains to keep master whole. If the missing piece can still merge, approve it and let it in. If the
+landed pieces have to come back out, a maintainer runs a rollback, which reverts them in order through
+the same review and gate. Reverting shipped code is serious, so it asks for a typed confirmation.
 
-That link is the whole connection between your work and the board. With it, opening the PR moves the
-Task to review, and merging moves it to awaiting release, on their own. Without it, the Task sits still
-while your PR sails past.
+**A ticket appears on the board, tagged `escalation`.** The board opened it because something is stuck
+and needs you: a hotfix that stalled, a check that never finished. Fix the underlying thing, and the
+ticket closes itself. It is a signal, not work to plan, so do not size or groom it.
 
-You review by approving. A standalone PR merges once approved. An Epic's members wait for each other. A
-member holds until every sibling across every repository is ready too, and then the whole set merges
-together. A held PR is not stuck. It is waiting for the rest of its feature.
+**The board looks out of date.** A sweep re-checks everything every fifteen minutes and corrects any
+drift, so it usually catches up on its own. If you need it sooner, you can run the sweep by hand from the
+Actions tab.
 
-Releasing is deliberate, and only an admin does it. For one repository, you run its release and choose
-the size of the bump. For a whole Epic, you run the release train once. It ships every repository the
-Epic touched, records what it shipped, and is safe to re-run to finish any that did not go. Releasing is
-what clears the work: the shipped Tasks leave the board and their issues close.
+**Everything has stopped.** The kill switch is on. It halts every bit of board automation at once, for an
+incident. While it is on, no Pull Request can merge, and the emergency hotfix path stays open on purpose.
+Turn it off, and the next sweep repairs whatever piled up.
 
-## When something looks wrong
-
-The board heals itself, so most surprises pass within a few minutes. A handful are worth recognizing.
-
-**A PR shows a red gate.** It is an Epic member waiting for its siblings. Get the rest of the Epic
-approved, and the gate clears for the whole set at once. There is nothing to fix on the PR itself.
-
-**A PR is frozen.** Part of an Epic landed and part did not, so the automation froze what remains to keep
-the main branch whole. If the missing piece can still merge, approve it and let it in; that completes the
-feature. If the landed pieces must come out, an admin runs a rollback, which reverts them in order
-through the same gate. Reverting merged code is heavy, so it asks for a typed confirmation.
-
-**A ticket appears, labelled `escalation`.** The automation opened it because something needs a person: a
-hotfix that stalled, a check that never finished, an emergency path that failed. Fix the underlying
-thing, and the ticket closes itself once the condition clears. It is not planning work, so do not size or
-groom it.
-
-**The board looks stale.** A sweep re-checks it every fifteen minutes and corrects any drift, so it
-usually rights itself. If you need it sooner, run the sweep by hand from the Actions tab.
-
-**Everything has stopped.** The kill switch is on. It halts every board automation at once, for an
-incident. While it is on, the gate fails every PR so nothing slips through, and the emergency hotfix path
-stays open on purpose. Turn it off to resume, and the next sweep repairs whatever built up.
-
-**A shipped version has a bug.** Patch it with a hotfix. You dispatch the repository's hotfix with the
-line to patch and the fix to apply, and it cuts a new patch straight off the released tag. It then opens
-a PR to carry the fix forward to the main branch. Merge that PR. Until it lands, the next release off
+**A version already in production has a bug.** Patch it with a hotfix. You dispatch the repository's
+hotfix with the release line and the fix, and it cuts a new patch straight off the shipped version, then
+opens a Pull Request to carry the fix back to master. Merge that one. Until it lands, the next release off
 that line could bring the bug back.
 
-## Underneath
+### How the board keeps itself in step
 
-You rarely need this. When the board does something you did not expect, it is enough to reason about it.
+You rarely need this, but when the board does something you did not expect, it helps to know how it works
+underneath.
 
-The board's Status has a single author. One bot writes it, always from what happened to a PR: a draft is
-in progress, an open PR is in review, a merged one is awaiting release. Because the Status is derived and
-never entered, it cannot drift, and a hand edit does not stick. The same logic runs live on each PR event
-and again on the fifteen-minute sweep, so a dropped event never leaves the board wrong.
+Every status is written by one actor, the board's bot, and always from what actually happened to a Pull
+Request: a draft is in progress, an open one is in review, a merged one is awaiting release. Because the
+status is read from reality and never typed in, it cannot drift, and a manual edit will not stick. The
+same reasoning runs the moment something happens, and again on the fifteen-minute sweep, so a missed
+event never leaves the board wrong.
 
-A parent follows its children. An Epic sits at the least-advanced status among its Tasks. It reaches
-review once they all have, awaiting release once they all merge, and it archives once they all close.
-Initiatives follow their Epics the same way, so a parent is always a true summary of what is under it.
+A parent tracks its children. An Epic sits at the least-advanced status among its Tasks, so it enters
+review once they all have, awaiting release once they all merge, and it leaves the board once they all
+close. An Initiative follows its Epics the same way. A parent is always an honest summary of what is
+under it.
 
-The gate that holds Epic members is a required check. It guards the one rule the whole system exists to
-protect: an Epic's members land together, or none of them do. The freeze and the rollback are its safety
-net for a landing that goes half-way.
-
-Everything writes through that one bot, and everything checks the kill switch first. An unset switch means
-running. Any value at all engages it, so a mistyped value fails safe rather than open.
+The gate that holds an Epic's members guards the single rule the whole board protects: an Epic lands
+whole, or not at all. The freeze and the rollback are its safety net for a landing that only went
+half-way.
