@@ -4,23 +4,23 @@ This documentation walks you through our planning process, from a business featu
 shipped release.
 
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
-The board takes on the bookkeeping, so your attention can stay on the two things that really matter: the
+The board takes on the bookkeeping, so you can focus on the two things that really matter: the
 intention and the shipment. It tracks everything in between for you.
 
-It starts with **the intention**. A feature begins as an idea, and before any code you open a draft issue
-to hold it: you refine the scope, look up the resources you need, and track your progress there. That
-description is the first place the work waits for a human. It is where you settle what to build, and
+It starts with **the intention**: the specification behind your idea, and before any code you open a draft issue
+to hold it. You refine the scope, look up the resources you need, and track your progress there. That
+specification is the first place the work waits for a human. It is where you settle what to build, and
 everything after it rests on it, so do it with care. Once it holds, the idea becomes a real Task,
 Epic, Initiative, or Milestone, sized to the work. They are one idea at different scales, so let's follow
 the smallest, the one that turns straight into code: the Task.
 
 Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
 copy of the code. As you pick it up and work, the board follows on its own and moves the Task from Ready
-to In progress. You never set its status; you just write code. When it is ready, you ask for review, and the
+to In progress. You never set its status; you write code. When it is ready, you ask for review, and the
 work waits for a human a second time: In Review.
 
 Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
-the last stop of the development cycle. Once they approve it, on its own or as a whole Epic, the Task is
+the last stop of the development cycle. Once your code is approved, on its own or as a whole Epic, the Task moves as
 Done and merges to master.
 
 Master is staging, not production. Every merged Task gathers there and settles in with everything else
