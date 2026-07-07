@@ -1,43 +1,50 @@
 ## Board lifecycle and feature planning
 
-This documentation will take you through our entire planning process, from a business feature to the
-concrete implementation, all the way to shipping to production.
+This documentation walks you through our planning process, from a business feature to concrete code to a
+shipped release.
 
-As a contributor to `a-novel` and `a-novel-kit`, your goal is to build on our foundations and expand the
-application: greater features, better processes, and so on. The board is there to give you automation, so
-you can focus on what really matters: the intention, and the shipment (more on that later).
+As a contributor to `a-novel` and `a-novel-kit`, your job is to grow the application: new features,
+better processes. The board, one per organization
+([a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1),
+[a-novel](https://github.com/orgs/a-novel/projects/7)), hands you the automation for the rest, so you can
+focus on the two things that matter, the intention and the shipment.
 
-**The intention** usually begins as a draft issue (the first layer), where you refine the scope of your
-work, look up external resources, and track your progress. That description is the first human gate of
-the process: it is where you cement your specifications. This crucial step leads to a real Task, Epic,
-Initiative, or even Milestone, depending on its size. They all scale the same concept, so let's focus on
-the smallest, most down-to-earth one, the one that translates directly into an implementation: the Task.
+**The intention** starts as a draft issue, the first layer, where you refine the scope, gather external
+resources, and track your progress. Its description is the first human gate: this is where you cement
+your specifications. From it comes a real Task, Epic, Initiative, or Milestone, sized to the work. They
+all scale the same idea, so let's take the smallest, the one that maps straight to code: the Task.
 
-**The code** is where a Task turns your business idea into a concrete implementation. A Task is (almost)
-always linked to a Pull Request, where your raw code actually lives. A Pull Request is a branch, a local
-copy of the code you can iterate on. Once you open a Pull Request on a Task, it reaches the second human
+**The code** is a Task made concrete. A Task is (almost) always tied to a Pull Request, the branch where
+your raw code lives and where you iterate. Open that Pull Request and the Task reaches the second human
 gate: In Review.
 
-In review, it falls to a maintainer (a technical role) to read the code and call out what needs fixing
-or improving. This is the last gate of the development cycle. Once a Task is approved, or a whole set of
-Tasks under an Epic is, it becomes mergeable and lands on master, where the release process takes over.
-That process is separate from the strict development cycle.
+There a maintainer reads the code and calls out what to fix or improve, the last gate of the development
+cycle. Once approved, alone or as a full Epic, the work merges to master, where the release process takes
+over.
 
-Master is where all the accepted work gathers, and it is a staging ground, not production. Every merged
-Task lands there and integrates with everything else in flight. This is why an Epic's Tasks merge as one:
-master should only ever hold whole features, never half of one.
+Master is staging, not production. Every merged Task gathers there and integrates with the rest in
+flight. That is why an Epic's Tasks merge as one: master holds whole features, never halves.
 
-**The shipment** is the other end that is yours. Shipping is deliberate, and it is a maintainer's call. A
-release takes the current state of master and publishes it, as a versioned build that reaches
-production. You cut one when the moment is right, sometimes as soon as a feature lands, sometimes once a
-few have gathered. One repository ships with a single release; a cross-repo Epic ships with a single
-release train that covers every repository it touched. Large changes go out in steps, the dependency
-first and the code that uses it next, so production always holds a set that fits together. Once a Task
-ships, it is done: it leaves the board, and its issue closes.
+**The shipment** is the other end that is yours, a maintainer's deliberate call. A release publishes the
+current master as a versioned build in production, cut when the moment is right: as soon as a feature
+lands, or once a few have gathered. One repository ships with one release; a cross-repo Epic ships with
+one release train across every repository it touched. Big changes go out
+[in steps](taxonomy.md#versioning-and-releases), the dependency before the code that uses it, so
+production always holds a set that fits. Once a Task ships it is done: off the board, its issue closed.
 
-That is the whole path, from an idea to production. The two ends are yours, the intention you cement at
-the start and the shipment you decide at the end, and the board keeps everything in between in step for
-you.
+```
+  ◆ = a human gate
+
+  the intention   ◆ you write the spec           →  Ready
+  the code          you build it on a branch     →  In progress
+                  ◆ you open the PR for review    →  In review
+                  ◆ a maintainer approves it      →  Awaiting release
+  the shipment    ◆ a maintainer cuts a release   →  shipped (off the board)
+```
+
+That is the whole path. The two ends are yours, the intention at the start and the shipment at the end;
+the board keeps the middle in step, and [tells you](#when-the-board-needs-you) on the rare day it needs a
+hand.
 
 ### When the board needs you
 
@@ -57,9 +64,9 @@ the same review and gate. Reverting shipped code is serious, so it asks for a ty
 and needs you: a hotfix that stalled, a check that never finished. Fix the underlying thing, and the
 ticket closes itself. It is a signal, not work to plan, so do not size or groom it.
 
-**The board looks out of date.** A sweep re-checks everything every fifteen minutes and corrects any
-drift, so it usually catches up on its own. If you need it sooner, you can run the sweep by hand from the
-Actions tab.
+**The board looks out of date.** A [sweep](#how-the-board-keeps-itself-in-step) re-checks everything
+every fifteen minutes and corrects any drift, so it usually catches up on its own. If you need it sooner,
+you can run the sweep by hand from the Actions tab.
 
 **Everything has stopped.** The kill switch is on. It halts every bit of board automation at once, for an
 incident. While it is on, no Pull Request can merge, and the emergency hotfix path stays open on purpose.
@@ -87,5 +94,5 @@ close. An Initiative follows its Epics the same way. A parent is always an hones
 under it.
 
 The gate that holds an Epic's members guards the single rule the whole board protects: an Epic lands
-whole, or not at all. The freeze and the rollback are its safety net for a landing that only went
-half-way.
+whole, or not at all. The [freeze and the rollback](#when-the-board-needs-you) are its safety net for a
+landing that only went half-way.
