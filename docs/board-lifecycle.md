@@ -4,44 +4,31 @@ This documentation walks you through our planning process, from a business featu
 shipped release.
 
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
-Each organization keeps its own board, [a-novel's](https://github.com/orgs/a-novel/projects/7) and
-[a-novel-kit's](https://github.com/orgs/a-novel-kit/projects/1), and it takes on the bookkeeping, so you
-can focus on the two things that really matter: the intention and the shipment. It tracks everything in
-between for you.
+Work is tracked in each organization's board ([a-novel's](https://github.com/orgs/a-novel/projects/7) and 
+[a-novel-kit's](https://github.com/orgs/a-novel-kit/projects/1)). Those boards, combined with agentic skills, take on 
+the bookkeeping, so you can focus on the two things that really matter: the intention and the shipment. They track
+everything in between for you.
 
-It starts with **the intention**: the specification behind your idea. Before coding anything, the first
+It starts with **the intention**: the non-technical specification behind your idea. Before coding anything, the first
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
 specification is human-gated: it's the initial input the whole process will be based on. Taking time
 validating and refining it is what makes the whole process smooth and well-scoped. Once it holds, the
-GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its size, Task being the smallest
-unit.
+GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its size.
 
-Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
-copy of the code. As you pick it up from your My items view
-([a-novel](https://github.com/orgs/a-novel/projects/7/views/5),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/4)) and work, the Task moves from Ready
-to In progress. You usually don't
-touch the board yourself: an agent runs the Pull Request, and the status follows it on its own. The agent
-only stands in for a person, though, so you can take the work by hand, drive the Pull Request yourself,
-and the board tracks it the same way. When it is ready, your task moves to the second human-gated stage:
-the review process.
+Once your specification is ready comes the implementation phase. Most of the time, this translates to opening a Pull
+Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters 
+the implementation cycle and moves "In Progress". This step can be picked up by an agent, or yourself. During this 
+phase, Pull Requests should remain in draft status. Once the development is completed, the Task moves to the second
+human-gated step: the review process.
 
-Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
-the last stop of the development cycle. Once your code is approved, on its own or as a whole Epic, the
-Task moves to Done and merges to master.
+"In Review" status is automatically assigned once you mark a Pull Request as ready. It will request a code maintainer
+to review your code, ask for changes, and in the end approve it. This is the final development step. Once done, your
+Pull Request merges to master and enters the "Awaiting Release" status.
 
-Master is staging, not production. Every merged Task gathers there and settles in with everything else
-that has landed. Nothing half-built reaches it: an Epic's Tasks merge together or not at all, so master
-only ever holds whole features.
-
-The last stop is **the shipment**. A merged Task waits in Awaiting Release
-([a-novel](https://github.com/orgs/a-novel/projects/7/views/9),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/6)) until someone decides it is time.
-That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes it to
-production, and big changes go out [in steps](taxonomy.md#versioning-and-releases), the dependency before
-the code that leans on it, so what reaches production always fits together. And the Task is finished: it
-leaves the board, and its issue closes.
+This status is for the release team: merged features are pending on an unstable copy of the production, called staging,
+which deploys a canary release for extended testing. Once this canary branch is deemed stable and ready, the release
+team will publish it, and the merged features finally reach production.
 
 On the board, that same path is a row of states:
 
@@ -145,7 +132,7 @@ nothing still needs it. Between them, any landing order is safe.
 
 The board holds an Epic together with a required check, the **merge-gate**. A Pull Request joins an Epic by
 carrying an `epic:<N>` label that only a maintainer can add, so membership is trusted rather than guessed
-from a `Closes` line. The gate holds every member until all are approved, then greens them at once and
+from a `Closes` line. The gate holds every member until all are approved, then greens them at once, and
 lets the merge queue land them together.
 
 When a member lands and its siblings do not, the board sees the **partial landing** and
