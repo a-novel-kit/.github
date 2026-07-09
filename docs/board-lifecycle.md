@@ -13,13 +13,13 @@ It starts with **the intention**: the non-technical specification behind your id
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
 specification is human-gated: it's the initial input the whole process will be based on. Taking time
-validating and refining it is what makes the whole process smooth and well-scoped, and
-[planning a task](#planning-a-task) walks through it. Once it holds, the
+validating and refining it is what makes the [whole planning process](#planning-a-task) smooth and
+well-scoped. Once it holds, the
 GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its size.
 
 Once your specification is ready comes the implementation phase. Most of the time, this translates to opening a Pull
 Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters 
-the implementation cycle and moves "In Progress". This step can be picked up by an agent, or by you, following [the development cycle](#the-development-cycle). During this 
+[the implementation cycle](#the-development-cycle) and moves "In Progress". This step can be picked up by an agent, or yourself. During this 
 phase, Pull Requests should remain in draft status. Once the development is completed, the Task moves to the second
 human-gated step: the review process.
 
@@ -105,10 +105,8 @@ An Epic lives in the organization's `.github` repository and adopts its Tasks as
 repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
 in the _other_ organization cannot be a child that way, so it is tracked as a plain link instead.
 
-A parent's status is a summary of its children; the Epics view
-([a-novel](https://github.com/orgs/a-novel/projects/7/views/8),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/5)) lays each Epic over its Tasks. An
-Epic sits at the least-advanced status among its Tasks:
+A parent's status is a summary of its children. An Epic sits at the least-advanced status among its
+Tasks:
 it reaches review only once every Task has, and awaiting release only once every Task has merged. When the
 last child closes, the parent archives itself, and the same holds from Epics up to their Initiative.
 
@@ -221,9 +219,9 @@ which survivors still form the feature. And if the landed pieces have to come ba
 rollback, which reverts them in order through the same review and gate. Reverting shipped code is serious,
 so it asks for a typed confirmation.
 
-**A ticket appears, tagged `escalation`.** You will find it in the Triage view
-([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)). The board opened it because
+**A ticket appears in the Triage view ([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)), tagged `escalation`.** The board
+opened it because
 something is stuck and needs a person: a hotfix that stalled, a check that never finished, an Epic that
 cannot complete. Fix the underlying thing and the ticket closes itself. It is a signal, not work to
 plan, so do not size or groom it. A pile of open escalation tickets is itself the alarm.
