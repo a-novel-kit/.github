@@ -29,7 +29,7 @@ the review process.
 
 Now it is a maintainer's turn. They read the code, ask for changes, and in the end approve it. That is
 the last stop of the development cycle. Once your code is approved, on its own or as a whole Epic, the
-Task moves as Done and merges to master.
+Task moves to Done and merges to master.
 
 Master is staging, not production. Every merged Task gathers there and settles in with everything else
 that has landed. Nothing half-built reaches it: an Epic's Tasks merge together or not at all, so master
@@ -37,7 +37,8 @@ only ever holds whole features.
 
 The last stop is **the shipment**. A merged Task waits in Awaiting Release
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/9),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/6)) until someone decides it is time. That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/6)) until someone decides it is time.
+That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes
 it to production as a versioned build, cut the moment it is right. The release process is separate,
 managed by admins using automated publish workflows (a single release for a repo, or a release train for
 cross-repo deployments). Big changes go out [in steps](taxonomy.md#versioning-and-releases), the
@@ -128,7 +129,7 @@ A feature often spans repositories. A service needs a new function from a librar
 field from a schema. Merge the service before the library and the service no longer builds. Preventing
 that broken state is the whole point of the rule.
 
-The obvious fix, merging every piece at the same instant, is not one GitHub offers: it merges one Pull
+The obvious fix would be to merge every piece at the same instant, but GitHub cannot: it merges one Pull
 Request at a time, one repository at a time, with no atomic merge across repositories. So "lands whole"
 cannot mean "at the same instant." It means something you can actually guarantee: **whatever order the
 Tasks land in, and however many land before the rest, every repository still builds.**
@@ -136,7 +137,7 @@ Tasks land in, and however many land before the rest, every repository still bui
 You earn that by keeping every step backward-compatible, which is why a breaking change across
 repositories is never one Epic. It is two. An **expand** Epic adds the new path beside the old and ships
 it, so both work at once. Then a **contract** Epic removes the old path, once the expand release is out and
-nothing depends on the old path surviving. Between them, any landing order is safe.
+nothing still needs it. Between them, any landing order is safe.
 
 The board holds an Epic together with a required check, the **merge-gate**. A Pull Request joins an Epic by
 carrying an `epic:<N>` label that only a maintainer can add, so membership is trusted rather than guessed
@@ -161,10 +162,9 @@ protected gate, and there is no local release command on purpose.
 One repository ships with one release. A cross-repo Epic ships with a **release train**: a single dispatch
 that runs each repository's own release, in any order, and is safe to re-run to finish any that did not go.
 
-Two words are worth keeping apart. Inside one Epic, the Tasks are a **convoy** — they land together, in any
-order, because each builds on its own. Across Epics, where one depends on another, they form a **release
-train** — the dependency ships first, and the code that needs it catches the next departure once it can
-point at the published version.
+Inside one Epic, the Tasks are a **convoy**: they land together, in any order, because each builds on its
+own, and one release train ships them all. Across a dependency, releases go in **stages** instead: the
+dependency ships first, and the code that needs it follows once it can point at the published version.
 
 That order is a hard rule. A dependency is **published**, not merely merged, before anything downstream
 rolls out, and you never merge a consumer that still points at an unreleased dependency.
@@ -184,7 +184,7 @@ and the gate greens them together. There is nothing to fix on the Pull Request i
 
 **A Pull Request is frozen.** Part of an Epic reached master and part did not, so the board froze the rest
 to keep master whole. If the missing piece can still merge, approve it and let it in. If a sibling was
-abandoned instead, so the set can never be complete, the board holds and waits for you rather than guessing
+abandoned instead, the set can never be whole, so the board holds and waits for you rather than guessing
 which survivors still form the feature. And if the landed pieces have to come back out, a maintainer runs a
 rollback, which reverts them in order through the same review and gate. Reverting shipped code is serious,
 so it asks for a typed confirmation.
@@ -192,9 +192,9 @@ so it asks for a typed confirmation.
 **A ticket appears, tagged `escalation`.** You will find it in the Triage view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)). The board opened it because
-something is stuck and needs a person: a hotfix that stalled, a check that never finished, an Epic that cannot complete. Fix the
-underlying thing and the ticket closes itself. It is a signal, not work to plan, so do not size or groom
-it. A pile of open escalation tickets is itself the alarm.
+something is stuck and needs a person: a hotfix that stalled, a check that never finished, an Epic that
+cannot complete. Fix the underlying thing and the ticket closes itself. It is a signal, not work to
+plan, so do not size or groom it. A pile of open escalation tickets is itself the alarm.
 
 **The board looks out of date.** A [sweep](#how-the-board-keeps-itself-in-step) re-checks everything every
 fifteen minutes and fixes any drift, so it usually rights itself. If you need it sooner, run the sweep by
@@ -217,8 +217,8 @@ line could bring the bug back. A cross-repo bug is not a special case; it is an 
 ### How the board keeps itself in step
 
 You will rarely need this. But when the board does something you did not expect, it helps to know how it
-works underneath. The whole system is built from GitHub's own parts — required checks, the merge queue,
-scheduled jobs — driven by a single actor, the board's bot.
+works underneath. The whole system is built from GitHub's own parts (required checks, the merge queue,
+scheduled jobs) and driven by a single actor, the board's bot.
 
 Every status is written by that one bot, always from what happened to a Pull Request: a draft is in
 progress, an open one is in review, an approved one is done, a merged one is awaiting release. Because the
@@ -239,8 +239,8 @@ under it.
 
 One rule stands above the rest, and a required check guards it: an Epic lands whole, or not at all. The
 merge-gate holds a member until its whole set is ready, and a freeze stops the survivors if a landing goes
-half-way. Neither ever reverts a merge — the board's answer to trouble is to stop, hold, and hand it to a
-person, never to rewrite history on its own.
+half-way. Neither ever reverts a merge. The board's answer to trouble is to stop, hold, and hand it to a person,
+never to rewrite history on its own.
 
 When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, an Epic that
 cannot complete: each raises an escalation ticket on the board and, for the worst of them, a direct page. A
