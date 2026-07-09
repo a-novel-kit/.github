@@ -38,12 +38,10 @@ only ever holds whole features.
 The last stop is **the shipment**. A merged Task waits in Awaiting Release
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/9),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/6)) until someone decides it is time.
-That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes
-it to production as a versioned build, cut the moment it is right. The release process is separate,
-managed by admins using automated publish workflows (a single release for a repo, or a release train for
-cross-repo deployments). Big changes go out [in steps](taxonomy.md#versioning-and-releases), the
-dependency before the code that leans on it, so what reaches production always fits together. And the Task
-is finished: it leaves the board, and its issue closes.
+That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes it to
+production, and big changes go out [in steps](taxonomy.md#versioning-and-releases), the dependency before
+the code that leans on it, so what reaches production always fits together. And the Task is finished: it
+leaves the board, and its issue closes.
 
 On the board, that same path is a row of states:
 
@@ -87,10 +85,12 @@ write up to the effort that spans a year.
 A **Task** is one branch of work, about one Pull Request. It is the leaf you actually build, and it closes
 when its Pull Request merges. A **Feature** groups a few Tasks that make up one capability inside a single
 repository. An **Epic** groups the Tasks of one feature across every repository the feature touches, and
-it is the unit that ships: roughly one Epic, one release. An **Initiative** stands above Epics, the
-umbrella for a broad effort that runs across many releases; it does no work of its own, sitting in
-**Tracking** until its Epics are done. Cutting across all of these, a **Milestone** names one shared goal,
-so the Roadmap view ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
+it is the unit that ships: roughly one Epic, one release.
+
+Above the work sit two organizing types. An **Initiative** is the umbrella for a broad effort that runs
+across many releases; it does no work of its own, sitting in **Tracking** until its Epics are done. And a
+**Milestone** cuts across all of these to name one shared goal, so the Roadmap view
+([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) can gather everything aimed at the
 same outcome.
 
@@ -107,11 +107,15 @@ stages, not two Tasks side by side. A breaking change across repositories is nev
 next section explains why). And a whole effort spanning several releases is an Initiative with one Epic per
 release, not a single Epic carrying them all.
 
-Where an issue lives is what links it to your code. A Task lives in the repository it changes, so its Pull
-Request references it directly. Its Epic lives in the organization's `.github` repository and adopts the
-Task as a child across repositories, which is how a feature spanning five repositories still rolls up to
-one place. A dependency in the _other_ organization cannot be a child that way, so it is tracked as a plain
-link instead.
+Where an issue lives is what links it to your code. A `Closes` line in your Pull Request ties the two
+together: `Closes #123` when the issue sits in the same repository, or the full
+`Closes a-novel-kit/.github#123` when it lives in another one, like a planning issue in `.github`. A bare
+`#123` aimed at another repository links nothing, so the board never advances. That link is what the whole
+lifecycle keys off, so it is worth getting right.
+
+An Epic lives in the organization's `.github` repository and adopts its Tasks as children across
+repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
+in the _other_ organization cannot be a child that way, so it is tracked as a plain link instead.
 
 A parent's status is a summary of its children; the Epics view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/8),
