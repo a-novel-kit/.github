@@ -13,12 +13,13 @@ It starts with **the intention**: the non-technical specification behind your id
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
 specification is human-gated: it's the initial input the whole process will be based on. Taking time
-validating and refining it is what makes the whole process smooth and well-scoped. Once it holds, the
+validating and refining it is what makes the whole process smooth and well-scoped, and
+[planning a task](#planning-a-task) walks through it. Once it holds, the
 GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its size.
 
 Once your specification is ready comes the implementation phase. Most of the time, this translates to opening a Pull
 Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters 
-the implementation cycle and moves "In Progress". This step can be picked up by an agent, or yourself. During this 
+the implementation cycle and moves "In Progress". This step can be picked up by an agent, or by you, following [the development cycle](#the-development-cycle). During this 
 phase, Pull Requests should remain in draft status. Once the development is completed, the Task moves to the second
 human-gated step: the review process.
 
@@ -110,6 +111,46 @@ A parent's status is a summary of its children; the Epics view
 Epic sits at the least-advanced status among its Tasks:
 it reaches review only once every Task has, and awaiting release only once every Task has merged. When the
 last child closes, the parent archives itself, and the same holds from Epics up to their Initiative.
+
+### Planning a task
+
+This is the first human gate, and it comes before any code. What it produces is a specification good
+enough to build from without guessing.
+
+**Write it in product terms, not code.** Say what the feature does and why, the scope it covers and the
+scope it leaves out, and the resources it leans on. Leave the how to whoever implements it; a spec that
+dictates code ages badly and boxes them in.
+
+**Size it and rank it.** Give the issue a Size, for how much work it is, and a Priority, for how soon it
+matters, so the board can order what comes next. A Task too large to size is really an Epic, so split it.
+
+**Then get it accepted.** A groomed specification waits in Triage until someone accepts it into Ready and
+opens it for work. That acceptance is the gate: everything downstream rests on what you settled here, so
+spend the time now rather than in review.
+
+### The development cycle
+
+This one is for when you write the code yourself; an agent that picks up a Task already works this way. It
+is the general shape only, the same in every repository, and each repository's own `CONTRIBUTING.md` fills
+in the language, the stack, and the tools. In outline: learn the local rules, build in small tested steps,
+and open the result for review once it holds together.
+
+**Read the local guidelines first.** Every repository carries its own conventions, and they outrank any
+general habit. Read them before writing a line, so your code lands in the shape the reviewers expect.
+
+**Break the work into small steps.** A large change is easier to write, and far easier to review, when you
+build it as a sequence of small pieces that each stand on their own, rather than one sprawling diff.
+
+**Test as you go, not at the end.** Write the tests alongside the code and keep them passing as you work.
+Untested code is not finished code, and a test written afterward tends to check what the code does rather
+than what it should.
+
+**Keep the Pull Request in draft while you work.** A draft holds the Task at In progress and asks no one to
+look yet. Once the code is written, tested, and passing, mark the Pull Request ready: that is what moves
+the Task to In Review and calls in a maintainer.
+
+**Green CI is the price of review.** Every push runs the checks; clear what they flag before you ask for
+eyes. A reviewer reads working code, not a broken pipeline.
 
 ### Why an Epic lands whole
 
