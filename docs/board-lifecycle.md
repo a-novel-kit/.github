@@ -4,8 +4,10 @@ This documentation walks you through our planning process, from a business featu
 shipped release.
 
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
-The board takes on the bookkeeping, so you can focus on the two things that really matter: the intention
-and the shipment. It tracks everything in between for you.
+Each organization keeps its own board, [a-novel's](https://github.com/orgs/a-novel/projects/7) and
+[a-novel-kit's](https://github.com/orgs/a-novel-kit/projects/1), and it takes on the bookkeeping, so you
+can focus on the two things that really matter: the intention and the shipment. It tracks everything in
+between for you.
 
 It starts with **the intention**: the specification behind your idea. Before coding anything, the first
 step is to translate this specification into an issue (the GitHub layer that will later interface with
@@ -16,7 +18,10 @@ GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its siz
 unit.
 
 Then comes **the code**. A Task is (almost) always tied to a Pull Request, a branch that holds a working
-copy of the code. As you pick it up and work, the Task moves from Ready to In progress. You usually don't
+copy of the code. As you pick it up from your My items view
+([a-novel](https://github.com/orgs/a-novel/projects/7/views/5),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/4)) and work, the Task moves from Ready
+to In progress. You usually don't
 touch the board yourself: an agent runs the Pull Request, and the status follows it on its own. The agent
 only stands in for a person, though, so you can take the work by hand, drive the Pull Request yourself,
 and the board tracks it the same way. When it is ready, your task moves to the second human-gated stage:
@@ -30,8 +35,9 @@ Master is staging, not production. Every merged Task gathers there and settles i
 that has landed. Nothing half-built reaches it: an Epic's Tasks merge together or not at all, so master
 only ever holds whole features.
 
-The last stop is **the shipment**. A merged Task waits in Awaiting Release until someone decides it is
-time. That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes
+The last stop is **the shipment**. A merged Task waits in Awaiting Release
+([a-novel](https://github.com/orgs/a-novel/projects/7/views/9),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/6)) until someone decides it is time. That call is deliberate, and a maintainer makes it. A release takes what is on master and publishes
 it to production as a versioned build, cut the moment it is right. The release process is separate,
 managed by admins using automated publish workflows (a single release for a repo, or a release train for
 cross-repo deployments). Big changes go out [in steps](taxonomy.md#versioning-and-releases), the
@@ -83,7 +89,9 @@ repository. An **Epic** groups the Tasks of one feature across every repository 
 it is the unit that ships: roughly one Epic, one release. An **Initiative** stands above Epics, the
 umbrella for a broad effort that runs across many releases; it does no work of its own, sitting in
 **Tracking** until its Epics are done. Cutting across all of these, a **Milestone** names one shared goal,
-so a roadmap can gather everything aimed at the same outcome.
+so the Roadmap view ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) can gather everything aimed at the
+same outcome.
 
 An Epic is named for the goal it delivers, never for the version it will become. The version is its
 target, not its name.
@@ -104,7 +112,10 @@ Task as a child across repositories, which is how a feature spanning five reposi
 one place. A dependency in the _other_ organization cannot be a child that way, so it is tracked as a plain
 link instead.
 
-A parent's status is a summary of its children. An Epic sits at the least-advanced status among its Tasks:
+A parent's status is a summary of its children; the Epics view
+([a-novel](https://github.com/orgs/a-novel/projects/7/views/8),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/5)) lays each Epic over its Tasks. An
+Epic sits at the least-advanced status among its Tasks:
 it reaches review only once every Task has, and awaiting release only once every Task has merged. When the
 last child closes, the parent archives itself, and the same holds from Epics up to their Initiative.
 
@@ -178,8 +189,10 @@ which survivors still form the feature. And if the landed pieces have to come ba
 rollback, which reverts them in order through the same review and gate. Reverting shipped code is serious,
 so it asks for a typed confirmation.
 
-**A ticket appears, tagged `escalation`.** The board opened it because something is stuck and needs a
-person: a hotfix that stalled, a check that never finished, an Epic that cannot complete. Fix the
+**A ticket appears, tagged `escalation`.** You will find it in the Triage view
+([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)). The board opened it because
+something is stuck and needs a person: a hotfix that stalled, a check that never finished, an Epic that cannot complete. Fix the
 underlying thing and the ticket closes itself. It is a signal, not work to plan, so do not size or groom
 it. A pile of open escalation tickets is itself the alarm.
 
