@@ -13,7 +13,7 @@ It starts with **the intention**: the non-technical specification behind your id
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
 specification is human-gated: it's the initial input the whole process will be based on. Taking the time to
-validate and refine it is what makes the [whole planning process](#planning-a-task) smooth and
+validate and refine it is what makes the [whole planning process](#planning-an-issue) smooth and
 well-scoped. Once it holds, the
 GitHub issue becomes a Task, Epic, or Initiative, depending on its size.
 
@@ -75,7 +75,7 @@ A **feature** is the intention itself, the idea you set out to deliver; on the b
 
 A feature enters as a single issue, and its size sets the top: small enough, that top is one Task; larger,
 an Epic or an Initiative. You build downward from there, one level at a time. Each issue carries its own
-intention, validated at its own [gate](#planning-a-task) before the level beneath it is written, so an
+intention, validated at its own [gate](#planning-an-issue) before the level beneath it is written, so an
 Initiative is settled before its Epics, and an Epic before its Tasks. Every piece has a parent from the
 start, and an **Initiative** does no work of its own, sitting in a dedicated **Tracking** status until its
 Epics are done.
@@ -131,17 +131,19 @@ The fitting title at each level, and a common way to miss it:
 | **Task**       | the single change    | Per-org reconcile sweep                   | Various fixes   |
 | **Bug**        | the broken behavior  | Merge-gate skips queued Pull Requests     | Queue is broken |
 
-### Planning a task
+### Planning an issue
 
-This is the first human gate, and it comes before any code. What it produces is a specification good
-enough to build from without guessing.
+This is the first human gate, and every issue clears it before anything follows from it: the code of a
+Task, the child issues of an Epic or Initiative. What it produces is a specification good enough to build
+from, or to break down, without guessing.
 
 **Write it in product terms, not code.** Say what the feature does and why, the scope it covers and the
 scope it leaves out, and the resources it leans on. Leave the how to whoever implements it; a spec that
 dictates code ages badly and boxes them in.
 
 **Size it and rank it.** Give the issue a Size, for how much work it is, and a Priority, for how soon it
-matters, so the board can order what comes next. A Task too large to size is really an Epic, so split it.
+matters, so the board can order what comes next. If the Size outgrows a single branch, the issue is an Epic or an
+Initiative, not a Task: split it, and plan each child in turn.
 
 **Then get it accepted.** A groomed specification waits in Triage until someone accepts it into Ready and
 opens it for work. That acceptance is the gate: everything downstream rests on what you settled here, so
