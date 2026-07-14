@@ -100,11 +100,13 @@ a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs t
 
 #### Working with issues
 
-Choosing between the types comes down to one rule: **work that cannot merge at the same time belongs to
-different Epics.** One Task is one branch; two pieces that touch the same repository are one Task or two
-stages, not two Tasks side by side. A breaking change across repositories is never one Epic either (the
-next section explains why). And a whole effort spanning several releases is an Initiative whose Epics ship in
-sequence, not a single Epic carrying them all.
+Choosing between the types comes down to one rule: **two Tasks share an Epic only if they can land
+concurrently**, merged to master and shipped together without downtime. One Task is one branch and one Pull
+Request, so two pieces of work are always two Tasks, in the same repository or not. If they can land at
+once, one Epic holds them. If one must ship before the other can, they need separate Epics; a breaking
+change across repositories is the usual case, and [Why an Epic lands whole](#why-an-epic-lands-whole)
+explains why. A whole effort spanning several releases is then an Initiative whose Epics ship in sequence,
+not a single Epic carrying them all.
 
 Where an issue lives is what links it to your code. A `Closes` line in your Pull Request ties the two
 together: `Closes #123` when the issue sits in the same repository, or the full
@@ -227,11 +229,10 @@ One repository ships with one release. A cross-repo Epic ships with a **release 
 that runs each repository's own release, in any order, and is safe to re-run to finish any that did not go.
 
 Inside one Epic, the Tasks are a **convoy**: they land together, in any order, because each builds on its
-own, and one release train ships them all. Across a dependency, releases go in **stages** instead: the
-dependency ships first, and the code that needs it follows once it can point at the published version.
+own, and one release train ships them all.
 
-That order is a hard rule. A dependency is **published**, not merely merged, before anything downstream
-rolls out, and you never merge a consumer that still points at an unreleased dependency.
+Across a dependency, that freedom ends: the dependency is **published**, not merely merged, before anything
+downstream rolls out, and you never merge a consumer that still points at an unreleased dependency.
 
 A published version is permanent; a tag can never be taken back. So recovery is almost always to roll
 forward with a new release that supersedes the bad one, never to rewrite what shipped.
