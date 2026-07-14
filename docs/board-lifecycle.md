@@ -213,9 +213,9 @@ An Epic lands whole, but it is not a release. A single release may carry several
 it bundles turns on more than the board. Order is fixed in only one place: inside an Initiative or
 Milestone, whose Epics are planned into numbered **Stages**. A Stage's Epics land together, and the next
 Stage waits for the earlier to ship, so its Epics can build on a published version. It is the Epic rule one
-level up: Epics that can land concurrently share a Stage, and one that must wait falls to a later Stage,
-its number set once and never shifted. Unrelated Epics share no Stage, so a release may ship several at
-once.
+level up: Epics that can land concurrently share a Stage, and one that must wait falls to a later Stage.
+Unrelated Epics share no Stage, so a release may ship several at once. For now the numbers are set by hand,
+once and for good, and no automation yet reads them.
 
 ### Shipping
 
