@@ -15,7 +15,7 @@ concrete code). You refine the scope, look up the resources you need, and track 
 specification is human-gated: it's the initial input the whole process will be based on. Taking time
 validating and refining it is what makes the [whole planning process](#planning-a-task) smooth and
 well-scoped. Once it holds, the
-GitHub issue becomes a Task, Epic, Initiative, or Milestone depending on its size.
+GitHub issue becomes a Task, Epic, or Initiative, depending on its size.
 
 Once your specification is ready comes the implementation phase. Most of the time, this translates to opening a Pull
 Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters
