@@ -73,8 +73,7 @@ single branch you write up to large-scale efforts that can need coordination or 
 
 You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
 the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
-work of its own, sitting in a dedicated **Tracking** status until its Epics are done. An **Epic** is named for the goal it
-delivers, never for the version it will become; the version is its target, not its name.
+work of its own, sitting in a dedicated **Tracking** status until its Epics are done.
 
 A **Milestone** is not one of these. It is a separate GitHub feature, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
@@ -106,6 +105,27 @@ A parent's status is a summary of its children. An Epic sits at the least-advanc
 Tasks:
 it reaches review only once every Task has, and awaiting release only once every Task has merged. When the
 last child closes, the parent archives itself, and the same holds from Epics up to their Initiative.
+
+### Naming an issue
+
+A title says what the issue **delivers**, and the type decides how broad that is. The larger the type, the
+broader the outcome it names: an Initiative names a whole area of work, a Task a single change. A title
+never names how the work is built or which version ships it; the mechanism and the version are attributes
+it carries, not what it is.
+
+That range is the whole trick, because one feature reads differently at each level: the notifications work
+is a broad "Discord notifications for GitHub activity" at the Epic that delivers it, but a narrow "Resolve
+a user id to a Discord id" at one of its Tasks. Each title names its own scope, no wider and no narrower.
+
+The fitting title at each level, and a common way to miss it:
+
+| Type           | Title names              | Do                                        | Don't                 |
+| -------------- | ------------------------ | ----------------------------------------- | --------------------- |
+| **Initiative** | the area of effort       | Build & CI performance                    | Q3 tech-debt          |
+| **Epic**       | the goal it delivers     | Discord notifications for GitHub activity | v2.3.0                |
+| **Feature**    | the capability, one repo | Hotfix workflow                           | Rewrite `release.yml` |
+| **Task**       | the single change        | Per-org reconcile sweep                   | Various fixes         |
+| **Bug**        | the broken behavior      | Merge-gate skips queued Pull Requests     | Queue is broken       |
 
 ### Planning a task
 
