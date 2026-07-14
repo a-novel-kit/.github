@@ -72,9 +72,10 @@ single branch you write up to large-scale efforts that can need coordination or 
 | Type           | What it is                                                                         |
 | -------------- | ---------------------------------------------------------------------------------- |
 | **Task**       | One branch of work, about one Pull Request; the leaf you build.                    |
-| **Feature**    | A few Tasks making one capability, inside a single repository.                     |
 | **Epic**       | One feature's Tasks across every repository it touches; the unit that lands whole. |
 | **Initiative** | An umbrella over several Epics, for an effort spanning many releases.              |
+
+A feature is delivered as an Epic; there is no tier of its own between Task and Epic.
 
 You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
 the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
