@@ -120,9 +120,11 @@ which names the organization, the repository, then the number. A plain `#123` ai
 matches nothing: the link never forms, and the issue sits still on the board. The whole lifecycle turns on
 this link, so it is worth getting right.
 
-An Epic lives in the organization's `.github` repository and adopts its Tasks as children across
-repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
-in the _other_ organization cannot be a child that way, so it is tracked as a plain link instead.
+Only Tasks live in the repositories they touch, next to the code; every issue above them, Epics and
+Initiatives alike, lives in the organization's `.github` repository. An Epic there adopts its Tasks as
+children across those repositories, which is how a feature spanning five repositories still rolls up to one
+place. A dependency in the _other_ organization cannot be a child that way, so it is tracked as a plain
+link instead.
 
 ### Naming an issue
 
@@ -131,18 +133,20 @@ broader the outcome it names: an Initiative names a whole area of work, a Task a
 never names how the work is built or which version ships it; the mechanism and the version are attributes
 it carries, not what it is.
 
-That range is the whole trick, because one feature reads differently at each level: the notifications work
-is a broad "Discord notifications for GitHub activity" at the Epic that delivers it, but a narrow "Resolve
-a user id to a Discord id" at one of its Tasks. Each title names its own scope, no wider and no narrower.
+Take one feature, the notifications work, and watch its title tighten as the type narrows:
 
-The fitting title at each level, and a common way to miss it:
-
-| Type           | Title names          | Do                                        | Don't           |
-| -------------- | -------------------- | ----------------------------------------- | --------------- |
-| **Initiative** | the area of effort   | Build & CI performance                    | Q3 tech-debt    |
-| **Epic**       | the goal it delivers | Discord notifications for GitHub activity | v2.3.0          |
-| **Task**       | the single change    | Per-org reconcile sweep                   | Various fixes   |
-| **Bug**        | the broken behavior  | Merge-gate skips queued Pull Requests     | Queue is broken |
+- An **Initiative** names the area of effort: **Contributor notifications**.
+  - Not _Q3 notifications_: a calendar box the effort outlasts.
+  - Not _Discord notifications for GitHub activity_: too narrow, that is one Epic inside the area.
+- An **Epic** names the goal it delivers: **Discord notifications for GitHub activity**.
+  - Not _v2.3.0_: the version it ships in, not the goal it reaches.
+  - Not _Notifications_: too broad, that is the whole Initiative.
+- A **Task** names the single change: **Resolve a GitHub user id to a Discord id**.
+  - Not _Various notification fixes_: vague and plural, where a Task is one branch.
+  - Not _Edit `notify.ts`_: the file it touches, not the change it makes.
+- A **Bug** names the broken behavior: **Discord pings fire twice on a re-run**.
+  - Not _Notifications broken_: names neither what breaks nor how.
+  - Not _Bug in `notify.ts`_: a guess at where it lives, not what the reader sees.
 
 ### Planning an issue
 
@@ -151,8 +155,9 @@ Task, the child issues of an Epic or Initiative. What it produces is a specifica
 from, or to break down, without guessing.
 
 **Write it in product terms, not code.** Say what the feature does and why, the scope it covers and the
-scope it leaves out, and the resources it leans on. Leave the how to whoever implements it; a spec that
-dictates code ages badly and boxes them in.
+scope it leaves out, and the resources it leans on. Leave the how to whoever implements it: a spec that
+pins down the code goes stale as the real work drifts from it, and it leaves the implementer no room to
+find a better way.
 
 **Size it and rank it.** Give the issue a Size, for how much work it is, and a Priority, for how soon it
 matters, so the board can order what comes next. If the Size outgrows a single branch, the issue is an Epic or an
@@ -196,10 +201,12 @@ A feature often spans repositories. A service needs a new function from a librar
 field from a schema. Merge the service before the library and the service no longer builds. Preventing
 that broken state is the whole point of the rule.
 
-The obvious fix would be to merge every piece at the same instant, but GitHub cannot: it merges one Pull
-Request at a time, one repository at a time, with no atomic merge across repositories. So "lands whole"
-cannot mean "at the same instant." It means something you can actually guarantee: **whatever order the
-Tasks land in, and however many land before the rest, every repository still builds.**
+You cannot merge every piece at the same instant, and even that would not be enough. A repository sees
+another's work only once it is **published**, not merely merged: the service can only use a released
+version of the library, so the library's new function must ship before the service can call it. Releases
+go out one at a time, so cross-repo work comes together in sequence, not all at once. "Lands whole"
+therefore cannot mean "all at once"; it means the guarantee you can keep throughout: **whatever has landed
+and shipped so far, every repository still builds.**
 
 You earn that by keeping every step backward-compatible, which is why a breaking change across
 repositories is never one Epic. It is two. An **expand** Epic adds the new path beside the old and ships
