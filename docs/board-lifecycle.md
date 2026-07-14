@@ -116,10 +116,6 @@ An Epic lives in the organization's `.github` repository and adopts its Tasks as
 repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
 in the _other_ organization cannot be a child that way, so it is tracked as a plain link instead.
 
-A parent's status is a summary of its children. An Epic sits at the least-advanced status among its
-Tasks:
-it reaches review only once every Task has, and awaiting release only once every Task has merged. The same holds from Epics up to their Initiative.
-
 ### Naming an issue
 
 A title says what the issue **delivers**, and the type decides how broad that is. The larger the type, the
