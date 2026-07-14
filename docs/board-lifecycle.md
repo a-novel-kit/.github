@@ -83,8 +83,7 @@ below, holding each child to their direction so it serves the broader goal and s
 
 An **Initiative** is too large to build directly, so no Pull Request ever links to it. Planned like any
 issue, it skips the implementation statuses and sits in a dedicated **Tracking** status while its Epics are
-worked, then follows them to the end: **Awaiting release** once all its Epics have merged, and archived
-once they have all shipped.
+worked, reaching **Awaiting release** once all its Epics have merged.
 
 A **Milestone** is not one of these. It is a separate GitHub construct, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
@@ -97,7 +96,7 @@ or the board cannot gather their issues under it.
 
 Some work writes no code at all: creating a repository, changing a setting, granting a permission. That is
 a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs through the Backlog → Triage → Ready →
-**Applied** statuses before it archives itself. Keep meta tasks in their own Epic, never mixed with code Tasks.
+**Applied** statuses. Keep meta tasks in their own Epic, never mixed with code Tasks.
 
 #### Working with issues
 
@@ -119,8 +118,7 @@ in the _other_ organization cannot be a child that way, so it is tracked as a pl
 
 A parent's status is a summary of its children. An Epic sits at the least-advanced status among its
 Tasks:
-it reaches review only once every Task has, and awaiting release only once every Task has merged. When the
-last child closes, the parent archives itself, and the same holds from Epics up to their Initiative.
+it reaches review only once every Task has, and awaiting release only once every Task has merged. The same holds from Epics up to their Initiative.
 
 ### Naming an issue
 
@@ -314,9 +312,11 @@ truth. A dropped event, a missed webhook, a stray hand edit: the next sweep quie
 why the board can be trusted even though nothing guards it in the moment.
 
 A parent's status rolls up from its children. An Epic sits at the least-advanced status among its Tasks,
-reaching review once they all have and awaiting release once they all merge, and it archives when they all
-close. Initiatives follow their Epics the same way, so a parent is always an honest summary of what is
-under it.
+reaching review once they all have and awaiting release once they all merge. Initiatives follow their
+Epics the same way, so a parent is always an honest summary of what is under it.
+
+Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a parent
+once all its children have, a meta task once it reaches **Applied**. The board shows only live work.
 
 One rule stands above the rest, and a required check guards it: an Epic lands whole, or not at all. The
 merge-gate holds a member until its whole set is ready, and a freeze stops the survivors if a landing goes
