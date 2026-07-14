@@ -76,14 +76,15 @@ A **feature** is the intention itself, the idea you set out to deliver; on the b
 A feature enters as a single issue, and its size sets the top: small enough, that top is one Task; larger,
 an Epic or an Initiative. You build downward from there, one level at a time. Each issue carries its own
 intention, validated at its own [gate](#planning-an-issue) before the level beneath it is written, so an
-Initiative is settled before its Epics, and an Epic before its Tasks. Every piece has a parent from the start.
+Initiative is settled before its Epics, and an Epic before its Tasks. Only a Task is ever implemented. An Epic and an Initiative do no work of their own but coordinate the level
+below, holding each child to their direction so it serves the broader goal and stays on topic.
 
 #### Initiatives
 
-An **Initiative** is planned like any issue, but it does no implementation of its own: it is too large to
-build directly, so no Pull Request ever links to it. It skips the implementation statuses, sitting in a
-dedicated **Tracking** status while its Epics are worked, then follows them to the end: **Awaiting
-release** once all its Epics have merged, and archived once they have all shipped.
+An **Initiative** is too large to build directly, so no Pull Request ever links to it. Planned like any
+issue, it skips the implementation statuses and sits in a dedicated **Tracking** status while its Epics are
+worked, then follows them to the end: **Awaiting release** once all its Epics have merged, and archived
+once they have all shipped.
 
 #### Milestones
 
