@@ -12,14 +12,14 @@ everything in between for you.
 It starts with **the intention**: the non-technical specification behind your idea. Before coding anything, the first
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
-specification is human-gated: it's the initial input the whole process will be based on. Taking time
-validating and refining it is what makes the [whole planning process](#planning-a-task) smooth and
+specification is human-gated: it's the initial input the whole process will be based on. Taking the time to
+validate and refine it is what makes the [whole planning process](#planning-a-task) smooth and
 well-scoped. Once it holds, the
 GitHub issue becomes a Task, Epic, or Initiative, depending on its size.
 
-Once your specification is ready comes the implementation phase. Most of the time, this translates to opening a Pull
+Once your specification is ready, the implementation phase begins. Most of the time, this translates to opening a Pull
 Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters
-[the implementation cycle](#the-development-cycle) and moves "In Progress". This step can be picked up by an agent, or by you. During this
+[the implementation cycle](#the-development-cycle) and moves to "In Progress". This step can be picked up by an agent, or by you. During this
 phase, Pull Requests should remain in draft status. Once the development is completed, the Task moves to the second
 human-gated step: the review process.
 
@@ -27,9 +27,9 @@ human-gated step: the review process.
 to review your code, ask for changes, and in the end approve it. This is the final development step. Once done, your
 Pull Request merges to master and enters the "Awaiting Release" status.
 
-A merged code does not mean it has reached production yet: it seats ahead on a pre-production environment (the staging).
+Merging does not mean the code has reached production yet: it first sits in a pre-production environment (staging).
 There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
-shipped into production: a versioned, stable code.
+shipped into production: versioned, stable code.
 
 On the board, that same path is a row of columns. Work crosses them left to right, and every issue sits
 as a card in the column for its state:
