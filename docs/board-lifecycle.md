@@ -75,8 +75,6 @@ single branch you write up to large-scale efforts that can need coordination or 
 | **Epic**       | One feature's Tasks across every repository it touches; the unit that lands whole. |
 | **Initiative** | An umbrella over several Epics, for an effort spanning many releases.              |
 
-A feature is delivered as an Epic; there is no tier of its own between Task and Epic.
-
 You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
 the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
 work of its own, sitting in a dedicated **Tracking** status until its Epics are done.
@@ -125,13 +123,12 @@ a user id to a Discord id" at one of its Tasks. Each title names its own scope, 
 
 The fitting title at each level, and a common way to miss it:
 
-| Type           | Title names              | Do                                        | Don't                 |
-| -------------- | ------------------------ | ----------------------------------------- | --------------------- |
-| **Initiative** | the area of effort       | Build & CI performance                    | Q3 tech-debt          |
-| **Epic**       | the goal it delivers     | Discord notifications for GitHub activity | v2.3.0                |
-| **Feature**    | the capability, one repo | Hotfix workflow                           | Rewrite `release.yml` |
-| **Task**       | the single change        | Per-org reconcile sweep                   | Various fixes         |
-| **Bug**        | the broken behavior      | Merge-gate skips queued Pull Requests     | Queue is broken       |
+| Type           | Title names          | Do                                        | Don't           |
+| -------------- | -------------------- | ----------------------------------------- | --------------- |
+| **Initiative** | the area of effort   | Build & CI performance                    | Q3 tech-debt    |
+| **Epic**       | the goal it delivers | Discord notifications for GitHub activity | v2.3.0          |
+| **Task**       | the single change    | Per-org reconcile sweep                   | Various fixes   |
+| **Bug**        | the broken behavior  | Merge-gate skips queued Pull Requests     | Queue is broken |
 
 ### Planning a task
 
