@@ -210,10 +210,12 @@ fix is almost always to roll forward and get the stuck sibling in. Reverting wha
 resort, run by hand, because undoing a merge is far more dangerous than finishing one.
 
 An Epic lands whole, but it is not a release. A single release may carry several unrelated Epics, and what
-it bundles turns on more than the board. Order is fixed in only one place: among Epics that share an
-Initiative or Milestone, where each tends to build on the last. There Epic N is released before Epic N+1
-merges, so N+1 can point at a published version. Unrelated Epics carry no such order, and a release may
-ship several of them at once.
+it bundles turns on more than the board. Order is fixed in only one place: inside an Initiative or
+Milestone, whose Epics are planned into numbered **Stages**. A Stage's Epics land together, and the next
+Stage waits for the earlier to ship, so its Epics can build on a published version. It is the Epic rule one
+level up: Epics that can land concurrently share a Stage, and one that must wait falls to a later Stage,
+its number set once and never shifted. Unrelated Epics share no Stage, so a release may ship several at
+once.
 
 ### Shipping
 
