@@ -66,7 +66,7 @@ single branch you write up to large-scale efforts that can need coordination or 
 
 | Type           | What it is                                                                                               |
 | -------------- | -------------------------------------------------------------------------------------------------------- |
-| **Task**       | One branch of work, about one Pull Request; the leaf you build. A **Bug** is the same, for a defect.     |
+| **Task**       | One branch of work, about one Pull Request; the leaf you build.                                          |
 | **Feature**    | A few Tasks making one capability, inside a single repository.                                           |
 | **Epic**       | One feature's Tasks across every repository it touches. The unit that ships: about one Epic per release. |
 | **Initiative** | An umbrella over several Epics, for an effort spanning many releases.                                    |
@@ -199,6 +199,19 @@ rolls out, and you never merge a consumer that still points at an unreleased dep
 A published version is permanent; a tag can never be taken back. So recovery is almost always to roll
 forward with a new release that supersedes the bad one, never to rewrite what shipped.
 
+### Bugs and hotfixes
+
+A **Bug** is the leaf for a defect: built and tracked like a Task, on the same lifecycle and the same
+gates, with its own type so its nature is plain. Caught before it ships, it rides the ordinary cycle like
+any other Task.
+
+Once a version is in production, a bug cannot wait for that cycle. You **hotfix** it: run the repository's
+hotfix workflow with the release line and the fix, and it cuts a new patch straight off the shipped
+version, then opens a Pull Request to carry the same fix back to master. Merge that backport, or the next
+release off that line ships without the fix and brings the bug back.
+
+A bug that spans repositories is no special case. It is an ordinary Epic, run fast.
+
 ### When the board needs you
 
 Most days the board runs itself and you barely notice it. It heals its own drift within minutes and moves
@@ -236,10 +249,8 @@ published release behind it is flagged loudly for a person, never skipped in sil
 While it is on, no Pull Request can merge, and the emergency hotfix path stays open on purpose. Turn it off
 and the next sweep repairs whatever piled up.
 
-**A version in production has a bug.** Patch it with a hotfix: you run the repository's hotfix workflow
-with the release line and the fix, and it cuts a new patch straight off the shipped version, then opens a
-Pull Request to carry the fix back to master. Merge that one. Until it lands, the next release off that
-line could bring the bug back. A cross-repo bug is not a special case; it is an ordinary Epic, run fast.
+**A version in production has a bug.** [Hotfix it](#bugs-and-hotfixes): patch the shipped version directly
+and backport the fix to master, so the next release off that line does not bring the bug back.
 
 ### How the board keeps itself in step
 
