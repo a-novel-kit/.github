@@ -69,12 +69,12 @@ shape.
 Every item on the board is a GitHub **issue**, and each issue has a **type**. The types nest, from the
 single branch you write up to large-scale efforts that can need coordination or deeper planning:
 
-| Type           | What it is                                                                                               |
-| -------------- | -------------------------------------------------------------------------------------------------------- |
-| **Task**       | One branch of work, about one Pull Request; the leaf you build.                                          |
-| **Feature**    | A few Tasks making one capability, inside a single repository.                                           |
-| **Epic**       | One feature's Tasks across every repository it touches. The unit that ships: about one Epic per release. |
-| **Initiative** | An umbrella over several Epics, for an effort spanning many releases.                                    |
+| Type           | What it is                                                                         |
+| -------------- | ---------------------------------------------------------------------------------- |
+| **Task**       | One branch of work, about one Pull Request; the leaf you build.                    |
+| **Feature**    | A few Tasks making one capability, inside a single repository.                     |
+| **Epic**       | One feature's Tasks across every repository it touches; the unit that lands whole. |
+| **Initiative** | An umbrella over several Epics, for an effort spanning many releases.              |
 
 You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
 the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
@@ -93,8 +93,8 @@ a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs t
 Choosing between the types comes down to one rule: **work that cannot merge at the same time belongs to
 different Epics.** One Task is one branch; two pieces that touch the same repository are one Task or two
 stages, not two Tasks side by side. A breaking change across repositories is never one Epic either (the
-next section explains why). And a whole effort spanning several releases is an Initiative with one Epic per
-release, not a single Epic carrying them all.
+next section explains why). And a whole effort spanning several releases is an Initiative whose Epics ship in
+sequence, not a single Epic carrying them all.
 
 Where an issue lives is what links it to your code. A `Closes` line in your Pull Request ties the two
 together: `Closes #123` when the issue sits in the same repository, or the full
@@ -200,6 +200,12 @@ When a member lands and its siblings do not, the board sees the **partial landin
 [freezes the rest](#when-the-board-needs-you), so nothing else merges until the Epic is whole again. The
 fix is almost always to roll forward and get the stuck sibling in. Reverting what already merged is a last
 resort, run by hand, because undoing a merge is far more dangerous than finishing one.
+
+An Epic lands whole, but it is not a release. A single release may carry several unrelated Epics, and what
+it bundles turns on more than the board. Order is fixed in only one place: among Epics that share an
+Initiative or Milestone, where each tends to build on the last. There Epic N is released before Epic N+1
+merges, so N+1 can point at a published version. Unrelated Epics carry no such order, and a release may
+ship several of them at once.
 
 ### Shipping
 
