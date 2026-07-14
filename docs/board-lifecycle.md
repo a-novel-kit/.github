@@ -44,11 +44,12 @@ On the board, that same path is a row of states:
 Execution is the part you can delegate; an agent can even write the code. Comprehension and judgment are
 the part you cannot, and three stages are made of nothing else:
 
-- **The spec** sets the target. Build from a vague one and you build the wrong thing, however clean the
-  code, so a sharp spec is the whole foundation.
-- **The review** is where you understand what was built, not a rubber stamp. A rushed one lets bugs
-  through and lets weak structure settle in, and every later change builds on what you let stand.
-- **The release** picks the moment. Ship at the wrong time and even good work lands badly.
+- **The spec** is the whole foundation, so make it sharp. A vague one builds the wrong thing, and no
+  amount of clean code redeems a wrong target.
+- **The review** is where you come to understand what was built, so read the code until you do. Rushed,
+  it lets bugs and weak structure through, and every later change builds on what you let stand.
+- **The release** is a deliberate choice of when, so ship only when the work is ready. Ship at the wrong
+  time and even good work lands badly.
 
 The board catches none of this, and neither does an agent; only a person who understands the work can. You
 can hand off the typing, never the understanding. The spec is yours; the review and the release are a
