@@ -41,22 +41,18 @@ On the board, that same path is a row of states:
 
 ### What deserves your attention
 
-Execution is the part you can delegate. The board handles it, and an agent can even write the code.
-Comprehension and judgment are the part you cannot, and three stages are made of nothing else: the spec,
-the review, the release.
+Execution is the part you can delegate; an agent can even write the code. Comprehension and judgment are
+the part you cannot, and three stages are made of nothing else:
 
-The **spec** sets the target. Build from a vague one and you build the wrong thing, however clean the
-code, so a sharp spec is the whole foundation.
+- **The spec** sets the target. Build from a vague one and you build the wrong thing, however clean the
+  code, so a sharp spec is the whole foundation.
+- **The review** is where you understand what was built, not a rubber stamp. A rushed one lets bugs
+  through and lets weak structure settle in, and every later change builds on what you let stand.
+- **The release** picks the moment. Ship at the wrong time and even good work lands badly.
 
-The **review** is where you understand what was built. It is not a rubber stamp. You read the code to
-grasp it, because a rushed review lets bugs through and lets weak structure settle in, and every later
-change builds on what you let stand.
-
-The **release** picks the moment. Ship at the wrong time and even good work lands badly.
-
-The board catches none of this, and neither does an agent; only a person who understands the work can.
-You can hand off the typing, never the understanding. Your part is the spec; a maintainer holds the review
-and the release. At whichever stage is yours, comprehension and judgment are the whole job, so spend them
+The board catches none of this, and neither does an agent; only a person who understands the work can. You
+can hand off the typing, never the understanding. The spec is yours; the review and the release are a
+maintainer's. At whichever stage is yours, comprehension and judgment are the whole job, so spend them
 there and trust the board with the rest.
 
 One rule sits above all of it: an Epic lands whole. Plan its pieces so they can land together, and keep
@@ -67,23 +63,26 @@ its siblings moving in step. A Task left behind holds back everything it is boun
 The journey followed a single Task. Most features are larger than one Task, and the board gives them a
 shape.
 
-Every item on the board is an issue, and every issue has a **type**. The types nest, from the branch you
-write up to the effort that spans a year.
+Every item on the board is a GitHub **issue**, and each issue has a **type**. The types nest, from the
+single branch you write up to large-scale efforts that can need coordination or deeper planning:
 
-A **Task** is one branch of work, about one Pull Request. It is the leaf you actually build, and it closes
-when its Pull Request merges. A **Feature** groups a few Tasks that make up one capability inside a single
-repository. An **Epic** groups the Tasks of one feature across every repository the feature touches, and
-it is the unit that ships: roughly one Epic, one release.
+| Type           | What it is                                                                                               |
+| -------------- | -------------------------------------------------------------------------------------------------------- |
+| **Task**       | One branch of work, about one Pull Request; the leaf you build. A **Bug** is the same, for a defect.     |
+| **Feature**    | A few Tasks making one capability, inside a single repository.                                           |
+| **Epic**       | One feature's Tasks across every repository it touches. The unit that ships: about one Epic per release. |
+| **Initiative** | An umbrella over several Epics, for an effort spanning many releases.                                    |
 
-Above the work sit two organizing types. An **Initiative** is the umbrella for a broad effort that runs
-across many releases; it does no work of its own, sitting in **Tracking** until its Epics are done. And a
-**Milestone** cuts across all of these to name one shared goal, so the Roadmap view
+You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
+the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
+work of its own, sitting in **Tracking** until its Epics are done. An **Epic** is named for the goal it
+delivers, never for the version it will become; the version is its target, not its name.
+
+A **Milestone** is not one of these. It is a separate GitHub feature, a named grouping with a due date and
+no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) can gather everything aimed at the
-same outcome.
-
-An Epic is named for the goal it delivers, never for the version it will become. The version is its
-target, not its name.
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. A Milestone
+lives in one repository, so a cross-repo goal uses one of the same name in each.
 
 Some work writes no code at all: creating a repository, changing a setting, granting a permission. That is
 a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs Backlog → Triage → Ready →
