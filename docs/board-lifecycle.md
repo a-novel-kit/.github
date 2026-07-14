@@ -27,8 +27,9 @@ human-gated step: the review process.
 to review your code, ask for changes, and in the end approve it. This is the final development step. Once done, your
 Pull Request merges to master and enters the "Awaiting Release" status.
 
-This status is for the release team. Master is staging: the merged work runs there, ahead of production, until the
-team cuts a release. That release is what reaches production, and when to cut it is a human call.
+A merged code does not mean it has reached production yet: it seats ahead on a pre-production environment (the staging).
+There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
+shipped into production: a versioned, stable code.
 
 On the board, that same path is a row of states:
 
