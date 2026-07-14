@@ -37,8 +37,7 @@ as a card in the column for its state:
 ```
   Triage       Ready        In progress  In Review    Awaiting Release
   ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐
-  │ Epic  │    │ Task  │    │ Task  │    │ Task  │    │ Task  │
-  │Discord│    │ sweep │    │user id│    │Hotfix │    │caller │
+  │ Task  │    │ Task  │    │ Task  │    │ Task  │    │ Task  │
   └───────┘    └───────┘    └───────┘    └───────┘    └───────┘
    ◆ you       └ board moves them ┘      ◆ you        ◆ you
 ```
