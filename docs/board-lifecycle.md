@@ -31,26 +31,19 @@ A merged code does not mean it has reached production yet: it seats ahead on a p
 There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
 shipped into production: a versioned, stable code.
 
-On the board, that same path is a row of states:
+On the board, that same path is a row of columns. Work crosses them left to right, and every issue sits
+as a card in the column for its state:
 
 ```
-  ◆ Triage  →  [ Ready → In progress ]  →  ◆ In Review  →  [ Done ]  →  ◆ Awaiting Release  →  shipped
-
-  ◆ waits for you    ·    [ … ] the board moves it on its own
-```
-
-At any moment the board holds many issues at once, each a card in the column of its state:
-
-```
-  ◆ Triage     Ready        In progress  ◆ In Review  ◆ Awaiting Release
+  Triage       Ready        In progress  In Review    Awaiting Release
   ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐
   │ Epic  │    │ Task  │    │ Task  │    │ Task  │    │ Task  │
   │Discord│    │ sweep │    │user id│    │Hotfix │    │caller │
   └───────┘    └───────┘    └───────┘    └───────┘    └───────┘
+   ◆ you       └ board moves them ┘      ◆ you        ◆ you
 ```
 
-The ◆ columns are the human gates: the spec, the review, the release. The board fills the rest on its
-own.
+Those three ◆ gates are the spec, the review, and the release.
 
 ### What deserves your attention
 
