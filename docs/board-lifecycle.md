@@ -85,7 +85,7 @@ An **Initiative** is too large to build directly, so no Pull Request ever links 
 issue, it skips the implementation statuses and sits in a dedicated **Tracking** status while its Epics are
 worked, reaching **Awaiting release** once all its Epics have merged.
 
-A **Milestone** is not one of these. It is a separate GitHub construct, a named grouping with a due date and
+A **Milestone** is a separate GitHub construct, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. For now, a Milestone is
