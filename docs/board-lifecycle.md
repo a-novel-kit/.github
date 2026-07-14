@@ -182,7 +182,8 @@ eyes. A reviewer reads working code, not a broken pipeline.
 
 ### Why an Epic lands whole
 
-An Epic's Tasks merge together or not at all. That rule shapes how you plan, so it is worth understanding
+An Epic's Tasks make one **atomic landing**: they merge together, or not at all. That rule shapes how you
+plan, so it is worth understanding
 why it exists.
 
 A feature often spans repositories. A service needs a new function from a library; a client needs a new
@@ -230,8 +231,8 @@ protected gate, and there is no local release command on purpose.
 One repository ships with one release. A cross-repo Epic ships with a **release train**: a single dispatch
 that runs each repository's own release, in any order, and is safe to re-run to finish any that did not go.
 
-Inside one Epic, the Tasks are a **convoy**: they land together, in any order, because each builds on its
-own, and one release train ships them all.
+Inside one Epic, the Tasks make their atomic landing in any order, because each builds on its own, and one
+release train ships them all.
 
 Across a dependency, that freedom ends: the dependency is **published**, not merely merged, before anything
 downstream rolls out, and you never merge a consumer that still points at an unreleased dependency.
