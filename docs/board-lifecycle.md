@@ -89,8 +89,9 @@ once they have all shipped.
 A **Milestone** is not one of these. It is a separate GitHub construct, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. A Milestone
-lives in one repository, so a cross-repo goal uses one of the same name in each.
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. For now, a Milestone is
+tied to a single repository, so a goal that spans several needs the same-named Milestone recreated in each,
+or the board cannot gather their issues under it.
 
 #### Meta tasks
 
