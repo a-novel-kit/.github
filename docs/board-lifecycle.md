@@ -39,6 +39,19 @@ On the board, that same path is a row of states:
   ◆ waits for you    ·    [ … ] the board moves it on its own
 ```
 
+At any moment the board holds many issues at once, each a card in the column of its state:
+
+```
+  ◆ Triage     Ready        In progress  ◆ In Review  ◆ Awaiting Release
+  ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐
+  │ Epic  │    │ Task  │    │ Task  │    │ Task  │    │ Task  │
+  │Discord│    │ sweep │    │user id│    │Hotfix │    │caller │
+  └───────┘    └───────┘    └───────┘    └───────┘    └───────┘
+```
+
+The ◆ columns are the human gates: the spec, the review, the release. The board fills the rest on its
+own.
+
 ### What deserves your attention
 
 Execution is the part you can delegate; an agent can even write the code. Comprehension and judgment are
