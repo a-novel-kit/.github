@@ -56,9 +56,6 @@ can hand off the typing, never the understanding. The spec is yours; the review 
 maintainer's. At whichever stage is yours, comprehension and judgment are the whole job, so spend them
 there and trust the board with the rest.
 
-One rule sits above all of it: an Epic lands whole. Plan its pieces so they can land together, and keep
-its siblings moving in step. A Task left behind holds back everything it is bound to.
-
 ### Shaping the work
 
 The journey followed a single Task. Most features are larger than one Task, and the board gives them a
