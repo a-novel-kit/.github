@@ -78,10 +78,14 @@ an Epic or an Initiative. You build downward from there, one level at a time. Ea
 intention, validated at its own [gate](#planning-an-issue) before the level beneath it is written, so an
 Initiative is settled before its Epics, and an Epic before its Tasks. Every piece has a parent from the start.
 
+#### Initiatives
+
 An **Initiative** is planned like any issue, but it does no implementation of its own: it is too large to
 build directly, so no Pull Request ever links to it. It skips the implementation statuses, sitting in a
 dedicated **Tracking** status while its Epics are worked, then follows them to the end: **Awaiting
 release** once all its Epics have merged, and archived once they have all shipped.
+
+#### Milestones
 
 A **Milestone** is not one of these. It is a separate GitHub construct, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
@@ -89,9 +93,13 @@ no spec of its own, that collects the issues aimed at one outcome; the Roadmap v
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. A Milestone
 lives in one repository, so a cross-repo goal uses one of the same name in each.
 
+#### Meta tasks
+
 Some work writes no code at all: creating a repository, changing a setting, granting a permission. That is
 a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs through the Backlog → Triage → Ready →
 **Applied** statuses before it archives itself. Keep meta tasks in their own Epic, never mixed with code Tasks.
+
+#### Choosing a type
 
 Choosing between the types comes down to one rule: **work that cannot merge at the same time belongs to
 different Epics.** One Task is one branch; two pieces that touch the same repository are one Task or two
@@ -99,11 +107,15 @@ stages, not two Tasks side by side. A breaking change across repositories is nev
 next section explains why). And a whole effort spanning several releases is an Initiative whose Epics ship in
 sequence, not a single Epic carrying them all.
 
+#### Linking an issue to code
+
 Where an issue lives is what links it to your code. A `Closes` line in your Pull Request ties the two
 together: `Closes #123` when the issue sits in the same repository, or the full
 `Closes a-novel-kit/.github#123` when it lives in another one, like a planning issue in `.github`. A bare
 `#123` aimed at another repository links nothing, so the board never advances. That link is what the whole
 lifecycle keys off, so it is worth getting right.
+
+#### Parents and children
 
 An Epic lives in the organization's `.github` repository and adopts its Tasks as children across
 repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
