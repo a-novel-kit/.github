@@ -108,11 +108,17 @@ change across repositories is the usual case, and [Why an Epic lands whole](#why
 explains why. A whole effort spanning several releases is then an Initiative whose Epics ship in sequence,
 not a single Epic carrying them all.
 
-Where an issue lives is what links it to your code. A `Closes` line in your Pull Request ties the two
-together: `Closes #123` when the issue sits in the same repository, or the full
-`Closes a-novel-kit/.github#123` when it lives in another one, like a planning issue in `.github`. A bare
-`#123` aimed at another repository links nothing, so the board never advances. That link is what the whole
-lifecycle keys off, so it is worth getting right.
+Your code lives in a Pull Request, but the board follows the issue behind it, so the two must be tied
+together. You do that in the Pull Request's description: write `Closes #123`, where `#123` is the issue's
+number (GitHub numbers every issue and shows it next to the title). When the Pull Request merges, GitHub
+closes that issue and records that this code delivered it, and that record is the signal the board watches
+to move the issue forward.
+
+A plain `#123` only finds an issue in the Pull Request's own repository. When the issue lives in another
+one, such as a planning issue in `.github`, you give its full address instead: `Closes a-novel-kit/.github#123`,
+which names the organization, the repository, then the number. A plain `#123` aimed across repositories
+matches nothing: the link never forms, and the issue sits still on the board. The whole lifecycle turns on
+this link, so it is worth getting right.
 
 An Epic lives in the organization's `.github` repository and adopts its Tasks as children across
 repositories, which is how a feature spanning five repositories still rolls up to one place. A dependency
