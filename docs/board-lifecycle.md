@@ -63,23 +63,24 @@ attention there and trust the board with the rest.
 
 ### Shaping the work
 
-Until now, we have followed a single Task from spec to shipped. Most features are larger than one Task, and the board gives them a
-shape.
+Until now, we have followed a single Task from spec to shipped, but most features are larger than one Task.
+A **feature** is the intention itself, the idea you set out to deliver; on the board it becomes one or more
+**issues**, each with a **type** that marks its size:
 
-Every item on the board is a GitHub **issue**, and each issue has a **type**. The types nest, from the
-single branch you write up to large-scale efforts that can need coordination or deeper planning:
+| Type           | What it is                                                                                            |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| **Task**       | One branch of work, about one Pull Request; the leaf you build.                                       |
+| **Epic**       | Several Tasks that must land together, across the repositories they touch; the unit that lands whole. |
+| **Initiative** | Several Epics, for an effort that spans many releases.                                                |
 
-| Type           | What it is                                                                         |
-| -------------- | ---------------------------------------------------------------------------------- |
-| **Task**       | One branch of work, about one Pull Request; the leaf you build.                    |
-| **Epic**       | One feature's Tasks across every repository it touches; the unit that lands whole. |
-| **Initiative** | An umbrella over several Epics, for an effort spanning many releases.              |
+A feature enters as a single issue, and its size sets the top: small enough, that top is one Task; larger,
+an Epic or an Initiative. You build downward from there, one level at a time. Each issue carries its own
+intention, validated at its own [gate](#planning-a-task) before the level beneath it is written, so an
+Initiative is settled before its Epics, and an Epic before its Tasks. Every piece has a parent from the
+start, and an **Initiative** does no work of its own, sitting in a dedicated **Tracking** status until its
+Epics are done.
 
-You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
-the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
-work of its own, sitting in a dedicated **Tracking** status until its Epics are done.
-
-A **Milestone** is not one of these. It is a separate GitHub feature, a named grouping with a due date and
+A **Milestone** is not one of these. It is a separate GitHub construct, a named grouping with a due date and
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. A Milestone
