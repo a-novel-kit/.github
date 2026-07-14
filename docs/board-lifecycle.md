@@ -314,10 +314,9 @@ Epics the same way, so a parent is always an honest summary of what is under it.
 Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a parent
 once all its children have, a meta task once it reaches **Applied**. The board shows only live work.
 
-One rule stands above the rest, and a required check guards it: an Epic lands whole, or not at all. The
-merge-gate holds a member until its whole set is ready, and a freeze stops the survivors if a landing goes
-half-way. Neither ever reverts a merge. The board's answer to trouble is to stop, hold, and hand it to a person,
-never to rewrite history on its own.
+The board's answer to trouble is always the same: stop, hold, and hand it to a person, never rewrite what
+happened. The [merge-gate and freeze](#why-an-epic-lands-whole) that keep an Epic whole are the clearest
+case, holding a half-landed set for a person to finish rather than reverting a merge.
 
 When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, an Epic that
 cannot complete: each raises an escalation ticket on the board and, for the worst of them, a direct page. A
