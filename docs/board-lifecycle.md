@@ -73,7 +73,7 @@ single branch you write up to large-scale efforts that can need coordination or 
 
 You open each item at the level its work sits, and the larger ones come first: the Epic before its Tasks,
 the Initiative before its Epics, so every piece has a parent from the start. An **Initiative** does no
-work of its own, sitting in **Tracking** until its Epics are done. An **Epic** is named for the goal it
+work of its own, sitting in a dedicated **Tracking** status until its Epics are done. An **Epic** is named for the goal it
 delivers, never for the version it will become; the version is its target, not its name.
 
 A **Milestone** is not one of these. It is a separate GitHub feature, a named grouping with a due date and
@@ -83,8 +83,8 @@ no spec of its own, that collects the issues aimed at one outcome; the Roadmap v
 lives in one repository, so a cross-repo goal uses one of the same name in each.
 
 Some work writes no code at all: creating a repository, changing a setting, granting a permission. That is
-a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs Backlog → Triage → Ready →
-**Applied** before it archives itself. Keep meta tasks in their own Epic, never mixed with code Tasks.
+a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs through the Backlog → Triage → Ready →
+**Applied** statuses before it archives itself. Keep meta tasks in their own Epic, never mixed with code Tasks.
 
 Choosing between the types comes down to one rule: **work that cannot merge at the same time belongs to
 different Epics.** One Task is one branch; two pieces that touch the same repository are one Task or two
