@@ -31,7 +31,7 @@ Merging does not mean the code has reached production yet: it first sits in a pr
 There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
 shipped into production: versioned, stable code.
 
-On the board, that same path is a row of columns. Work crosses them left to right, and every issue sits
+On the board, the states a feature passes through are a row of columns. Work crosses them left to right, and every issue sits
 as a card in the column for its state:
 
 ```
@@ -58,12 +58,12 @@ the part you cannot, and three stages are made of nothing else:
 
 The board catches none of this, and neither does an agent; only a person who understands the work can. You
 can hand off the typing, never the understanding. The spec is yours; the review and the release are a
-maintainer's. At whichever stage is yours, comprehension and judgment are the whole job, so spend them
-there and trust the board with the rest.
+maintainer's. At whichever stage is yours, comprehension and judgment are the whole job, so spend your
+attention there and trust the board with the rest.
 
 ### Shaping the work
 
-The journey followed a single Task. Most features are larger than one Task, and the board gives them a
+Until now, we have followed a single Task from spec to shipped. Most features are larger than one Task, and the board gives them a
 shape.
 
 Every item on the board is a GitHub **issue**, and each issue has a **type**. The types nest, from the
