@@ -47,8 +47,9 @@ The **`a-novel` CLI** is one command for the whole workspace, building, testing,
 every repository in place of the per-repository scripts each would otherwise carry. How it works is its
 own reference; here it is simply the tool that operates the repositories.
 
-The **reusable workflows** are composite actions every repository's CI calls instead of copying a recipe.
-They are referenced and pinned to a released version, so an upgrade is a deliberate bump.
+The **reusable workflows** and **composite actions** stand in for the CI recipe every repository would
+otherwise copy: a composite action bundles a few shared steps, a reusable workflow a whole job. Both are
+referenced and pinned to a released version, so an upgrade is a deliberate bump.
 
 The **meta-repositories** (`.github`) hold the organization's shared documentation and policy, this
 document among them.
