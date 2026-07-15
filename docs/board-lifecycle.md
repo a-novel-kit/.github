@@ -17,10 +17,10 @@ validate and refine it is what makes the [whole planning process](#planning-an-i
 well-scoped. Once it holds, the
 GitHub issue becomes a Task, Epic, or Initiative, depending on its size.
 
-Once your specification is ready, the **implementation phase** begins. Most of the time, this translates to opening a 
+Once your specification is ready, the **implementation phase** begins. Most of the time, this translates to opening a
 Pull Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters
-[the implementation cycle](#the-development-cycle) and moves to "In Progress". This step can be picked up by an agent, 
-or by you. During this phase, Pull Requests should remain in draft status. Once the development is completed, the Task 
+[the implementation cycle](#the-development-cycle) and moves to "In Progress". This step can be picked up by an agent,
+or by you. During this phase, Pull Requests should remain in draft status. Once the development is completed, the Task
 moves to the second human-gated step: the review process.
 
 "In Review" status is automatically assigned once you mark a Pull Request as ready. It will request a code maintainer
@@ -31,7 +31,7 @@ Merging does not mean the code has reached production yet: it first sits in a pr
 There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
 shipped into production: versioned, stable code.
 
-On the board, the states a feature passes through are a row of columns. Work crosses them left to right, and every issue 
+On the board, the states a feature passes through are a row of columns. Work crosses them left to right, and every issue
 sits as a card in the column for its state:
 
 ```
@@ -49,11 +49,11 @@ Those three ◆ gates are the spec, the review, and the release.
 Execution is the part you can delegate; an agent can even write the code. Comprehension and judgment are
 the part you cannot, and three stages are made of nothing else:
 
-- **The spec** is the whole foundation, so make it sharp. A vague one builds the wrong thing, and no
+- 🎯 **The spec** is the whole foundation, so make it sharp. A vague one builds the wrong thing, and no
   amount of clean code redeems a wrong target.
-- **The review** is where you come to understand what was built, so read the code until you do. Rushed,
+- 🔍 **The review** is where you come to understand what was built, so read the code until you do. Rushed,
   it lets bugs and weak structure through, and every later change builds on what you let stand.
-- **The release** is a deliberate choice of when, so ship only when the work is ready. Ship at the wrong
+- 🚀 **The release** is a deliberate choice of when, so ship only when the work is ready. Ship at the wrong
   time and even good work lands badly.
 
 The board catches none of this, and neither does an agent; only a person who understands the work can. You
@@ -68,7 +68,7 @@ A **feature** is the intention itself, the idea you set out to deliver; on the b
 **issues**, each with a **type** that marks its size:
 
 | Type           | What it is                                                                                            |
-|----------------|-------------------------------------------------------------------------------------------------------|
+| -------------- | ----------------------------------------------------------------------------------------------------- |
 | **Task**       | One branch of work, about one Pull Request; the leaf you build.                                       |
 | **Epic**       | Several Tasks that must land together, across the repositories they touch; the unit that lands whole. |
 | **Initiative** | Several Epics, for an effort that spans many releases.                                                |
@@ -76,8 +76,8 @@ A **feature** is the intention itself, the idea you set out to deliver; on the b
 A feature enters as a single issue, and its size sets the top: small enough, that top is one Task; larger,
 an Epic or an Initiative. You build downward from there, one level at a time. Each issue carries its own
 intention, validated at its own [gate](#planning-an-issue) before the level beneath it is written, so an
-Initiative is settled before its Epics, and an Epic before its Tasks. Only a Task is ever implemented. An Epic and an 
-Initiative do no work of their own but coordinate the level below, holding each child to their direction so it serves 
+Initiative is settled before its Epics, and an Epic before its Tasks. Only a Task is ever implemented. An Epic and an
+Initiative do no work of their own but coordinate the level below, holding each child to their direction so it serves
 the broader goal and stays on topic.
 
 #### Initiatives and Milestones
@@ -94,7 +94,7 @@ tied to a single repository, so a goal that spans several needs the same-named M
 
 #### Meta tasks
 
-Some work writes no code at all: creating a repository, changing a setting, granting a permission. That is
+Some work writes no code at all: creating a repository, changing a setting, or granting a permission. That is
 a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs through the Backlog → Triage → Ready →
 **Applied** statuses. Keep meta tasks in their own Epic, never mixed with code Tasks.
 
@@ -103,13 +103,20 @@ a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs t
 Splitting issues comes down to one rule: **two Tasks share an Epic only if they can land
 concurrently**, merged to master and shipped together without downtime. One Task is one branch and one Pull
 Request, so two pieces of work are always two Tasks, in the same repository or not. If they can land at
-once, one Epic holds them. If 
+once, one Epic holds them. If
 [one must ship before the other can, they need separate Epics](#ordering-across-repositories), tied together by
 an Initiative.
 
 Your code lives in a Pull Request, but the board follows the issue behind it, so the two must be tied
-together. You do that in the Pull Request's description: write `Closes #123`, where `#123` is the issue's
-number (GitHub numbers every issue and shows it next to the title). When the Pull Request merges, GitHub
+together. You tie them in the Pull Request's description, with a line naming the issue by its number:
+
+```
+<summary>
+
+Closes #123
+```
+
+`#123` is the issue's number, which GitHub shows next to its title. When the Pull Request merges, GitHub
 closes that issue and records that this code delivered it, and that record is the signal the board watches
 to move the issue forward.
 
@@ -134,18 +141,18 @@ it carries, not what it is.
 
 Take one feature, the notifications work, and watch its title tighten as the type narrows:
 
-- An **Initiative** names the area of effort: **Contributor notifications**.
-  - Not _Q3 notifications_: a calendar box the effort outlasts.
-  - Not _Discord notifications for GitHub activity_: too narrow, that is one Epic inside the area.
-- An **Epic** names the goal it delivers: **Discord notifications for GitHub activity**.
-  - Not _v2.3.0_: the version it ships in, not the goal it reaches.
-  - Not _Notifications_: too broad, that is the whole Initiative.
-- A **Task** names the single change: **Resolve a GitHub user id to a Discord id**.
-  - Not _Various notification fixes_: vague and plural, where a Task is one branch.
-  - Not _Edit `notify.ts`_: the file it touches, not the change it makes.
-- A **Bug** names the broken behavior: **Discord pings fire twice on a re-run**.
-  - Not _Notifications broken_: names neither what breaks nor how.
-  - Not _Bug in `notify.ts`_: a guess at where it lives, not what the reader sees.
+- An **Initiative** names the area of effort: ✅ **Contributor notifications**.
+  - ❌ _Q3 notifications_: a calendar box the effort outlasts.
+  - ❌ _Discord notifications for GitHub activity_: too narrow, that is one Epic inside the area.
+- An **Epic** names the goal it delivers: ✅ **Discord notifications for GitHub activity**.
+  - ❌ _v2.3.0_: the version it ships in, not the goal it reaches.
+  - ❌ _Notifications_: too broad, that is the whole Initiative.
+- A **Task** names the single change: ✅ **Resolve a GitHub user id to a Discord id**.
+  - ❌ _Various notification fixes_: vague and plural, where a Task is one branch.
+  - ❌ _Edit `notify.ts`_: the file it touches, not the change it makes.
+- A **Bug** names the broken behavior: ✅ **Discord pings fire twice on a re-run**.
+  - ❌ _Notifications broken_: names neither what breaks nor how.
+  - ❌ _Bug in `notify.ts`_: a guess at where it lives, not what the reader sees.
 
 ### Planning an issue
 
@@ -275,7 +282,7 @@ so it asks for a typed confirmation.
 **A ticket appears in the Triage view ([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)), tagged `escalation`.** The board
 opened it because
-something is stuck and needs a person: a hotfix that stalled, a check that never finished, an Epic that
+something is stuck and needs a person: a hotfix that stalled, a check that never finished, or an Epic that
 cannot complete. Fix the underlying thing and the ticket closes itself. It is a signal, not work to
 plan, so do not size or groom it. A pile of open escalation tickets is itself the alarm.
 
@@ -298,11 +305,11 @@ and backport the fix to master, so the next release off that line does not bring
 ### How the board keeps itself in step
 
 You will rarely need this. But when the board does something you did not expect, it helps to know how it
-works underneath. The whole system is built from GitHub's own parts (required checks, the merge queue,
+works underneath. The whole system is built from GitHub's own parts (required checks, the merge queue, and
 scheduled jobs) and driven by a single actor, the board's bot.
 
 Every status is written by that one bot, always from what happened to a Pull Request: a draft is in
-progress, an open one is in review, an approved one is done, a merged one is awaiting release. Because the
+progress, an open one is in review, an approved one is done, and a merged one is awaiting release. Because the
 status is read from what happened and never typed in, it cannot drift, and a manual edit will not stick.
 There is one carve-out: a meta task has no Pull Request to read from, so its final Applied status is set by
 hand.
@@ -310,7 +317,7 @@ hand.
 GitHub raises no event when a Status field changes, so the board is never driven by its own state; it is
 always derived from the Pull Requests and issues underneath. That derivation runs the moment something
 happens, and again on a sweep every fifteen minutes that re-checks the whole board against live GitHub
-truth. A dropped event, a missed webhook, a stray hand edit: the next sweep quietly puts it right. That is
+truth. A dropped event, a missed webhook, or a stray hand edit: the next sweep quietly puts it right. That is
 why the board can be trusted even though nothing guards it at the moment.
 
 A parent's status rolls up from its children. An Epic sits at the least-advanced status among its Tasks,
@@ -324,7 +331,7 @@ The board's answer to trouble is always the same: stop, hold, and hand it to a p
 happened. The [merge-gate and freeze](#why-an-epic-lands-whole) that keep an Epic whole are the clearest
 case, holding a half-landed set for a person to finish rather than reverting a merge.
 
-When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, an Epic that
+When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, or an Epic that
 cannot complete: each raises an escalation ticket on the board and, for the worst of them, a direct page. A
 separate watchdog watches the safety systems themselves, so if a sweep stops running, someone hears about
 it.
