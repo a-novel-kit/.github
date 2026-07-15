@@ -325,7 +325,7 @@ reaching review once they all have and awaiting release once they all merge. Ini
 Epics the same way, so a parent is always an honest summary of what is under it.
 
 Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a parent
-once all its children have, a meta task once it reaches **Applied**. The board shows only live work.
+once all its children have, and a meta task once it reaches **Applied**. The board shows only live work.
 
 The board's answer to trouble is always the same: stop, hold, and hand it to a person, never rewrite what
 happened. The [merge-gate and freeze](#why-an-epic-lands-whole) that keep an Epic whole are the clearest
