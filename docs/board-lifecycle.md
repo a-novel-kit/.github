@@ -104,7 +104,7 @@ Choosing between the types comes down to one rule: **two Tasks share an Epic onl
 concurrently**, merged to master and shipped together without downtime. One Task is one branch and one Pull
 Request, so two pieces of work are always two Tasks, in the same repository or not. If they can land at
 once, one Epic holds them. If one must ship before the other can, they need separate Epics; a breaking
-change across repositories is the usual case, and [Why an Epic lands whole](#why-an-epic-lands-whole)
+change across repositories is the usual case, and [Ordering across repositories](#ordering-across-repositories)
 explains why. A whole effort spanning several releases is then an Initiative whose Epics ship in sequence,
 not a single Epic carrying them all.
 
@@ -193,43 +193,39 @@ eyes. A reviewer reads working code, not a broken pipeline.
 
 ### Why an Epic lands whole
 
-An Epic's Tasks make one **atomic landing**: they merge together, or not at all. That rule shapes how you
-plan, so it is worth understanding
-why it exists.
-
-A feature often spans repositories. A service needs a new function from a library; a client needs a new
-field from a schema. Merge the service before the library and the service no longer builds. Preventing
-that broken state is the whole point of the rule.
-
-You cannot merge every piece at the same instant, and even that would not be enough. A repository sees
-another's work only once it is **published**, not merely merged: the service can only use a released
-version of the library, so the library's new function must ship before the service can call it. Releases
-go out one at a time, so cross-repo work comes together in sequence, not all at once. "Lands whole"
-therefore cannot mean "all at once"; it means the guarantee you can keep throughout: **whatever has landed
-and shipped so far, every repository still builds.**
-
-You earn that by keeping every step backward-compatible, which is why a breaking change across
-repositories is never one Epic. It is two. An **expand** Epic adds the new path beside the old and ships
-it, so both work at once. Then a **contract** Epic removes the old path, once the expand release is out and
-nothing still needs it. Between them, any landing order is safe.
+An Epic's Tasks make one **atomic landing**: they merge together, or not at all. They are the independent
+parts of one feature, so the rule keeps master from ever carrying half of one: a client with no endpoint to
+reach, or an endpoint no client calls. That is worth understanding, because it shapes how you plan.
 
 The board holds an Epic together with a required check, the **merge-gate**. A Pull Request joins an Epic by
 carrying an `epic:<N>` label that only a maintainer can add, so membership is trusted rather than guessed
-from a `Closes` line. The gate holds every member until all are approved, then greens them at once, and
-lets the merge queue land them together.
+from a `Closes` line. The gate holds every member until all are approved, then greens them at once and lets
+the merge queue land them together. Because each Task stands on its own, the brief window while they land
+still builds.
 
 When a member lands and its siblings do not, the board sees the **partial landing** and
 [freezes the rest](#when-the-board-needs-you), so nothing else merges until the Epic is whole again. The
 fix is almost always to roll forward and get the stuck sibling in. Reverting what already merged is a last
 resort, run by hand, because undoing a merge is far more dangerous than finishing one.
 
-An Epic lands whole, but it is not a release. A single release may carry several unrelated Epics, and what
-it bundles turns on more than the board. Order is fixed in only one place: inside an Initiative or
-Milestone, whose Epics are planned into numbered **Stages**. A Stage's Epics land together, and the next
-Stage waits for the earlier to ship, so its Epics can build on a published version. It is the Epic rule one
-level up: Epics that can land concurrently share a Stage, and one that must wait falls to a later Stage.
-Unrelated Epics share no Stage, so a release may ship several at once. For now the numbers are set by hand,
-once and for good, and no automation yet reads them.
+### Ordering across repositories
+
+Not every feature can land whole. When a piece in one repository needs a piece in another, the two cannot
+share an Epic, because a repository sees another's work only once it is **published**, not merely merged: a
+service can only use a released version of a library, so the library's new function must ship before the
+service can call it. Releases go out one at a time, so cross-repo work comes together in a sequence of
+steps, never all at once.
+
+A breaking change is the clearest case, and it is never one Epic. It is two. An **expand** Epic adds the
+new path beside the old and ships it, so both work at once. Then a **contract** Epic removes the old path,
+once the expand release is out and nothing still needs it. Each Epic lands whole on its own; between them,
+any order is safe.
+
+An Initiative or Milestone plans these ordered Epics into numbered **Stages**. A Stage's Epics land
+together, and the next Stage waits for the earlier to ship, so its Epics can build on a published version.
+It is the atomic-landing rule one level up: Epics that can land concurrently share a Stage, and one that
+must wait falls to a later Stage. Unrelated Epics share no Stage, so a release may ship several at once. For
+now the numbers are set by hand, once and for good, and no automation yet reads them.
 
 ### Shipping
 
@@ -243,12 +239,6 @@ protected gate, and there is no local release command on purpose.
 
 One repository ships with one release. A cross-repo Epic ships with a **release train**: a single dispatch
 that runs each repository's own release, in any order, and is safe to re-run to finish any that did not go.
-
-Inside one Epic, the Tasks make their atomic landing in any order, because each builds on its own, and one
-release train ships them all.
-
-Across a dependency, that freedom ends: the dependency is **published**, not merely merged, before anything
-downstream rolls out, and you never merge a consumer that still points at an unreleased dependency.
 
 A published version is permanent; a tag can never be taken back. So recovery is almost always to roll
 forward with a new release that supersedes the bad one, never to rewrite what shipped.
