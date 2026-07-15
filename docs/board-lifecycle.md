@@ -6,10 +6,10 @@ shipped release.
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
 Work is tracked in each organization's board ([a-novel's](https://github.com/orgs/a-novel/projects/7) and
 [a-novel-kit's](https://github.com/orgs/a-novel-kit/projects/1)). Those boards, combined with agentic skills, take on
-the bookkeeping, so you can focus on the two things that really matter: the intention and the shipment. They track
-everything in between for you.
+the bookkeeping, so you can focus on the two things that really matter: the intention and the shipment. Everything else
+can be tracked for you.
 
-It starts with **the intention**: the non-technical specification behind your idea. Before coding anything, the first
+Work starts with **the intention**: the non-technical specification behind your idea. Before coding anything, the first
 step is to translate this specification into an issue (the GitHub layer that will later interface with
 concrete code). You refine the scope, look up the resources you need, and track your progress there. That
 specification is human-gated: it's the initial input the whole process will be based on. Taking the time to
@@ -17,11 +17,11 @@ validate and refine it is what makes the [whole planning process](#planning-an-i
 well-scoped. Once it holds, the
 GitHub issue becomes a Task, Epic, or Initiative, depending on its size.
 
-Once your specification is ready, the implementation phase begins. Most of the time, this translates to opening a Pull
-Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters
-[the implementation cycle](#the-development-cycle) and moves to "In Progress". This step can be picked up by an agent, or by you. During this
-phase, Pull Requests should remain in draft status. Once the development is completed, the Task moves to the second
-human-gated step: the review process.
+Once your specification is ready, the **implementation phase** begins. Most of the time, this translates to opening a 
+Pull Request (a branch that holds a working copy of the code). Once a Task is tied to a Pull Request, it enters
+[the implementation cycle](#the-development-cycle) and moves to "In Progress". This step can be picked up by an agent, 
+or by you. During this phase, Pull Requests should remain in draft status. Once the development is completed, the Task 
+moves to the second human-gated step: the review process.
 
 "In Review" status is automatically assigned once you mark a Pull Request as ready. It will request a code maintainer
 to review your code, ask for changes, and in the end approve it. This is the final development step. Once done, your
@@ -31,8 +31,8 @@ Merging does not mean the code has reached production yet: it first sits in a pr
 There, a release team becomes responsible for cutting a release from a publication plan. This cut is what actually gets
 shipped into production: versioned, stable code.
 
-On the board, the states a feature passes through are a row of columns. Work crosses them left to right, and every issue sits
-as a card in the column for its state:
+On the board, the states a feature passes through are a row of columns. Work crosses them left to right, and every issue 
+sits as a card in the column for its state:
 
 ```
   Triage       Ready        In progress  In Review    Awaiting Release
@@ -63,12 +63,12 @@ attention there and trust the board with the rest.
 
 ### Shaping the work
 
-Until now, we have followed a single Task from spec to shipped, but most features are larger than one Task.
+Part of the specification phase boils down to correctly sizing and dispatching the feature you work on.
 A **feature** is the intention itself, the idea you set out to deliver; on the board it becomes one or more
 **issues**, each with a **type** that marks its size:
 
 | Type           | What it is                                                                                            |
-| -------------- | ----------------------------------------------------------------------------------------------------- |
+|----------------|-------------------------------------------------------------------------------------------------------|
 | **Task**       | One branch of work, about one Pull Request; the leaf you build.                                       |
 | **Epic**       | Several Tasks that must land together, across the repositories they touch; the unit that lands whole. |
 | **Initiative** | Several Epics, for an effort that spans many releases.                                                |
@@ -76,8 +76,9 @@ A **feature** is the intention itself, the idea you set out to deliver; on the b
 A feature enters as a single issue, and its size sets the top: small enough, that top is one Task; larger,
 an Epic or an Initiative. You build downward from there, one level at a time. Each issue carries its own
 intention, validated at its own [gate](#planning-an-issue) before the level beneath it is written, so an
-Initiative is settled before its Epics, and an Epic before its Tasks. Only a Task is ever implemented. An Epic and an Initiative do no work of their own but coordinate the level
-below, holding each child to their direction so it serves the broader goal and stays on topic.
+Initiative is settled before its Epics, and an Epic before its Tasks. Only a Task is ever implemented. An Epic and an 
+Initiative do no work of their own but coordinate the level below, holding each child to their direction so it serves 
+the broader goal and stays on topic.
 
 #### Initiatives and Milestones
 
@@ -89,8 +90,7 @@ A **Milestone** is a separate GitHub construct, a named grouping with a due date
 no spec of its own, that collects the issues aimed at one outcome; the Roadmap view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/4),
 [a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/3)) groups the board by it. For now, a Milestone is
-tied to a single repository, so a goal that spans several needs the same-named Milestone recreated in each,
-or the board cannot gather their issues under it.
+tied to a single repository, so a goal that spans several needs the same-named Milestone recreated in each.
 
 #### Meta tasks
 
@@ -100,13 +100,12 @@ a **meta task**. It carries a `meta` label, skips the code lifecycle, and runs t
 
 #### Working with issues
 
-Choosing between the types comes down to one rule: **two Tasks share an Epic only if they can land
+Splitting issues comes down to one rule: **two Tasks share an Epic only if they can land
 concurrently**, merged to master and shipped together without downtime. One Task is one branch and one Pull
 Request, so two pieces of work are always two Tasks, in the same repository or not. If they can land at
-once, one Epic holds them. If one must ship before the other can, they need separate Epics; a breaking
-change across repositories is the usual case, and [Ordering across repositories](#ordering-across-repositories)
-explains why. A whole effort spanning several releases is then an Initiative whose Epics ship in sequence,
-not a single Epic carrying them all.
+once, one Epic holds them. If 
+[one must ship before the other can, they need separate Epics](#ordering-across-repositories), tied together by
+an Initiative.
 
 Your code lives in a Pull Request, but the board follows the issue behind it, so the two must be tied
 together. You do that in the Pull Request's description: write `Closes #123`, where `#123` is the issue's
@@ -177,7 +176,7 @@ and open the result for review once it holds together.
 **Read the local guidelines first.** Every repository carries its own conventions, and they outrank any
 general habit. Read them before writing a line, so your code lands in the shape the reviewers expect.
 
-**Break the work into small steps.** A large change is easier to write, and far easier to review, when you
+**Break the work into small steps.** A large change is easier to write and far easier to review when you
 build it as a sequence of small pieces that each stand on their own, rather than one sprawling diff.
 
 **Test as you go, not at the end.** Write the tests alongside the code and keep them passing as you work.
@@ -195,17 +194,17 @@ eyes. A reviewer reads working code, not a broken pipeline.
 
 An Epic's Tasks make one **atomic landing**: they merge together, or not at all. They are the independent
 parts of one feature, so the rule keeps master from ever carrying half of one: a client with no endpoint to
-reach, or an endpoint no client calls. That is worth understanding, because it shapes how you plan.
+reach, or an endpoint no client calls. That is worth understanding because it shapes how you plan.
 
 The board holds an Epic together with a required check, the **merge-gate**. A Pull Request joins an Epic by
 carrying an `epic:<N>` label that only a maintainer can add, so membership is trusted rather than guessed
-from a `Closes` line. The gate holds every member until all are approved, then greens them at once and lets
+from a `Closes` line. The gate holds every member until all are approved, then approves them at once, letting
 the merge queue land them together. Because each Task stands on its own, the brief window while they land
 still builds.
 
 When a member lands and its siblings do not, the board sees the **partial landing** and
 [freezes the rest](#when-the-board-needs-you), so nothing else merges until the Epic is whole again. The
-fix is almost always to roll forward and get the stuck sibling in. Reverting what already merged is a last
+fix is almost always to roll forward and get the stuck sibling in. Reverting what is already merged is a last
 resort, run by hand, because undoing a merge is far more dangerous than finishing one.
 
 ### Ordering across repositories
@@ -218,7 +217,7 @@ steps, never all at once.
 
 A breaking change is the clearest case, and it is never one Epic. It is two. An **expand** Epic adds the
 new path beside the old and ships it, so both work at once. Then a **contract** Epic removes the old path,
-once the expand release is out and nothing still needs it. Each Epic lands whole on its own; between them,
+once the expanded release is out and nothing still needs it. Each Epic lands whole on its own; between them,
 any order is safe.
 
 An Initiative or Milestone plans these ordered Epics into numbered **Stages**. A Stage's Epics land
@@ -246,7 +245,7 @@ forward with a new release that supersedes the bad one, never to rewrite what sh
 ### Bugs and hotfixes
 
 A **Bug** is the leaf for a defect: built and tracked like a Task, on the same lifecycle and the same
-gates, with its own type so its nature is plain. Caught before it ships, it rides the ordinary cycle like
+gates, with its own type, so its nature is plain. Caught before it ships, it rides the ordinary cycle like
 any other Task.
 
 Once a version is in production, a bug cannot wait for that cycle. You **hotfix** it: run the repository's
@@ -258,7 +257,7 @@ A bug that spans repositories is no special case. It is an ordinary Epic, run fa
 
 ### When the board needs you
 
-Most days the board runs itself and you barely notice it. It heals its own drift within minutes and moves
+Most days the board runs itself, and you barely notice it. It heals its own drift within minutes and moves
 your work along as you go. Every so often, though, it hands something back to you. These are the moments
 worth knowing on sight.
 
@@ -312,7 +311,7 @@ GitHub raises no event when a Status field changes, so the board is never driven
 always derived from the Pull Requests and issues underneath. That derivation runs the moment something
 happens, and again on a sweep every fifteen minutes that re-checks the whole board against live GitHub
 truth. A dropped event, a missed webhook, a stray hand edit: the next sweep quietly puts it right. That is
-why the board can be trusted even though nothing guards it in the moment.
+why the board can be trusted even though nothing guards it at the moment.
 
 A parent's status rolls up from its children. An Epic sits at the least-advanced status among its Tasks,
 reaching review once they all have and awaiting release once they all merge. Initiatives follow their
@@ -330,7 +329,7 @@ cannot complete: each raises an escalation ticket on the board and, for the wors
 separate watchdog watches the safety systems themselves, so if a sweep stops running, someone hears about
 it.
 
-And if any of it misbehaves, one switch stops everything. The kill switch holds every Pull Request and
-freezes every board write at once. It fails safe: anything but a clear "off" value halts the automation, so
+And if any of them misbehaves, one switch stops everything. The kill switch holds every Pull Request and
+freezes every board writing at once. It fails safe: anything but a clear "off" value halts the automation, so
 a mistyped value stops the board rather than letting it run loose. The emergency hotfix path stays open
 through all of it, because the stop must never block the fix.
