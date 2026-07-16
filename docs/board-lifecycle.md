@@ -308,11 +308,13 @@ You will rarely need this. But when the board does something you did not expect,
 works underneath. The whole system is built from GitHub's own parts (required checks, the merge queue, and
 scheduled jobs) and driven by a single actor, the board's bot.
 
-Every status is written by that one bot, always from what happened to a Pull Request: a draft is in
-progress, an open one is in review, an approved one is done, and a merged one is awaiting release. Because the
-status is read from what happened and never typed in, it cannot drift, and a manual edit will not stick.
-There is one carve-out: a meta task has no Pull Request to read from, so its final Applied status is set by
-hand.
+Once a Task has a Pull Request, that one bot writes its status, always from what happened to the Pull
+Request: a draft is in progress, an open one is in review, an approved one is done, and a merged one is
+awaiting release. Because those are read from what happened and never typed in, they cannot drift, and a
+manual edit will not stick. Before a Pull Request exists the bot has nothing to read, so the early
+statuses are yours: an issue joins the board in Triage, and you move it to Ready at the spec gate. A meta
+task never gets a Pull Request at all, so it keeps that freedom to the end, and its final Applied is set
+by hand.
 
 GitHub raises no event when a Status field changes, so the board is never driven by its own state; it is
 always derived from the Pull Requests and issues underneath. That derivation runs the moment something
