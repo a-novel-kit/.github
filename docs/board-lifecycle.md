@@ -323,8 +323,10 @@ truth. A dropped event, a missed webhook, or a stray hand edit: the next sweep q
 why the board can be trusted even though nothing guards it at the moment.
 
 A parent's status rolls up from its children. An Epic sits at the least-advanced status among its Tasks,
-reaching review once they all have and awaiting release once they all merge. Initiatives follow their
-Epics the same way, so a parent is always an honest summary of what is under it.
+reaching review once they all have and awaiting release once they all merge. An Initiative is quieter: it
+holds Tracking while its Epics are worked, then rolls straight to Awaiting release once they all merge,
+never the pickup statuses in between, because you work its Epics and never the Initiative itself. Either
+way, a parent is an honest summary of what is under it.
 
 Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a parent
 once all its children have, and a meta task once it reaches **Applied**. The board shows only live work.
