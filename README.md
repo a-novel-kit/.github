@@ -457,38 +457,42 @@ you prefer — or both, and switch between them.
 
 #### Claude Code (Anthropic)
 
-[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's terminal
-coding agent.
+[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's coding
+agent.
 
-Install with the [native installer](https://code.claude.com/docs/en/setup)
-on every platform — macOS, Linux and WSL2 alike:
+The smoothest way in is the
+[IDE extension](https://code.claude.com/docs/en/ide-integrations): it runs Claude
+in a graphical panel inside VS Code and its forks (Cursor and the like), with a
+plugin for JetBrains IDEs. Install it from your editor's marketplace — search
+**Claude Code** — then sign in on first open. The VS Code extension bundles its
+own copy of the CLI, so the panel works with nothing else installed.
+
+Prefer the terminal? The CLI is the same agent without the editor UI. Install it
+with the [native installer](https://code.claude.com/docs/en/setup) on every
+platform — macOS, Linux and WSL2 alike:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 The binary lands in `~/.local/bin`, and the installer adds that directory to
-your `PATH`. If a new shell still can't find `claude`, add it yourself:
+your `PATH`. If a new shell still can't find `claude`, add it yourself (as with
+Go in step 1, another shell's rc file takes the same line, e.g. `~/.bashrc`):
 
 ```bash
 echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
 exec "$SHELL"
 ```
 
-(As with Go in step 1, another shell's rc file takes the same line instead,
-e.g. `~/.bashrc`.)
+Unlike the rest of the toolchain, the CLI keeps itself up to date in the
+background — the same reason we prefer Homebrew elsewhere, satisfied even better
+here. (A `claude-code` Homebrew cask exists if you prefer it, but it does not
+auto-update.) `claude update` forces an update immediately.
 
-Unlike the rest of the toolchain, Claude Code keeps itself up to date in the
-background — the same reason we prefer Homebrew elsewhere, satisfied even
-better here. (A `claude-code` Homebrew cask exists if you prefer it, but it
-does not auto-update.)
+Either way, Claude Code requires a paid Claude account (Pro, Max, Team or
+Enterprise) or a Claude Console account — the free plan does not include it.
 
-Claude Code requires a paid Claude account (Pro, Max, Team or Enterprise) or
-a Claude Console account — the free plan does not include it. To
-authenticate, run `claude` once from any project directory and follow the
-browser prompts.
-
-Verify:
+Verify the CLI:
 
 ```bash
 claude --version
@@ -516,30 +520,32 @@ though, noticeably improve the experience — all are global (saved to
   it, the `/effort` picker shows which levels it does — pick a newer one
   (another reason to choose the latest above) or fall back to `high`.
 
-`claude update` forces an update immediately if you don't want to wait for the
-background one.
-
 #### Codex (OpenAI)
 
-[Codex](https://developers.openai.com/codex) is OpenAI's terminal coding agent.
-Install it with the standalone installer, on macOS, Linux and WSL2 alike:
+[Codex](https://developers.openai.com/codex) is OpenAI's coding agent.
+
+As with Claude Code, the [IDE extension](https://developers.openai.com/codex/ide)
+is the easiest start. Install it from the marketplace in VS Code, Cursor or
+Windsurf — search **Codex** (extension id `openai.chatgpt`); JetBrains and Xcode
+ship their own native Codex integrations. Sign in on first open.
+
+Prefer the terminal? Install the CLI with the standalone installer, on macOS,
+Linux and WSL2 alike:
 
 ```bash
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
 ```
 
 The installer adds `codex` to your `PATH`; open a new shell (or run
-`exec "$SHELL"`) so the command resolves. On macOS a `codex` Homebrew cask
-(`brew install --cask codex`) is an alternative, if you would rather keep it
-current with `brew upgrade` alongside the rest of the toolchain.
+`exec "$SHELL"`) so the command resolves, and re-run the installer to update in
+place. On macOS a `codex` Homebrew cask (`brew install --cask codex`) is an
+alternative, if you would rather keep it current with `brew upgrade`.
 
-Codex needs a paid ChatGPT plan (Plus, Pro, Team, Edu or Enterprise) or an
-OpenAI API key. Run `codex` once from any project directory and pick **Sign in
-with ChatGPT** — or supply an API key — then follow the prompts.
+Either way, Codex needs a paid ChatGPT plan (Plus, Pro, Team, Edu or Enterprise)
+or an OpenAI API key. On first launch, pick **Sign in with ChatGPT** — or supply
+an API key — then follow the prompts.
 
-Re-running the standalone installer updates Codex in place.
-
-Verify:
+Verify the CLI:
 
 ```bash
 codex --version
