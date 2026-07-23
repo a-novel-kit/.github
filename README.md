@@ -1,14 +1,13 @@
 # Developing A-Novel
 
-Welcome! This guide takes you from a fresh machine to a working a-novel
-development environment. By the end you will have the complete toolchain
-installed, the [`a-novel` CLI](https://github.com/a-novel-kit/stack) built and
-configured, and local checkouts of every repository you need.
+This guide takes a fresh machine to a working a-novel setup: the toolchain, the
+[`a-novel` CLI](https://github.com/a-novel-kit/stack) built and configured, and
+local checkouts of every repository.
 
-A-Novel spans two GitHub organizations: [`a-novel`](https://github.com/a-novel)
-hosts [Agora](https://github.com/a-novel), the online writing studio itself,
-and [`a-novel-kit`](https://github.com/a-novel-kit) hosts the shared libraries,
-GitHub Actions and tooling behind it. One setup covers both.
+A-Novel spans two GitHub organizations —
+[`a-novel`](https://github.com/a-novel) (the Agora writing studio) and
+[`a-novel-kit`](https://github.com/a-novel-kit) (shared libraries, Actions and
+tooling). One setup covers both.
 
 **Contents**
 
@@ -26,28 +25,15 @@ GitHub Actions and tooling behind it. One setup covers both.
 
 ### Supported platforms
 
-Development is supported on **macOS and Linux** — anything that runs a
-bash-compatible shell. Install commands below are given for macOS, Ubuntu and
-Arch Linux; other distributions work fine too, as long as you can source the
-same tools. Every tool section links its official install documentation in
-case your setup needs a different path.
-
-The example outputs in this guide were captured on a real Linux setup. Your
-version numbers will differ — that is expected; what matters is that the
-command answers at all, and that the version meets the stated floor when one
-exists.
+**macOS and Linux** — anything with a bash-compatible shell. Commands are given
+for macOS, Ubuntu and Arch Linux; other distros work if you can source the same
+tools. Example version numbers will differ — what matters is that the command
+answers and clears any stated floor.
 
 ### A note for macOS users
 
-We recommend installing the toolchain through [Homebrew](https://brew.sh),
-and the macOS commands in this guide are written for it. The reason is
-maintenance: everything installed through Homebrew updates with a single
-`brew upgrade`, instead of each tool shipping its own installer and update
-mechanism. Each section still links the official install documentation,
-which may recommend a different method — you are free to follow it instead;
-the rest of the guide works the same either way.
-
-If you don't have Homebrew yet, install it first:
+Install through [Homebrew](https://brew.sh) so the whole toolchain updates with
+one `brew upgrade`. If you don't have it yet:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -55,9 +41,7 @@ If you don't have Homebrew yet, install it first:
 
 ### A note for Arch Linux users
 
-A base Arch install leaves out a few packages that the rest of this guide — and
-many tool installers — assume are already there. Install them up front so a
-later step doesn't fail on a missing command:
+A base Arch install omits a few packages later steps assume:
 
 ```bash
 sudo pacman -S which inetutils openssh
@@ -65,28 +49,20 @@ sudo pacman -S which inetutils openssh
 
 ### A note for Windows users
 
-Windows is not supported natively — the tooling assumes a bash-compatible
-environment. Other solutions exist, but the one we recommend is
-[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install): install a
-Ubuntu distribution, then follow the Ubuntu steps throughout this guide.
-This path is well-trodden — the guide itself is maintained from a WSL2
-environment.
+Not supported natively. Use
+[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) with an Ubuntu
+distribution and follow the Ubuntu steps throughout.
 
 ## Step 1 — install the toolchain
 
-Work through the subsections in order — later steps assume the earlier ones
-(for example, the SSH-key step uses the `gh` you install just before it). Each
-subsection ends with a **Verify** block; the comment under each command shows
-the kind of output you should expect.
+Work through these in order — later steps use earlier ones. Each ends with a
+**Verify** block; the comment shows the expected output.
 
 ### zsh
 
-Any bash-compatible shell works, but we recommend
-[zsh](https://www.zsh.org) on every platform — it is what the team uses, and
-the `a-novel` CLI's shell integration (daemon auto-start, tab completion)
-supports zsh, bash and fish. See the
-[per-OS install instructions](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
-for other systems.
+Recommended on every platform: the `a-novel` CLI's shell integration (daemon
+auto-start, tab completion) supports zsh, bash and fish.
+[Other systems](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH).
 
 ```bash
 # macOS — zsh is already the default shell; nothing to do
@@ -100,10 +76,7 @@ sudo pacman -S zsh zsh-completions
 chsh -s /usr/bin/zsh
 ```
 
-`chsh` makes zsh your default shell; log out and back in for it to take
-effect.
-
-Verify:
+`chsh` sets your default shell; log out and back in for it to take effect.
 
 ```bash
 echo $SHELL
@@ -112,8 +85,8 @@ echo $SHELL
 
 ### Git
 
-Everything is versioned with [Git](https://git-scm.com/downloads), and all
-repositories are cloned over SSH.
+Everything is versioned with [Git](https://git-scm.com/downloads) and cloned
+over SSH.
 
 ```bash
 # macOS
@@ -126,54 +99,43 @@ sudo apt install git
 sudo pacman -S git
 ```
 
-Verify:
-
 ```bash
 git --version
 # git version 2.54.0
 ```
 
-Set your commit identity — Git stamps it on every commit as the author, and
-GitHub matches the email to your account:
+Set your commit identity — use an email tied to your GitHub account so commits
+link back to it (the `…@users.noreply.github.com` address from your email
+settings works):
 
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "you@users.noreply.github.com"
 ```
 
-Use an email tied to your GitHub account so your commits link back to your
-profile. GitHub's `…@users.noreply.github.com` address — found under your
-account's email settings — works if you would rather not publish a real one.
-
 ### Oh My Zsh (recommended)
 
-[Oh My Zsh](https://ohmyz.sh) is a configuration framework for zsh: sane
-defaults, themes, plugins, and far better completion out of the box. It is
-optional, but it makes day-to-day shell work markedly nicer, and it is what
-the team runs.
+An [Oh My Zsh](https://ohmyz.sh) config framework: better zsh defaults and
+completion.
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-The installer replaces your `~/.zshrc` with its own template (your previous
-file is backed up to `~/.zshrc.pre-oh-my-zsh`). Run it **now**, before later
-steps append `PATH` lines to `~/.zshrc` — installing it afterwards would shed
-those edits. It may also offer to set zsh as your login shell; you already did
-that in the zsh step, so accepting is harmless and declining is fine.
+Run it **now** — it rewrites `~/.zshrc` (your old file is backed up to
+`~/.zshrc.pre-oh-my-zsh`), so installing it after later `PATH` edits would drop
+them.
 
 ### GitHub CLI
 
-The [GitHub CLI](https://github.com/cli/cli#installation) (`gh`) drives pull
-requests and API calls from the terminal, and doubles as the easiest way to
-authenticate your machine with GitHub.
+[`gh`](https://github.com/cli/cli#installation) drives pull requests and API
+calls, and authenticates your machine with GitHub.
 
 ```bash
 # macOS
 brew install gh
 
-# Ubuntu — the apt package works; the official apt repository ships fresher
-# releases if you ever need one:
+# Ubuntu — apt works; the official apt repo ships fresher releases if needed:
 # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 sudo apt install gh
 
@@ -181,15 +143,12 @@ sudo apt install gh
 sudo pacman -S github-cli
 ```
 
-Then authenticate. Pick **GitHub.com**, then **SSH** as the protocol. When
-`gh` offers to generate or upload an SSH key, choose **Skip** — the next
-section creates one explicitly and reuses it for commit signing:
+Authenticate — pick **GitHub.com**, then **SSH**, and **Skip** the key offer
+(the next section creates one):
 
 ```bash
 gh auth login
 ```
-
-Verify:
 
 ```bash
 gh --version
@@ -201,29 +160,15 @@ gh auth status
 
 ### SSH key
 
-Every repository is cloned over SSH, so GitHub needs one of your public keys.
-You create a single key here and use it for two things: authenticating Git
-operations, and signing your commits (next section).
-
-Generate an Ed25519 key, accepting the default location at each prompt. A
-passphrase protects the key if the machine is lost or the private key is
-exfiltrated; leaving it empty (press Enter) is reasonable on an encrypted
-personal machine and saves a prompt on every signed commit — choose by your
-threat model.
-This writes the private key to `~/.ssh/id_ed25519` and the public key to
-`~/.ssh/id_ed25519.pub` (reference:
-[Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)):
+Repos clone over SSH. One Ed25519 key covers both Git auth and commit signing
+(next section) — accept the default path, passphrase optional:
 
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-Register the public key with GitHub as an **authentication** key — the next
-section adds the same key again as a _signing_ key, since GitHub tracks the two
-separately. `gh auth login` doesn't grant the scope needed to manage keys, so
-grant it just for this command and drop it again right after, to avoid leaving a
-key-management token lying around (each `gh auth refresh` re-authorizes in your
-browser):
+Register it as an **authentication** key. `gh auth login` lacks the scope, so
+grant it only for this command:
 
 ```bash
 gh auth refresh -h github.com -s admin:public_key
@@ -231,15 +176,12 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type authentication --title "$(hostname)"
 gh auth refresh -h github.com --remove-scopes admin:public_key
 ```
 
-Prefer the web UI? Print the public key and paste it at
-[github.com/settings/ssh/new](https://github.com/settings/ssh/new) (reference:
-[Adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)):
+Prefer the web UI? Print the key and paste it at
+[github.com/settings/ssh/new](https://github.com/settings/ssh/new):
 
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
-
-Verify your SSH access:
 
 ```bash
 ssh -T git@github.com
@@ -247,17 +189,12 @@ ssh -T git@github.com
 ```
 
 > [!NOTE]
-> `ssh -T git@github.com` exits with code 1 even on success — GitHub refuses
-> the shell after greeting you. The greeting line is what matters.
+> `ssh -T git@github.com` exits `1` even on success — the greeting line is what
+> matters.
 
 ### Signing your commits
 
-Commits to A-Novel repositories must be signed — no GPG needed. Reuse the SSH
-key you created in the previous section: point Git at it and turn signing on
-(reference:
-[Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
-and
-[Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)):
+Commits to A-Novel repos must be signed — no GPG. Point Git at the same key:
 
 ```bash
 git config --global gpg.format ssh
@@ -265,12 +202,7 @@ git config --global user.signingkey ~/.ssh/id_ed25519.pub
 git config --global commit.gpgsign true
 ```
 
-> If you created your key under a different name or path, substitute it for
-> `~/.ssh/id_ed25519.pub` in the commands here.
-
-Then register that **same** public key a second time — now as a _signing_ key.
-As before, grant the key-management scope just for this command and remove it
-again afterward:
+Then register that **same** key again, now as a **signing** key:
 
 ```bash
 gh auth refresh -h github.com -s admin:ssh_signing_key
@@ -282,10 +214,9 @@ New commits now show as **Verified** on GitHub.
 
 ### Go
 
-The services, the shared libraries and the `a-novel` CLI itself are written in
-[Go](https://go.dev/doc/install). The minimum version is whatever
-[`cli/go.mod`](https://github.com/a-novel-kit/stack/blob/HEAD/cli/go.mod)
-declares in the stack repo — any release at or above it works.
+Services, libraries and the CLI are written in [Go](https://go.dev/doc/install).
+Minimum version:
+[`cli/go.mod`](https://github.com/a-novel-kit/stack/blob/HEAD/cli/go.mod).
 
 ```bash
 # macOS
@@ -298,39 +229,32 @@ sudo snap install go --classic
 sudo pacman -S go
 ```
 
-Verify:
-
 ```bash
 go version
 # go version go1.26.4 linux/amd64
 ```
 
-One more thing while you are here: `go install` places binaries in
-`$(go env GOPATH)/bin` — `~/go/bin` by default; set `GOBIN`
-(`go env -w GOBIN=<dir>`) if you want them elsewhere. That directory must be
-on your `PATH`, or the `a-novel` CLI you install in step 2 won't be found:
+`go install` puts binaries in `$(go env GOPATH)/bin` (`~/go/bin` by default).
+That directory must be on your `PATH`, or step 2's CLI won't be found:
 
 ```bash
 echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
 exec "$SHELL"
 ```
 
-(The example targets zsh — if you use another shell, the same line goes to
-its rc file instead, e.g. `~/.bashrc`.)
-
 ### Node.js
 
-JavaScript tooling (linters, formatters, the published client packages) runs
-on [Node.js](https://nodejs.org/en/download). We track the **Current** release
-line, not LTS — the exact floor is the `engines.node` field of the
+JavaScript tooling (linters, formatters, client packages) runs on
+[Node.js](https://nodejs.org/en/download). We track **Current**; the floor is
+`engines.node` in the
 [stack `package.json`](https://github.com/a-novel-kit/stack/blob/HEAD/package.json).
 
 ```bash
 # macOS
 brew install node
 
-# Ubuntu — use nvm; the apt package is far too old. Check the nvm README for
-# the current installer version: https://github.com/nvm-sh/nvm#installing-and-updating
+# Ubuntu — use nvm; the apt package is far too old. Current installer version:
+# https://github.com/nvm-sh/nvm#installing-and-updating
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
 \. "$HOME/.nvm/nvm.sh"   # load nvm into this shell — new shells load it automatically
 nvm install node         # "node" is nvm's alias for the latest version
@@ -339,8 +263,6 @@ nvm install node         # "node" is nvm's alias for the latest version
 sudo pacman -S nodejs npm
 ```
 
-Verify:
-
 ```bash
 node --version
 # v24.11.1
@@ -348,13 +270,11 @@ node --version
 
 ### pnpm
 
-[pnpm](https://pnpm.io/installation) is the package manager for every
-JavaScript workspace in both orgs — plain `npm` or `yarn` will be rejected by
+The package manager for every JS workspace — `npm` and `yarn` are rejected by
 the repos' `preinstall` hooks.
 
 ```bash
-# macOS — note: pnpm's standalone install script does not support Intel macs,
-# which is one more reason Homebrew is the path here
+# macOS — the standalone script doesn't support Intel macs; another reason to use brew
 brew install pnpm
 
 # Ubuntu
@@ -364,8 +284,6 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 sudo pacman -S pnpm
 ```
 
-Verify:
-
 ```bash
 pnpm --version
 # 11.5.2
@@ -373,40 +291,25 @@ pnpm --version
 
 ### GitHub Packages access
 
-The `@a-novel` and `@a-novel-kit` npm scopes are published to
-[GitHub Packages](https://docs.github.com/en/packages), not the public npm
-registry — every JS workspace's `.npmrc` points those scopes at
-`npm.pkg.github.com`. Installing them (anything that runs `pnpm install`) needs
-a GitHub **personal access token** with the `read:packages` scope.
-
-Create a classic token with `read:packages` at
-[github.com/settings/tokens](https://github.com/settings/tokens) (reference:
-[Authenticating to GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)),
-then add it to the `.npmrc` in your **home** directory — never a repo's:
+The `@a-novel` and `@a-novel-kit` npm scopes live on
+[GitHub Packages](https://docs.github.com/en/packages), so `pnpm install` needs
+a [classic token](https://github.com/settings/tokens) with `read:packages`. Put
+it in your **home** `.npmrc` — never a repo's, since those are committed:
 
 ```bash
-# ~/.npmrc — outside every repo, so the token can't be committed by accident
+# ~/.npmrc
 //npm.pkg.github.com/:_authToken=ghp_your_token_here
 ```
 
-> Keep the credential in `~/.npmrc`, not a project `.npmrc`. The per-repo
-> `.npmrc` files are committed and only map the scopes to the registry; a token
-> placed there is one `git add` away from being pushed. npm and pnpm merge your
-> home `~/.npmrc` with the project one, so the registry mapping and your token
-> combine automatically.
-
 ### Podman and podman-compose
 
-Local infrastructure — databases, test environments, service containers —
-runs on [Podman](https://podman.io/docs/installation) (rootless by default on
-Linux — no daemon, no root), with
+Local infrastructure runs on
+[Podman](https://podman.io/docs/installation) (rootless, no daemon) with
 [podman-compose](https://github.com/containers/podman-compose#installation)
-(1.6.0 or newer) as the provider behind `podman compose`. Docker is not used,
-and does not need to be installed.
+**1.6.0+** behind `podman compose`. No Docker needed.
 
 ```bash
-# macOS — Podman runs inside a lightweight VM: the two `podman machine`
-# commands below create it once, then start it after each reboot.
+# macOS — Podman runs in a lightweight VM: init once, start after each reboot
 brew install podman podman-compose
 podman machine init
 podman machine start
@@ -414,138 +317,79 @@ podman machine start
 # Ubuntu
 sudo apt install podman podman-compose
 
-# Arch Linux — pacman prompts for an OCI runtime provider; choose `crun`
+# Arch Linux — pacman prompts for an OCI runtime; choose `crun`
 sudo pacman -S podman podman-compose
 ```
 
-Verify that the Podman service answers and that the compose provider is
-found:
-
 ```bash
 podman info --format '{{.Version.Version}}'
-# 5.8.2
-#   (plain `podman info` prints a long status report — any error here means
-#    the service, or the VM on macOS, is not running)
+# 5.8.2   (an error here means the service — or the macOS VM — isn't running)
 
 podman compose version
-# >>>> Executing external compose provider "podman-compose". Please see podman-compose(1) for how to disable this message. <<<<
+# >>>> Executing external compose provider "podman-compose". ... <<<<
 # podman version 5.8.2
 ```
 
-The "external compose provider" banner is the success signal: it means
-`podman compose` found `podman-compose`.
-
-podman-compose must be 1.6.0 or newer — older versions mishandle
-`depends_on: service_healthy` and can hang at start-up. If docker-compose is
-also installed, `podman compose` prefers it (which would then need Podman's
-Docker-compatible socket); you don't need docker-compose, and the `a-novel` CLI
-pins the provider to podman-compose for its own commands regardless.
+The "external compose provider" banner is the success signal: `podman compose`
+found `podman-compose`. Versions below 1.6.0 mishandle
+`depends_on: service_healthy` and can hang at start-up.
 
 ### AI coding agents (optional — heavily recommended)
 
-Our workflow leans on AI coding agents. Every repository ships a curated set of
-skills that teach an agent the project's conventions, and because those skills
-live in the vendor-neutral `.agents/skills/` directory, whichever agent you
-bring arrives pre-configured the moment you open a workspace folder. Codex reads
-that directory directly; Claude Code reads it through a committed
-`.claude/skills` symlink, and also picks up the repository's checked-in project
-settings. You can develop a-novel without an agent — but you would be passing on
-a lot of leverage.
-
-The team uses two, described below. Either works on its own, so install whichever
-you prefer — or both, and switch between them.
+Every repo ships agent-agnostic skills under `.agents/skills/`, so any agent
+arrives pre-configured — Codex reads that directory directly, Claude Code
+through a committed `.claude/skills` symlink. Optional, but a lot of leverage.
+The team uses two:
 
 #### Claude Code (Anthropic)
 
-[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's coding
-agent.
-
-The smoothest way in is the
-[IDE extension](https://code.claude.com/docs/en/ide-integrations): it runs Claude
-in a graphical panel inside VS Code and its forks (Cursor and the like), with a
-plugin for JetBrains IDEs. Install it from your editor's marketplace — search
-**Claude Code** — then sign in on first open. The VS Code extension bundles its
-own copy of the CLI, so the panel works with nothing else installed.
-
-Prefer the terminal? The CLI is the same agent without the editor UI. Install it
-with the [native installer](https://code.claude.com/docs/en/setup) on every
-platform — macOS, Linux and WSL2 alike:
+[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's agent.
+Easiest is the
+[IDE extension](https://code.claude.com/docs/en/ide-integrations) — VS Code (and
+forks) plus a JetBrains plugin; search **Claude Code** and sign in. Or install
+the CLI:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-The binary lands in `~/.local/bin`, and the installer adds that directory to
-your `PATH`. If a new shell still can't find `claude`, add it yourself (as with
-Go in step 1, another shell's rc file takes the same line, e.g. `~/.bashrc`):
+It lands in `~/.local/bin`; if `claude` isn't found, add it to `PATH`:
 
 ```bash
 echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
 exec "$SHELL"
 ```
 
-Unlike the rest of the toolchain, the CLI keeps itself up to date in the
-background — the same reason we prefer Homebrew elsewhere, satisfied even better
-here. (A `claude-code` Homebrew cask exists if you prefer it, but it does not
-auto-update.) `claude update` forces an update immediately.
-
-Either way, Claude Code requires a paid Claude account (Pro, Max, Team or
-Enterprise) or a Claude Console account — the free plan does not include it.
-
-Verify the CLI:
+The CLI auto-updates in the background (`claude update` forces it). Either way,
+Claude Code needs a paid Claude account (Pro, Max, Team or Enterprise) or a
+Claude Console account.
 
 ```bash
 claude --version
 # 2.1.173 (Claude Code)
-
-claude doctor    # deeper health check: install method, auto-update status
 ```
 
-The per-repo `.claude/` directories handle every _project_ convention, so
-there is nothing to configure for a-novel itself. A few _personal_ settings,
-though, noticeably improve the experience — all are global (saved to
-`~/.claude/settings.json`), so you set them once and forget them:
+A few global settings sharpen it (set once in `~/.claude/settings.json`):
 
-- **Model** — run `/model` and pick the latest, most capable model; press Enter
-  to save it as your default. The newest models unlock the `xhigh` effort level
-  below.
-- **Output style** — `/config` → **Output style** → **Explanatory**. Claude
-  then narrates the reasoning behind each change, which is far easier to learn
-  from and to review than terse, answer-only output.
-- **Reasoning effort** — `/effort xhigh` makes deep reasoning your everyday
-  default (it persists across sessions). Step up to `/effort max` for the
-  genuinely hard tasks — architecture, gnarly debugging — where you want it to
-  think without a token limit (`max` applies to the current session only).
-  `xhigh` is only offered on recent models; if your selected model doesn't list
-  it, the `/effort` picker shows which levels it does — pick a newer one
-  (another reason to choose the latest above) or fall back to `high`.
+- **Model** — `/model`, pick the latest and most capable (unlocks `xhigh`).
+- **Output style** — `/config` → **Output style** → **Explanatory**.
+- **Effort** — `/effort xhigh` as your default; `/effort max` for the hard tasks.
 
 #### Codex (OpenAI)
 
-[Codex](https://developers.openai.com/codex) is OpenAI's coding agent.
-
-As with Claude Code, the [IDE extension](https://developers.openai.com/codex/ide)
-is the easiest start. Install it from the marketplace in VS Code, Cursor or
-Windsurf — search **Codex** (extension id `openai.chatgpt`); JetBrains and Xcode
-ship their own native Codex integrations. Sign in on first open.
-
-Prefer the terminal? Install the CLI with the standalone installer, on macOS,
-Linux and WSL2 alike:
+[Codex](https://developers.openai.com/codex) is OpenAI's agent. Easiest is the
+[IDE extension](https://developers.openai.com/codex/ide) — VS Code, Cursor or
+Windsurf (search **Codex**, id `openai.chatgpt`), with native JetBrains and
+Xcode integrations; sign in on first open. Or install the CLI:
 
 ```bash
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
 ```
 
-The installer adds `codex` to your `PATH`; open a new shell (or run
-`exec "$SHELL"`) so the command resolves, and re-run the installer to update in
-place. On macOS a `codex` Homebrew cask (`brew install --cask codex`) is an
-alternative, if you would rather keep it current with `brew upgrade`.
-
-Either way, Codex needs a paid ChatGPT plan (Plus, Pro, Team, Edu or Enterprise)
-or an OpenAI API key. On first launch, pick **Sign in with ChatGPT** — or supply
-an API key — then follow the prompts.
-
-Verify the CLI:
+It adds `codex` to your `PATH`; re-run the installer to update, or on macOS use
+the `codex` Homebrew cask (`brew install --cask codex`). Codex needs a paid
+ChatGPT plan (Plus, Pro, Team, Edu or Enterprise) or an OpenAI API key — sign in
+on first launch.
 
 ```bash
 codex --version
@@ -554,8 +398,7 @@ codex --version
 
 ### Keeping the toolchain up to date
 
-Most of the toolchain updates through your package manager; only the pieces
-installed outside it need their own command:
+Only the pieces installed outside your package manager need their own command:
 
 ```bash
 # macOS — everything came from Homebrew
@@ -574,15 +417,13 @@ sudo pacman -Syu
 ## Step 2 — install the a-novel CLI
 
 The `a-novel` CLI is the single entrypoint for building, testing, running and
-releasing every project. It installs like any other Go tool, straight from
-source — no need to clone anything first:
+releasing every project. It installs like any Go tool, straight from source:
 
 ```bash
 go install github.com/a-novel-kit/stack/cli/cmd/a-novel@latest
 ```
 
-The binary lands in the Go install directory you added to your `PATH` in
-step 1 — `$(go env GOPATH)/bin` by default, or `$GOBIN` if you changed it.
+It lands in the Go bin directory you added to `PATH` in step 1.
 
 ### Bootstrap your environment
 
@@ -590,35 +431,25 @@ step 1 — `$(go env GOPATH)/bin` by default, or `$GOBIN` if you changed it.
 a-novel core setup
 ```
 
-`core setup` is the one-time interactive bootstrap, and it takes care of
-everything: it re-checks the environment you installed in step 1 (podman,
-git, GitHub SSH), creates the CLI's state directories, clones your workspace
-(see below), installs a small block in your shell rc (zsh, bash and fish are
-supported) that auto-starts the background daemon and enables tab
-completion, and finally starts the daemon. It is also **idempotent** — you
-can re-run it any time as a health check; on an already-configured machine
-it changes nothing and simply reports green checks.
+`core setup` is the one-time interactive bootstrap: it re-checks your
+environment, creates the CLI's state directories, clones your workspace,
+installs a shell-rc block (daemon auto-start + completion) and starts the
+daemon. It is idempotent — re-run it any time as a health check.
 
-The workspace is a clone of the
-[stack repository](https://github.com/a-novel-kit/stack); it hosts the CLI's
-source and anchors your local checkouts of all org repositories. By default
-it lives at `~/git-projects/a-novel`. To put it somewhere else, set
-`A_NOVEL_STACKS` before running setup (format: `name:path` entries separated
-by commas, first entry is the default workspace) — and keep it set, for
-example in your shell rc:
+The workspace (a [stack](https://github.com/a-novel-kit/stack) clone) anchors
+all your checkouts and defaults to `~/git-projects/a-novel`. To relocate it, set
+`A_NOVEL_STACKS` before setup (format: `name:path` entries, comma-separated,
+first is the default) and keep it set in your rc:
 
 ```bash
 export A_NOVEL_STACKS="default:$HOME/somewhere/else/a-novel"
 ```
 
-Finally, pull the org repositories into the workspace:
+Then pull the org repositories into `app/` and `kit/`:
 
 ```bash
 a-novel core sync
 ```
-
-`core sync` clones (or fast-forwards) the curated set of org repositories
-into `app/` and `kit/` inside the workspace.
 
 ### Verify the installation
 
@@ -635,14 +466,13 @@ a-novel core status
 #     * default    /home/<you>/git-projects/a-novel
 ```
 
-If the daemon reports `not running`, start it with `a-novel core start` —
-new shells do this automatically thanks to the rc block installed by setup.
+If the daemon reports `not running`, start it with `a-novel core start` — new
+shells do this automatically.
 
 ### Updating the CLI
 
-After pulling a workspace update that touches `cli/`, rebuild in place —
-`a-novel install` rebuilds the binary from your workspace's `cli/` directory
-and restarts the daemon without losing your running targets:
+After pulling a workspace change that touches `cli/`, rebuild in place — this
+keeps your running targets:
 
 ```bash
 git -C ~/git-projects/a-novel pull   # adjust if you moved your workspace
@@ -651,38 +481,29 @@ a-novel install
 
 ### Optional — bot credentials
 
-Maintainers who run AI-agent workflows also need the per-org GitHub App keys
-under `.secrets/`. This is not required for regular development; when you
-need it, follow the
+Maintainers running AI-agent workflows need the per-org GitHub App keys under
+`.secrets/`; see the
 [GitHub access section of the stack README](https://github.com/a-novel-kit/stack#github-access).
+Not needed for regular development.
 
 ### Optional — service secrets
 
-Some services need secret values to run. The CLI ships a small local secret
-manager so these are never handled in the open: a tool — or an AI agent — can
-run the toolchain against real secrets **without ever seeing them**. Values are
-stored AES-256-GCM-encrypted under a local key and injected only into the child
-process of `test` / `run` / `ui` — never printed, logged, committed, or passed
-as an argument.
-
-Set the store up once:
+Some services need secret values to run. The CLI's local secret manager stores
+them AES-256-GCM-encrypted and injects them only into the child process of
+`test` / `run` / `ui` — never printed, logged or committed.
 
 ```bash
 a-novel secrets init   # generate the local key + store (run once)
 ```
 
-After that you only provision the secrets for the services you actually work on.
-A service declares what it needs in a committed, value-free `.a-novel/secrets.yaml`,
-and the CLI injects them automatically; a secret you haven't set yet is skipped
-with a descriptive warning naming exactly what to run. **Each service states the
-secrets it requires — and where to obtain them — in its own `CONTRIBUTING.md`;
-look there for the precise commands.** The
+Each service lists the secrets it needs — and where to get them — in its own
+`CONTRIBUTING.md`; a secret you haven't set is skipped with a warning. The
 [CLI README](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md)
-documents the full secrets model.
+documents the full model.
 
 ## Step 3 — daily usage
 
-A taste of the everyday commands, all run from anywhere inside the stack:
+The everyday commands, run from anywhere inside the stack:
 
 ```bash
 a-novel test -y                          # run all Go + pnpm tests in the working tree
@@ -693,20 +514,17 @@ a-novel run ui                           # full-screen TUI
 a-novel <verb> --help                    # exhaustive help for any subcommand
 ```
 
-Lint, format and code generation are deliberately **not** CLI verbs — they
-are uniform pnpm scripts in every repo: `pnpm lint:go`, `pnpm format:go`,
-`pnpm generate:go`, and so on.
+Lint, format and code generation are **not** CLI verbs — they are uniform pnpm
+scripts in every repo: `pnpm lint:go`, `pnpm format:go`, `pnpm generate:go`, and
+so on.
 
-For the full picture — command tree, daemon architecture, volumes, release
-flow — head to the [stack README](https://github.com/a-novel-kit/stack#readme)
-and the
+For the full picture — command tree, daemon architecture, volumes, release flow
+— see the [stack README](https://github.com/a-novel-kit/stack#readme) and the
 [CLI reference](https://github.com/a-novel-kit/stack/blob/HEAD/cli/README.md).
 
 ## Getting help
 
-- Questions and discussion: join us on
-  [Discord](https://discord.gg/rp4Qr8cA).
-- Bugs and feature requests: open an issue on the affected repository (the
-  templates will guide you).
+- Questions and discussion: join us on [Discord](https://discord.gg/rp4Qr8cA).
+- Bugs and feature requests: open an issue on the affected repository.
 - Security reports: **never** a public issue — follow the
   [security policy](https://github.com/a-novel-kit/.github/blob/HEAD/SECURITY.md).
