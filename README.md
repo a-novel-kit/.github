@@ -441,14 +441,24 @@ also installed, `podman compose` prefers it (which would then need Podman's
 Docker-compatible socket); you don't need docker-compose, and the `a-novel` CLI
 pins the provider to podman-compose for its own commands regardless.
 
-### Claude Code (optional — heavily recommended)
+### AI coding agents (optional — heavily recommended)
 
-[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's
-terminal coding agent, and our workflow leans on it heavily: every repository
-ships curated Claude Code skills and settings (under `.claude/`) that teach
-it the project's conventions, so it arrives pre-configured the moment you
-open a workspace folder. You can develop a-novel without it — but you would
-be passing on a lot of leverage.
+Our workflow leans on AI coding agents. Every repository ships a curated set of
+skills that teach an agent the project's conventions, and because those skills
+live in the vendor-neutral `.agents/skills/` directory, whichever agent you
+bring arrives pre-configured the moment you open a workspace folder. Codex reads
+that directory directly; Claude Code reads it through a committed
+`.claude/skills` symlink, and also picks up the repository's checked-in project
+settings. You can develop a-novel without an agent — but you would be passing on
+a lot of leverage.
+
+The team uses two, described below. Either works on its own, so install whichever
+you prefer — or both, and switch between them.
+
+#### Claude Code (Anthropic)
+
+[Claude Code](https://code.claude.com/docs/en/overview) is Anthropic's terminal
+coding agent.
 
 Install with the [native installer](https://code.claude.com/docs/en/setup)
 on every platform — macOS, Linux and WSL2 alike:
@@ -508,6 +518,33 @@ though, noticeably improve the experience — all are global (saved to
 
 `claude update` forces an update immediately if you don't want to wait for the
 background one.
+
+#### Codex (OpenAI)
+
+[Codex](https://developers.openai.com/codex) is OpenAI's terminal coding agent.
+Install it with the standalone installer, on macOS, Linux and WSL2 alike:
+
+```bash
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+```
+
+The installer adds `codex` to your `PATH`; open a new shell (or run
+`exec "$SHELL"`) so the command resolves. On macOS a `codex` Homebrew cask
+(`brew install --cask codex`) is an alternative, if you would rather keep it
+current with `brew upgrade` alongside the rest of the toolchain.
+
+Codex needs a paid ChatGPT plan (Plus, Pro, Team, Edu or Enterprise) or an
+OpenAI API key. Run `codex` once from any project directory and pick **Sign in
+with ChatGPT** — or supply an API key — then follow the prompts.
+
+Re-running the standalone installer updates Codex in place.
+
+Verify:
+
+```bash
+codex --version
+# 0.145.0
+```
 
 ### Keeping the toolchain up to date
 
