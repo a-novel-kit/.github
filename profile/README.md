@@ -1,3 +1,11 @@
+<p align="center">
+  <img
+    alt="Agora"
+    src="https://raw.githubusercontent.com/a-novel-kit/uikit/v0.4.0/packages/images/files/banner/1920w/agora-banner.png"
+    width="960"
+  />
+</p>
+
 # 🧰 A-Novel Kit
 
 The toolkit behind [Agora](https://github.com/a-novel), the online writing studio. This
