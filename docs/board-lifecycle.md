@@ -335,10 +335,8 @@ The board's answer to trouble is always the same: stop, hold, and hand it to a p
 happened. The [merge-gate and freeze](#why-an-epic-lands-whole) that keep an Epic whole are the clearest
 case, holding a half-landed set for a person to finish rather than reverting a merge.
 
-When it does need a person, it says so out loud. A stuck hotfix, a check that never finished, or an Epic that
-cannot complete: each raises an escalation ticket on the board and, for the worst of them, a direct page. A
-separate watchdog watches the safety systems themselves, so if a sweep stops running, someone hears about
-it.
+When it does need a person, it says so out loud. A hotfix that cannot be backported, or an Epic that cannot
+complete, raises an escalation ticket on the board and, for the worst of them, a direct page.
 
 And if any of them misbehaves, one switch stops everything. The kill switch holds every Pull Request and
 freezes every board writing at once. It fails safe: anything but a clear "off" value halts the automation, so
