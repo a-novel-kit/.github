@@ -23,4 +23,4 @@ Join us on social media!
 ## Technical
 
 Developing a-novel? Start with the
-[developer onboarding guide](https://github.com/a-novel-kit/.github#readme).
+[developer guide](https://a-novel-kit.github.io/stack/).

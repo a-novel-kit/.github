@@ -16,7 +16,7 @@ Each repository extends this with its own `CONTRIBUTING.md`.
 
 ## External resources
 
-- [Developer onboarding guide](https://github.com/a-novel-kit/.github/blob/master/README.md) — the
+- [Developer guide](https://a-novel-kit.github.io/stack/) — the
   toolchain and the `a-novel` CLI in practice.
 - [Service & architecture concepts](https://github.com/a-novel/.github/blob/master/CONTRIBUTING.md) —
   the product-side vocabulary.
