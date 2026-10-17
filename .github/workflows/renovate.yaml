@@ -7,6 +7,10 @@ on:
 jobs:
   renovate:
     runs-on: ubuntu-latest
+    # The privileged keys are secrets of the governance environment, which no feature branch opens.
+    environment:
+      name: governance
+      deployment: false
     # Matches the sibling org's renovate job; the default token is wider than
     # Renovate needs and this job runs on a schedule with no review in front.
     permissions:
