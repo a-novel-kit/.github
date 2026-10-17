@@ -8,9 +8,9 @@
 
 # 🧰 A-Novel Kit
 
-The toolkit behind [Agora](https://github.com/a-novel), the online writing studio. This
-organization hosts everything Agora's repositories share: Go and TypeScript libraries,
-reusable GitHub Actions, and the [`a-novel` CLI](https://github.com/a-novel-kit/stack).
+The toolkit behind [A-Novel](https://github.com/a-novel). This organization hosts everything
+A-Novel's repositories share: Go and TypeScript libraries, reusable GitHub Actions, and the
+[`a-novel` CLI](https://github.com/a-novel-kit/stack).
 
 ## 📱 Socials
 
@@ -22,5 +22,5 @@ Join us on social media!
 
 ## Technical
 
-Developing a-novel? Start with the
+Developing A-Novel? Start with the
 [developer guide](https://a-novel-kit.github.io/stack/).
