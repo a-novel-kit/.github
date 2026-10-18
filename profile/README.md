@@ -1,9 +1,19 @@
 <p align="center">
-  <img
-    alt="Agora"
-    src="https://raw.githubusercontent.com/a-novel-kit/uikit/v0.4.0/packages/images/files/banner/1920w/agora-banner.png"
-    width="960"
-  />
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://raw.githubusercontent.com/a-novel-kit/uikit/cfe1d542719dd8dff915b4773cad2352109763cb/packages/images/files/banner/960h/kit-banner.png"
+    />
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="https://raw.githubusercontent.com/a-novel-kit/uikit/cfe1d542719dd8dff915b4773cad2352109763cb/packages/images/files/banner/960h/kit-banner-light.png"
+    />
+    <img
+      alt="KIT"
+      src="https://raw.githubusercontent.com/a-novel-kit/uikit/cfe1d542719dd8dff915b4773cad2352109763cb/packages/images/files/banner/960h/kit-banner-light.png"
+      width="398"
+    />
+  </picture>
 </p>
 
 # 🧰 A-Novel Kit
