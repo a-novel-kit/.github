@@ -11,8 +11,6 @@ jobs:
     environment:
       name: governance
       deployment: false
-    # Matches the sibling org's renovate job; the default token is wider than
-    # Renovate needs and this job runs on a schedule with no review in front.
     permissions:
       checks: write
       statuses: write
