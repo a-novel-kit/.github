@@ -1,23 +1,16 @@
 # Contributing to a-novel-kit
 
-`a-novel-kit` is the **platform** the product is built on: the libraries the product depends on and the
-tooling that builds, tests, and ships it. This is the entry point to the contributor documentation; each
-topic has its own page.
+`a-novel-kit` is the **platform** the product is built on. It holds the libraries the product depends on
+and the tooling that builds, tests and ships it. Set up your machine with the
+[developer guide](https://a-novel-kit.github.io/stack/) first.
 
-## Contents
+- **[Taxonomy](docs/taxonomy.md)** is the platform's vocabulary.
+- **[The board lifecycle](docs/board-lifecycle.md)** is how work is planned, tracked, landed and
+  released. Both organizations run it.
 
-- **[Taxonomy](docs/taxonomy.md)** — the platform vocabulary: repository kinds, libraries, tooling, and
-  how versioning and releases work.
-- **[The board lifecycle](docs/board-lifecycle.md)** — how work is planned, tracked, landed, and
-  released on the shared board, and how to handle the edge cases. Both organizations run the identical
-  process, so this page is shared with `a-novel`.
+Each repository adds its own `CONTRIBUTING.md`. The product's concepts live in
+[`a-novel`'s contributor documentation](https://github.com/a-novel/.github/blob/master/CONTRIBUTING.md).
 
-Each repository extends this with its own `CONTRIBUTING.md`.
+## Questions?
 
-## External resources
-
-- [Developer guide](https://a-novel-kit.github.io/stack/) — the
-  toolchain and the `a-novel` CLI in practice.
-- [Service & architecture concepts](https://github.com/a-novel/.github/blob/master/CONTRIBUTING.md) —
-  the product-side vocabulary.
-- [Semantic Versioning](https://semver.org/) — the versioning scheme.
+Ask on [Discord](https://discord.gg/rp4Qr8cA), or open an issue on the affected repository.
