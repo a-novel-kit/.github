@@ -9,14 +9,10 @@ extends this document with its own `CONTRIBUTING.md`.
 
 ## Repository kinds
 
-A repository here is a **library** or **tooling**.
-
-A **library** is shared code other repositories depend on. **Tooling** is code that helps build the
-product but is never part of it.
-
-What separates the two is whether the code ships. A library ships: its code reaches production through
-the repositories that depend on it. Tooling only supports the work of shipping. Tests belong to the
-product they cover, so they are not tooling.
+A repository here is a **library** or **tooling**, and whether its code ships separates the two. A
+library ships: its code reaches production through the repositories that depend on it. Tooling helps
+build the product but never becomes part of it. Tests belong to the product they cover, so they are not
+tooling.
 
 ## Libraries
 
@@ -40,8 +36,6 @@ home, then it graduates.
 
 ## Tooling
 
-**Tooling** builds, tests, runs and ships the product without shipping inside it.
-
 The **[`a-novel` CLI](https://github.com/a-novel-kit/stack)** is one command for the whole workspace. It
 builds, tests and runs every repository the same way.
 
@@ -49,12 +43,13 @@ The **reusable workflows** and **composite actions** hold the CI recipe every re
 composite action bundles a few steps, and a reusable workflow a whole job. Repositories pin both to a
 released version, so an upgrade is a deliberate bump.
 
-The **meta-repositories** (`.github`) hold the organization's shared documentation and policy, this
-document among them.
+The **meta-repositories** (`.github`) hold the organization's shared documentation, policy and
+workflows, this document among them. They publish nothing, so their `master` is always the live
+version.
 
 ## Versioning and releases
 
-Every library and tool is versioned by a **git tag** that follows
+Every library and tool other than the meta-repositories is versioned by a **git tag** that follows
 [semantic versioning](https://semver.org/). Every consumer records the exact version it builds with, in
 `go.mod`, a lockfile or a pinned `uses:` tag, so an upgrade is always a reviewable change. A **release**
 is cut in CI by the repository's release workflow, which tags the version and publishes it.

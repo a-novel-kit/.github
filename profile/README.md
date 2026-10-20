@@ -30,7 +30,8 @@ Join us on social media!
 [![Discord](https://img.shields.io/discord/1315240114691248138?logo=discord)](https://discord.gg/rp4Qr8cA)
 [![Spotify](https://img.shields.io/badge/Spotify-1ED760?logo=spotify&logoColor=white)](https://open.spotify.com/show/6NiTIuFh4vtNVoJzLozrWb)
 
-## Technical
+## Contributing
 
-Developing A-Novel? Start with the
-[developer guide](https://a-novel-kit.github.io/stack/).
+Follow the work on our [roadmap](https://github.com/orgs/a-novel-kit/projects/1/views/3).
+
+To build A-Novel locally, start with the [developer guide](https://a-novel-kit.github.io/stack/).
