@@ -23,9 +23,9 @@ Marking the Pull Request ready moves the Task to In review, the second human gat
 the code, asks for changes and finally approves it. The Pull Request then merges to master, and the Task
 moves to Awaiting release.
 
-Merged code has not reached production yet. It first sits in staging, a pre-production environment.
-Cutting a release from there is the third human gate. The release is what ships to production:
-versioned, stable code.
+Merged code has not reached production yet. It waits on master, the branch every release is cut from.
+Cutting the release is the third human gate. The release is what ships to production: versioned,
+stable code.
 
 On the board, each state is a column. Every issue is a card in the column of its state, and work moves
 from left to right:
@@ -35,10 +35,10 @@ from left to right:
   ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐    ┌───────┐
   │ Task  │    │ Task  │    │ Task  │    │ Task  │    │ Task  │
   └───────┘    └───────┘    └───────┘    └───────┘    └───────┘
-   ◆ you       └ board moves them ┘      ◆ you        ◆ you
+   ◆ spec      └ board moves them ┘      ◆ review     ◆ release
 ```
 
-The three ◆ gates are the spec, the review and the release.
+Each ◆ marks a human gate.
 
 ## What deserves your attention
 
@@ -52,9 +52,9 @@ judgment, and the three gates are made of nothing else:
 - 🚀 **Ship only when the work is ready.** The release is a deliberate choice of when. Good work shipped
   at the wrong time still lands badly.
 
-Neither the board nor an agent catches any of this. Only a person who understands the work can. You can
-hand off the typing, never the understanding. The spec is yours, and the review and the release are a
-maintainer's. Spend your attention at your gate, and trust the board with the rest.
+Neither the board nor an agent catches any of this. Only a person who understands the work can. The spec
+is yours, and the review and the release are a maintainer's. Spend your attention at your gate, and trust
+the board with the rest.
 
 ## Shaping the work
 
@@ -92,8 +92,9 @@ Milestone of the same name in each.
 ### Meta tasks
 
 Some work writes no code, such as creating a repository, changing a setting or granting a permission.
-That work is a **meta task**. It carries a `meta` label, skips the code lifecycle, and moves through the
-Backlog → Triage → Ready → **Applied** statuses. Keep meta tasks in their own Epic, apart from code Tasks.
+That work is a **meta task**. It carries a `meta` label and skips the code lifecycle: once the change is
+made, you move it from Ready to **Applied** by hand. Keep meta tasks in their own Epic, apart from code
+Tasks.
 
 ### Working with issues
 
@@ -116,11 +117,10 @@ Closes #123
 the issue and records that this code delivered it. The board watches that record to move the issue
 forward.
 
-A plain `#123` only finds an issue in the Pull Request's own repository. For an issue in another
-repository, such as a planning issue in `.github`, write its full address:
-`Closes a-novel-kit/.github#123`, with the organization, the repository and the number. A plain `#123`
-aimed at another repository matches nothing. The link never forms, and the issue stays still on the
-board. The whole lifecycle turns on this link.
+A plain `#123` only finds an issue in the Pull Request's own repository. An issue in another
+repository, such as a planning issue in `.github`, takes its full address, with the organization, the
+repository and the number: `Closes a-novel-kit/.github#123`. Without it, the link never forms and the
+issue stays still on the board. The whole lifecycle turns on this link.
 
 Tasks live in the repositories they touch, next to the code. An Epic or an Initiative that spans
 repositories lives in the organization's `.github` repository. An Epic there adopts its Tasks as
@@ -164,13 +164,14 @@ an Epic or an Initiative. Split it, and plan each child in turn.
 
 **Then get it accepted.** A groomed specification waits in Triage until someone accepts it into Ready
 and opens it for work. That acceptance is the gate. Everything downstream rests on what you settle here,
-so spend the time now rather than in review.
+so spend the time now rather than in review. Accepted work that must wait its turn, such as a later
+stage, sits in Backlog until then.
 
 ## The development cycle
 
 This section is for when you write the code yourself. An agent that picks up a Task already works this
-way. It gives the general shape, the same in every repository. Each repository's own `CONTRIBUTING.md`
-adds the language, the stack and the tools.
+way. The shape is the same in every repository, and each repository's own `CONTRIBUTING.md` adds the
+language, the stack and the tools.
 
 **Read the local guidelines first.** Every repository has its own conventions, and they outrank any
 general habit. Read them before writing a line, so your code lands in the shape reviewers expect.
@@ -195,21 +196,21 @@ one feature, so master never carries half of one, such as a client with no endpo
 client calls. This rule shapes how you plan.
 
 A required check, the **merge-gate**, holds an Epic together. A Pull Request joins an Epic through an
-`epic:<N>` label that only a maintainer can add, so membership is trusted. The gate holds every member
-until all of them are approved, then approves them at once, and the merge queue lands them together.
-Each Task stands on its own, so master still builds during the brief window while they land.
+`epic:<N>` label. The gate holds every member until all of them are ready and approved, then passes them
+at once, and the merge queue lands them together. Each Task stands on its own, so master still builds
+during the brief window while they land.
 
 When one member lands and its siblings do not, the board sees a **partial landing** and
-[freezes the rest](#when-the-board-needs-you). Nothing else merges until the Epic is whole again. The
-fix is almost always to roll forward and get the stuck sibling in. Reverting what already merged is a
-last resort, run by hand, because undoing a merge is far more dangerous than finishing one.
+[freezes the rest](#when-the-board-needs-you) of the Epic. The fix is almost always to roll forward and get the stuck
+sibling in. Reverting what already merged is a last resort, run by hand, because undoing a merge is far
+more dangerous than finishing one.
 
 ## Ordering across repositories
 
 Not every feature can land whole. A repository sees another's work only once it is **published**, not
 merely merged. A service can only use a released version of a library, so the library's new function
-must ship before the service can call it. Two such pieces cannot share an Epic. Releases go out one at a
-time, so cross-repository work comes together in a sequence of steps.
+must ship before the service can call it. Two such pieces cannot share an Epic, so dependent work ships
+as a sequence of releases.
 
 A breaking change is the clearest case, and it always takes two Epics. An **expand** Epic adds the new
 path beside the old one and ships it, so both work at once. A **contract** Epic then removes the old
@@ -224,13 +225,13 @@ several at once. For now, the numbers are set by hand, once, and no automation r
 
 ## Shipping
 
-Merging is not shipping. Master is staging, and a release is what reaches production. Cutting one is
-always a deliberate, human call.
+Merging is not shipping. Master holds merged work, and a release is what reaches production. Cutting
+one is always a deliberate, human call.
 
 Each repository ships on its own, as a [`vX.Y.Z` tag](taxonomy.md#versioning-and-releases). A release
 publishes everything on that repository's master at that moment. You cut it from CI by running the
-release workflow and choosing the size of the bump. Only an admin can run it, through a protected gate,
-and no command releases from your machine.
+release workflow and choosing the size of the bump. The cut then waits at a protected gate until an admin
+approves it, and no command releases from your machine.
 
 One repository ships with one release. A cross-repository Epic ships with a **release train**, a single
 dispatch that runs each repository's own release. The train runs them in any order, and re-running it
@@ -245,10 +246,11 @@ A **Bug** is the leaf for a defect. It is built and tracked like a Task, on the 
 same gates, with its own type to make its nature plain. A bug caught before it ships rides the ordinary
 cycle like any other Task.
 
-A bug in a version already in production cannot wait for that cycle. You **hotfix** it. Run the
-repository's hotfix workflow with the release line and the fix. The workflow cuts a new patch straight
-from the shipped version, then opens a Pull Request that carries the same fix back to master. Merge that
-backport, or the next release from that line ships without the fix and brings the bug back.
+A bug in a version already in production cannot wait for the next release. You **hotfix** it. Fix it on
+master first, through the ordinary cycle. An admin then runs the repository's hotfix workflow with the
+release line, such as `1.4`, and the fix's commits. The workflow opens a backport Pull Request that
+carries each fix onto the line's `release/v1.4` branch. Merging the backport cuts the next patch from
+that line, behind the same release gate.
 
 A bug that spans repositories is an ordinary Epic, run fast.
 
@@ -264,20 +266,25 @@ Get the rest approved, and the gate greens them together. The Pull Request itsel
 **A Pull Request is frozen.** Part of an Epic reached master and part did not, so the board froze the
 rest to keep master whole. If the missing piece can still merge, approve it and let it in. If a sibling
 was abandoned, the set can never be whole. The board then holds and waits for you, without guessing
-which survivors still form the feature. If the landed pieces have to come back out, a maintainer runs a
+which survivors still form the feature. If the landed pieces have to come back out, an admin runs a
 rollback. The rollback reverts them in order, through the same review and gate, and asks for a typed
 confirmation.
 
 **A ticket tagged `escalation` appears in the Triage view
 ([a-novel](https://github.com/orgs/a-novel/projects/7/views/3),
-[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)).** The board opened it because
-something is stuck and needs a person: a stalled hotfix, a check that never finished, or an Epic that
-cannot complete. Fix the underlying problem, and the ticket closes itself. The ticket is a signal, so do
-not size or groom it. A pile of open escalation tickets is itself the alarm.
+[a-novel-kit](https://github.com/orgs/a-novel-kit/projects/1/views/2)).** The board opened it because a
+hotfix is stuck: a backport it could not open, or a patch that failed to cut. Fix the underlying problem,
+then close the ticket. The ticket is a signal, so do not size or groom it. A pile of open escalation
+tickets is itself the alarm.
 
 **The board looks out of date.** A [sweep](#how-the-board-keeps-itself-in-step) re-checks everything
-every fifteen minutes and fixes any drift. To run it sooner, start the `reconcile-board` workflow from
-the Actions tab of the organization's `.github` repository.
+every fifteen minutes and fixes any drift. To run it sooner, start the `reconcile-board` workflow of
+the organization's `.github` repository:
+
+```sh
+org=a-novel-kit # or a-novel
+gh workflow run reconcile-board.yaml --repo "$org/.github"
+```
 
 **A release stalled halfway.** A release train fans out to many repositories, and one of them can park
 at its approval gate or fail after tagging. Re-run the train. It reads what actually shipped from the
@@ -285,11 +292,12 @@ live tags and re-cuts only the repositories still missing. A tag with no publish
 flagged for a person.
 
 **Everything has stopped.** The kill switch is on, and it halts every board automation at once during an
-incident. While it is on, no Pull Request can merge, and the emergency hotfix path stays open. Turn the
-switch off, and the next sweep repairs whatever piled up.
+incident. While it is on, no Pull Request can merge, and the hotfix workflow keeps running so an admin
+can still ship a patch. An org admin turns the switch off by setting the `AGENT_KILL_SWITCH`
+organization variable to `off`, and the next sweep repairs whatever piled up.
 
-**A version in production has a bug.** [Hotfix it](#bugs-and-hotfixes). Patch the shipped version, then
-merge the backport to master.
+**A version in production has a bug.** [Hotfix it](#bugs-and-hotfixes). Fix it on master, then backport
+the fix to the release line.
 
 ## How the board keeps itself in step
 
@@ -299,17 +307,18 @@ single actor, the board's bot.
 
 Once a Task has a Pull Request, the bot writes the Task's status from what happened to the Pull Request:
 
-| Pull Request | Task status      |
-| ------------ | ---------------- |
-| Draft        | In progress      |
-| Ready        | In review        |
-| Approved     | Done             |
-| Merged       | Awaiting release |
+| Pull Request     | Task status      |
+| ---------------- | ---------------- |
+| Draft            | In progress      |
+| Ready            | In review        |
+| Approved         | Done             |
+| Merged           | Awaiting release |
+| Closed, unmerged | Ready            |
 
-The bot reads these statuses from events, so a manual edit does not stick. Before a Pull Request exists,
-the bot has nothing to read, so the early statuses are yours. An issue joins the board in Triage, and you
-move it to Ready at the spec gate. A meta task never gets a Pull Request, so you set all its statuses by
-hand, up to Applied.
+While the Pull Request is open, the bot rewrites the status on each of its events, so a manual edit does
+not stick. Before a Pull Request exists, the bot has nothing to read, so the early statuses are yours. An
+issue joins the board in Triage, and you move it to Ready at the spec gate. A meta task never gets a Pull
+Request, so you set all its statuses by hand, up to Applied.
 
 GitHub raises no event when a Status field changes. The board therefore never reacts to its own state.
 It always derives the state from the Pull Requests and issues underneath. That derivation runs the moment
@@ -317,24 +326,23 @@ something happens, and again in a sweep every fifteen minutes that re-checks the
 GitHub. The next sweep repairs a dropped event, a missed webhook or a stray hand edit. That repair is why
 you can trust the board without anything guarding it.
 
-A parent's status rolls up from its children. An Epic sits at the least advanced status among its Tasks.
-It reaches review once they all have, and Awaiting release once they all merge. An Initiative holds
-Tracking while its Epics are worked, then moves straight to Awaiting release once they all merge, since
-nobody works the Initiative itself. Either way, a parent summarizes what is under it.
+A parent's status rolls up from its children in each sweep. An Epic moves to In progress as soon as one
+of its Tasks does. It reaches In review once they all have, and Awaiting release once they all merge. An
+Initiative holds [Tracking](#initiatives-and-milestones) until all its Epics merge. Either way,
+a parent summarizes what is under it.
 
 Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a
-parent once all its children have, and a meta task once it reaches **Applied**. The board shows only live
-work.
+parent once all its children have, and any item, such as a meta task, once it reaches **Applied**. The
+board shows only live work.
 
 The board answers trouble the same way every time. It stops, holds, and hands the problem to a person,
 and it never rewrites what happened. The [merge-gate and the freeze](#why-an-epic-lands-whole) are the
 clearest case. They hold a half-landed set for a person to finish instead of reverting a merge.
 
 When the board needs a person, it says so. A hotfix that cannot be backported, or a patch that fails to
-cut, raises an escalation ticket on the board, and the worst of them also page someone directly. A
-rollback that cannot be produced opens a held draft for a person to finish.
+cut, raises an escalation ticket on the board. A rollback that cannot be produced opens a held draft for
+a person to finish.
 
 One switch stops everything if the automation misbehaves. The kill switch holds every Pull Request and
-freezes every board write at once. It fails safe: any value other than a clear "off" halts the
-automation, so a typo stops the board instead of letting it run loose. The emergency hotfix path stays
-open throughout, so the stop never blocks the fix.
+stops every status write at once. It fails safe: any value other than a clear "off" halts the
+automation, so a typo stops the board instead of letting it run loose.

@@ -2,8 +2,7 @@
 
 The **[developer guide](https://a-novel-kit.github.io/stack/)** takes a fresh machine to a working
 setup for both organizations, [`a-novel`](https://github.com/a-novel) and
-[`a-novel-kit`](https://github.com/a-novel-kit). It ends with the
-[`a-novel` CLI](https://github.com/a-novel-kit/stack) and a runbook per task.
+[`a-novel-kit`](https://github.com/a-novel-kit).
 
 The guide's source is the stack repository's
 [`docs/`](https://github.com/a-novel-kit/stack/tree/master/docs) directory. Change it there.
