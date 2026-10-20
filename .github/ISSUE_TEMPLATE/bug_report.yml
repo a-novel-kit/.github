@@ -1,6 +1,5 @@
 name: Bug report
 description: Report a reproducible bug or regression in an a-novel-kit project.
-title: "bug: <short description>"
 type: Bug
 body:
   - type: markdown
