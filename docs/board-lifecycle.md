@@ -5,7 +5,7 @@ This document is about how a feature travels from an idea to code to a shipped r
 As a contributor to `a-novel` and `a-novel-kit`, you turn ideas into features and grow the application.
 Each organization tracks its work on a board ([a-novel's](https://github.com/orgs/a-novel/projects/7) and
 [a-novel-kit's](https://github.com/orgs/a-novel-kit/projects/1)). The boards and the agent skills take on
-the bookkeeping, so you can focus on the two things that matter: the intention and the shipment.
+the bookkeeping, so you can focus on the three human gates: the specification, the review and the release.
 
 Work starts with **the intention**, the non-technical specification behind your idea. Before any code,
 you write that specification into a GitHub issue. There you refine the scope, gather the resources you
@@ -201,9 +201,9 @@ at once, and the merge queue lands them together. Each Task stands on its own, s
 during the brief window while they land.
 
 When one member lands and its siblings do not, the board sees a **partial landing** and
-[freezes the rest](#when-the-board-needs-you) of the Epic. The fix is almost always to roll forward and get the stuck
-sibling in. Reverting what already merged is a last resort, run by hand, because undoing a merge is far
-more dangerous than finishing one.
+[freezes the rest](#when-the-board-needs-you) of the Epic. The fix is almost always to roll forward and
+get the stuck sibling in. Reverting what already merged is a last resort, run by hand, because undoing a
+merge is far more dangerous than finishing one.
 
 ## Ordering across repositories
 
@@ -326,10 +326,10 @@ something happens, and again in a sweep every fifteen minutes that re-checks the
 GitHub. The next sweep repairs a dropped event, a missed webhook or a stray hand edit. That repair is why
 you can trust the board without anything guarding it.
 
-A parent's status rolls up from its children in each sweep. An Epic moves to In progress as soon as one
-of its Tasks does. It reaches In review once they all have, and Awaiting release once they all merge. An
-Initiative holds [Tracking](#initiatives-and-milestones) until all its Epics merge. Either way,
-a parent summarizes what is under it.
+A parent's status rolls up from its children in each sweep. An Epic moves to In progress as soon as one of
+its Tasks does. It reaches In review once they all have, and Awaiting release once they all merge. An
+Initiative holds [Tracking](#initiatives-and-milestones) until all its Epics merge. Either way, a parent
+summarizes what is under it.
 
 Archiving keeps the board clean. A finished item leaves the active views: an issue once it closes, a
 parent once all its children have, and any item, such as a meta task, once it reaches **Applied**. The
