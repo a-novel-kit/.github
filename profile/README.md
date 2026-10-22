@@ -2,15 +2,15 @@
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
-      srcset="https://raw.githubusercontent.com/a-novel-kit/uikit/master/packages/images/files/banner/960h/kit-banner.png"
+      srcset="https://raw.githubusercontent.com/a-novel-kit/ui-assets/master/packages/images/files/banner/960h/kit-banner.png"
     />
     <source
       media="(prefers-color-scheme: light)"
-      srcset="https://raw.githubusercontent.com/a-novel-kit/uikit/master/packages/images/files/banner/960h/kit-banner-light.png"
+      srcset="https://raw.githubusercontent.com/a-novel-kit/ui-assets/master/packages/images/files/banner/960h/kit-banner-light.png"
     />
     <img
       alt="KIT"
-      src="https://raw.githubusercontent.com/a-novel-kit/uikit/master/packages/images/files/banner/960h/kit-banner-light.png"
+      src="https://raw.githubusercontent.com/a-novel-kit/ui-assets/master/packages/images/files/banner/960h/kit-banner-light.png"
       width="398"
     />
   </picture>
