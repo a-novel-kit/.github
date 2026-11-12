@@ -137,14 +137,14 @@ Follow one feature, the notifications work, as its title tightens with the type:
 
 - An **Initiative** names the area of effort: ✅ **Contributor notifications**.
   - ❌ _Q3 notifications_: a calendar box the effort outlasts.
-  - ❌ _Discord notifications for GitHub activity_: too narrow, that is one Epic inside the area.
-- An **Epic** names the goal it delivers: ✅ **Discord notifications for GitHub activity**.
+  - ❌ _Fluxer notifications for GitHub activity_: too narrow, that is one Epic inside the area.
+- An **Epic** names the goal it delivers: ✅ **Fluxer notifications for GitHub activity**.
   - ❌ _v2.3.0_: the version it ships in, not the goal it reaches.
   - ❌ _Notifications_: too broad, that is the whole Initiative.
-- A **Task** names the single change: ✅ **Resolve a GitHub user id to a Discord id**.
+- A **Task** names the single change: ✅ **Resolve a GitHub user id to a Fluxer id**.
   - ❌ _Various notification fixes_: vague and plural, where a Task is one branch.
   - ❌ _Edit `notify.ts`_: the file it touches, not the change it makes.
-- A **Bug** names the broken behavior: ✅ **Discord pings fire twice on a re-run**.
+- A **Bug** names the broken behavior: ✅ **Fluxer pings fire twice on a re-run**.
   - ❌ _Notifications broken_: names neither what breaks nor how.
   - ❌ _Bug in `notify.ts`_: a guess at where it lives, not what the reader sees.
 

@@ -9,7 +9,7 @@ The guide's source is the stack repository's
 
 ## Getting help
 
-- Ask questions on [Discord](https://discord.gg/rp4Qr8cA).
+- Ask questions on [Fluxer](https://fluxer.gg/zrf7UIAg).
 - Open an issue on the affected repository for a bug or a feature request.
 - Report a vulnerability privately, as the [security policy](SECURITY.md) describes. Never open a
   public issue for it.

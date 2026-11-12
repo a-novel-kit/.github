@@ -13,4 +13,4 @@ Each repository adds its own `CONTRIBUTING.md`. The product's concepts live in
 
 ## Questions?
 
-Ask on [Discord](https://discord.gg/rp4Qr8cA), or open an issue on the affected repository.
+Ask on [Fluxer](https://fluxer.gg/zrf7UIAg), or open an issue on the affected repository.
